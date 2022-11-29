@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "880857450976",
+    "project_id": "workout-bud-bf113",
+    "storage_bucket": "workout-bud-bf113.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880857450976:android:e861fc9498e0cd19db8385",
+        "android_client_info": {
+          "package_name": "com.workoutBud.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "880857450976-2t4sa9elkmiqd86kg1qc2ejnaa0hv7q0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.workoutBud.app",
+            "certificate_hash": "c48b33b10d489db0eae5379af2b83f6ff2cd2302"
+          }
+        },
+        {
+          "client_id": "880857450976-1skn6ten3b36oklgmphol6asthb7ft60.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLy05P0A3kuoyybbTY1bBA9wWpzev-Jk0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "880857450976-1skn6ten3b36oklgmphol6asthb7ft60.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
