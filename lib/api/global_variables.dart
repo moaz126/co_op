@@ -28,6 +28,7 @@ List<DashboardModel> activityUsers = [];
 List<InsightModel> insightList = [];
 List<File> files = [];
 List<String> imageFiles = [];
+int notificationCount = 0;
 var getrequest =
     GetRequestModel(meetUpTime: '00:00:00', meetupEndTime: '00:00:00');
 var requestUser = DashboardModel(

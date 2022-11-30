@@ -87,6 +87,7 @@ class _HomePageState extends State<HomePage> {
     });
     await DataApiService.instance.getDashboard(context);
     await DataApiService.instance.getActivityUsers('Beginner', context);
+    await DataApiService.instance.getNotification(context);
     setState(() {
       loader = false;
     });
@@ -140,9 +141,31 @@ class _HomePageState extends State<HomePage> {
                         setState(() {});
                         Get.to(() => const NotificationPage());
                       },
-                      child: const Icon(
-                        Icons.notifications_none_outlined,
-                        color: secondaryColor,
+                      child: Stack(
+                        children: [
+                          Icon(
+                            Icons.notifications_none_outlined,
+                            color: secondaryColor,
+                          ),
+                          notificationCount != 0
+                              ? Positioned(
+                                  right: 0,
+                                  child: Container(
+                                    height: 12,
+                                    width: 12,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: secondaryColor,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Text(
+                                      notificationCount.toString(),
+                                      style: TextStyle(fontSize: 7),
+                                    ),
+                                  ),
+                                )
+                              : SizedBox()
+                        ],
                       )),
                   // InkWell(
                   //     onTap: (){
@@ -426,9 +449,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                               InkWell(
                                 onTap: () async {
-                                  // Get.to(() => NavigateScreen());
-                                  /*    DataApiService.instance
-                                      .sendRating('26', '2.5', context); */
                                   final s = form.DateFormat("HH:mm");
                                   String st = s.format(DateTime.now());
                                   DateTime dateTime = s.parse(st);

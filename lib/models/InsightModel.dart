@@ -58,7 +58,7 @@ class InsightModel {
         userData: List<UserDatum>.from(
             json["userData"].map((x) => UserDatum.fromJson(x))),
         requestedByUser: List<RequestedUser>.from(
-            json["requested_by_user"].map((x) => RequestedUser.fromJson(x))),
+            json["user_info"].map((x) => RequestedUser.fromJson(x))),
         requestedToUser: List<RequestedUser>.from(
             json["requested_to_user"].map((x) => RequestedUser.fromJson(x))),
       );

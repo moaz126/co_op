@@ -55,9 +55,7 @@ class _SignUpState extends State<SignUp> {
               decoration: InputDecoration(hintText: "Address Name"),
             ),
             actions: <Widget>[
-              FlatButton(
-                color: Colors.green,
-                textColor: Colors.white,
+              TextButton(
                 child: Text('OK'),
                 onPressed: () {
                   setState(() {

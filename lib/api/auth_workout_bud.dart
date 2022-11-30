@@ -798,7 +798,7 @@ class DataApiService {
           print('Success');
 
           notificationList = List<NotificationListModel>.from(
-              result['recieved_request']
+              result['All_Notification']
                   .map((x) => NotificationListModel.fromJson(x)));
         } else {
           print("unsuccess");
@@ -916,6 +916,32 @@ class DataApiService {
 
           insightList = List<InsightModel>.from(
               result['user'].map((x) => InsightModel.fromJson(x)));
+        } else {
+          print("unsuccess");
+        }
+      } on Exception {
+        rethrow;
+      } catch (e) {
+        rethrow;
+      }
+    }
+  }
+
+  Future getNotificationCount(context) async {
+    connected = await isNetworkAvailable();
+    if (connected) {
+      String url = baseUrl + notification_count_url;
+      print(url);
+
+      try {
+        http.Response response = await http.get(Uri.parse(url), headers: {
+          "Authorization": "Bearer ${USER_TOKEN.value}",
+        });
+        print(response.body);
+        final result = jsonDecode(response.body);
+        if (result['success']) {
+          print('Success');
+          notificationCount = jsonDecode(result['count']);
         } else {
           print("unsuccess");
         }

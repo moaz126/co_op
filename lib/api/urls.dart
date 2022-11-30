@@ -28,5 +28,6 @@ String activity_url = 'search/activity-level';
 String get_bookmark_url = 'get/bookmark';
 String upload_imgaes_url = 'upload/images';
 String insight_url = 'requested/category';
+String notification_count_url = 'notification/count';
 String filter_url =
     'https://becktesting.site/workout-bud/api/admin/get/filter/subfilter';
