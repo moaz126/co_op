@@ -941,7 +941,7 @@ class DataApiService {
         final result = jsonDecode(response.body);
         if (result['success']) {
           print('Success');
-          notificationCount = jsonDecode(result['count']);
+          notificationCount = result['count'];
         } else {
           print("unsuccess");
         }

@@ -5,7 +5,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:co_op/api/auth_workout_bud.dart';
 import 'package:co_op/api/global_variables.dart';
-import 'package:co_op/constants/custom_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -137,15 +136,22 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                         CarouselSlider(
                           carouselController: controller,
                           items: imageList.map((e) {
-                            return Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(0)),
-                              ),
-                              color: Colors.transparent,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Image.asset(e.trim().toString()),
+                            return InkWell(
+                              onTap: () {
+                                if (selectedIndexDots == imageList.length - 1) {
+                                  print('click');
+                                }
+                              },
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(0)),
+                                ),
+                                color: Colors.transparent,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Image.asset(e.trim().toString()),
+                                ),
                               ),
                             );
                           }).toList(),

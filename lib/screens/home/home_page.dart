@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
     });
     await DataApiService.instance.getDashboard(context);
     await DataApiService.instance.getActivityUsers('Beginner', context);
-    await DataApiService.instance.getNotification(context);
+    await DataApiService.instance.getNotificationCount(context);
     setState(() {
       loader = false;
     });
@@ -158,10 +158,19 @@ class _HomePageState extends State<HomePage> {
                                         color: secondaryColor,
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    child: Text(
-                                      notificationCount.toString(),
-                                      style: TextStyle(fontSize: 7),
-                                    ),
+                                    child: notificationCount > 9
+                                        ? Text(
+                                            '9+',
+                                            style: TextStyle(
+                                                fontSize: 7,
+                                                color: Colors.white),
+                                          )
+                                        : Text(
+                                            notificationCount.toString(),
+                                            style: TextStyle(
+                                                fontSize: 7,
+                                                color: Colors.white),
+                                          ),
                                   ),
                                 )
                               : SizedBox()
