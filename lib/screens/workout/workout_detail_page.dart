@@ -200,10 +200,10 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                   Icon(Icons.bookmark, color: Colors.white),
                                   InkWell(
                                       onTap: () async {
-                                        await selectFile();
+                                        /*             await selectFile();
                                         print(files.length);
                                         DataApiService.instance
-                                            .uploadImages(context);
+                                            .uploadImages(context); */
                                       },
                                       child: Icon(Icons.menu,
                                           color: Colors.white)),

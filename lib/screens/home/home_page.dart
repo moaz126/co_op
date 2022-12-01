@@ -19,6 +19,7 @@ import 'package:co_op/bottom_navigation_bar.dart';
 import 'package:co_op/constants/constants.dart';
 import 'package:co_op/screens/home/bookmarks.dart';
 import 'package:co_op/screens/home/notification.dart';
+import 'package:vibration/vibration.dart';
 
 import '../../api/auth_workout_bud.dart';
 import '../../api/global_variables.dart';
@@ -93,6 +94,18 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  callNoLoadingApi() {
+    setState(() {
+      loader = true;
+    });
+    DataApiService.instance.getDashboard(context);
+    DataApiService.instance.getActivityUsers('Beginner', context);
+    DataApiService.instance.getNotificationCount(context);
+    setState(() {
+      loader = false;
+    });
+  }
+
   bool activityLoader = false;
   callActivityApi(String level) async {
     setState(() {
@@ -107,7 +120,12 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    callApi();
+    if (firstHome) {
+      callNoLoadingApi();
+    } else {
+      callApi();
+    }
+    firstHome = true;
   }
 
   @override
@@ -214,6 +232,7 @@ class _HomePageState extends State<HomePage> {
                           height: 37.h,
                           // width: 15.h,
                           child: ListView.builder(
+                            physics: BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             itemCount: dashbarodUsersList.length,
                             itemBuilder: (context, index) {
@@ -458,9 +477,12 @@ class _HomePageState extends State<HomePage> {
                               ),
                               InkWell(
                                 onTap: () async {
-                                  final s = form.DateFormat("HH:mm");
+                                  if (await Vibration.hasVibrator() != null) {
+                                    Vibration.vibrate();
+                                  }
+                                  /*   final s = form.DateFormat("HH:mm");
                                   String st = s.format(DateTime.now());
-                                  DateTime dateTime = s.parse(st);
+                                  DateTime dateTime = s.parse(st); */
                                 },
                                 child: Text(
                                   "See All",

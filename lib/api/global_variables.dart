@@ -26,6 +26,7 @@ List<NotificationListModel> notificationList = [];
 List<DashboardModel> dashbarodUsersList = [];
 List<DashboardModel> activityUsers = [];
 List<InsightModel> insightList = [];
+bool firstHome = false;
 List<File> files = [];
 List<String> imageFiles = [];
 int notificationCount = 0;
