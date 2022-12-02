@@ -18,6 +18,7 @@ class GetProfileModel {
     this.weight,
     this.height,
     this.goal,
+    required this.imageList,
     this.activityLevel,
     this.image,
     this.fullName,
@@ -40,12 +41,13 @@ class GetProfileModel {
   String? weight;
   String? height;
   List<String>? goal;
+  List<GetWorkoutImage> imageList;
   String? activityLevel;
   String? image;
   String? fullName;
   String? nickName;
   String? phone;
-  dynamic? emailVerifiedAt;
+  dynamic emailVerifiedAt;
   DateTime? createdAt;
   DateTime? updatedAt;
   double? lat;
@@ -64,6 +66,10 @@ class GetProfileModel {
         goal: json["goal"] == null
             ? []
             : List<String>.from(json["goal"].map((x) => x)),
+        imageList: json["get_workout_images"] == null
+            ? []
+            : List<GetWorkoutImage>.from(json["get_workout_images"]
+                .map((x) => GetWorkoutImage.fromJson(x))),
         activityLevel: json["activity_level"],
         image: json["image"],
         fullName: json["full_name"],
@@ -73,4 +79,37 @@ class GetProfileModel {
         lat: json["lat"] as double?,
         lng: json["long"],
       );
+}
+
+class GetWorkoutImage {
+  GetWorkoutImage({
+    required this.id,
+    required this.userId,
+    required this.images,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  int id;
+  int userId;
+  List<String> images;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory GetWorkoutImage.fromJson(Map<String, dynamic> json) =>
+      GetWorkoutImage(
+        id: json["id"],
+        userId: json["user_id"],
+        images: List<String>.from(json["images"].map((x) => x)),
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "user_id": userId,
+        "images": List<dynamic>.from(images.map((x) => x)),
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }

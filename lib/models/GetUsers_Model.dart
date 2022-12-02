@@ -4,58 +4,62 @@
 
 import 'dart:convert';
 
-List<GetUsersModel> getUsersModelFromJson(String str) => List<GetUsersModel>.from(json.decode(str).map((x) => GetUsersModel.fromJson(x)));
+List<GetUsersModel> getUsersModelFromJson(String str) =>
+    List<GetUsersModel>.from(
+        json.decode(str).map((x) => GetUsersModel.fromJson(x)));
 
-String getUsersModelToJson(List<GetUsersModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String getUsersModelToJson(List<GetUsersModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class GetUsersModel {
-    GetUsersModel({
-        required this.id,
-        required this.subCategoryId,
-        required this.userName,
-        required this.email,
-        required this.gender,
-        required this.age,
-        required this.weight,
-        required this.height,
-        required this.goal,
-        required this.long,
-        required this.lat,
-        required this.activityLevel,
-        required this.image,
-        required this.fullName,
-        required this.nickName,
-        required this.phone,
-        required this.emailVerifiedAt,
-        required this.createdAt,
-        required this.updatedAt,
-        required this.isVisible,
-    });
+  GetUsersModel({
+    required this.id,
+    required this.subCategoryId,
+    required this.userName,
+    required this.email,
+    required this.gender,
+    required this.age,
+    required this.weight,
+    required this.height,
+    required this.goal,
+    required this.long,
+    required this.lat,
+    required this.activityLevel,
+    required this.image,
+    required this.fullName,
+    required this.nickName,
+    required this.phone,
+    required this.emailVerifiedAt,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isVisible,
+  });
 
-    int id;
-    List<dynamic> subCategoryId;
-    String userName;
-    String email;
-    int gender;
-    int age;
-    String weight;
-    String height;
-    List<String> goal;
-    double long;
-    double lat;
-    String? activityLevel;
-    String? image;
-    String? fullName;
-    String? nickName;
-    String? phone;
-    dynamic emailVerifiedAt;
-    DateTime createdAt;
-    DateTime updatedAt;
-    bool? isVisible;
+  int id;
+  List<dynamic> subCategoryId;
+  String userName;
+  String email;
+  int gender;
+  int age;
+  String weight;
+  String height;
+  List<String> goal;
+  double long;
+  double lat;
+  String? activityLevel;
+  String? image;
+  String? fullName;
+  String? nickName;
+  String? phone;
+  dynamic emailVerifiedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
+  bool? isVisible;
 
-    factory GetUsersModel.fromJson(Map<String, dynamic> json) => GetUsersModel(
+  factory GetUsersModel.fromJson(Map<String, dynamic> json) => GetUsersModel(
         id: json["id"],
-        subCategoryId: List<dynamic>.from(json["sub_category_id"].map((x) => x)),
+        subCategoryId:
+            List<dynamic>.from(json["sub_category_id"].map((x) => x)),
         userName: json["user_name"],
         email: json["email"],
         gender: json["gender"],
@@ -74,9 +78,9 @@ class GetUsersModel {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         isVisible: json["is_visible"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "sub_category_id": List<dynamic>.from(subCategoryId.map((x) => x)),
         "user_name": userName,
@@ -97,5 +101,5 @@ class GetUsersModel {
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "is_visible": isVisible,
-    };
+      };
 }

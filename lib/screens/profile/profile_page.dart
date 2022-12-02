@@ -4,6 +4,7 @@ import 'package:co_op/api/auth_workout_bud.dart';
 import 'package:co_op/api/global_variables.dart';
 import 'package:co_op/screens/auth/sign_in.dart';
 import 'package:co_op/screens/home/bookmarks.dart';
+import 'package:co_op/screens/home/notification.dart';
 import 'package:co_op/screens/profile/AddressList.dart';
 import 'package:co_op/screens/profile/edit_profile.dart';
 import 'package:flutter/material.dart';
@@ -216,21 +217,24 @@ class _ProfilePageState extends State<ProfilePage> {
                           leading: Icon(Icons.person),
                           title: Text('Edit Profile'),
                           onTap: () {
-                            Get.to(EditProfile());
+                            Get.to(
+                              EditProfile(),
+                              transition: Transition.fade,
+                              duration: const Duration(seconds: 1),
+                              curve: Curves.decelerate,
+                            );
                           },
                         ),
                       ),
                       Card(
                         child: ListTile(
                           onTap: () async {
-                            Map<String, dynamic> interestFilter = {
-                              'ids': '1',
-                            };
-                            print(interestFilter);
-                            getUsersList.clear();
-
-                            await DataApiService.instance
-                                .getUsersPreference(interestFilter, context);
+                            Get.to(
+                              NotificationPage(),
+                              transition: Transition.fade,
+                              duration: const Duration(seconds: 1),
+                              curve: Curves.decelerate,
+                            );
                           },
                           leading: Icon(Icons.notifications),
                           title: Text('Notifications'),
@@ -241,7 +245,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           leading: Icon(Icons.location_on),
                           title: Text('Address'),
                           onTap: () {
-                            Get.to(AddressList());
+                            Get.to(
+                              AddressList(),
+                              transition: Transition.fade,
+                              duration: const Duration(seconds: 1),
+                              curve: Curves.decelerate,
+                            );
                           },
                         ),
                       ),
@@ -250,7 +259,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           leading: Icon(Icons.bookmark),
                           title: Text('Bookmarks'),
                           onTap: () {
-                            Get.to(BookmarksPage());
+                            Get.to(
+                              BookmarksPage(),
+                              transition: Transition.fade,
+                              duration: const Duration(seconds: 1),
+                              curve: Curves.decelerate,
+                            );
                           },
                         ),
                       ),
@@ -277,7 +291,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           onTap: () {
                             // themeChange.darkTheme = !themeChange.darkTheme;
                             interestNavigation = true;
-                            Get.to(() => ChooseInterest());
+                            Get.to(
+                              () => ChooseInterest(),
+                              transition: Transition.fade,
+                              duration: const Duration(seconds: 1),
+                              curve: Curves.decelerate,
+                            );
                           },
                           leading: Icon(Icons.favorite),
                           title: Text('Interests'),

@@ -701,222 +701,383 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
-                          child: Container(
-                            padding: EdgeInsets.only(right: 20),
-                            height: 150,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: [
-                                Row(
-                                  children: [
-                                    for (int i = 0; i < imageList.length; i++)
-                                      Stack(
+                        profileInfo.imageList.isNotEmpty
+                            ? Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: Container(
+                                  padding: EdgeInsets.only(right: 20),
+                                  height: 150,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: [
+                                      Row(
                                         children: [
-                                          InkWell(
-                                            onTap: () async {},
-                                            child: Container(
-                                              height: 140,
-                                              width: 140,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(5)),
-                                                  border: Border.all(
-                                                    color: Colors.grey
-                                                        .withOpacity(0.4),
-                                                  ),
-                                                  color: Colors.white),
-                                              child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(3.0),
-                                                  child: Image.asset(
+                                          for (int i = 0;
+                                              i <
+                                                  profileInfo.imageList[0]
+                                                      .images.length;
+                                              i++)
+                                            Stack(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () async {},
+                                                  child: Container(
+                                                    height: 140,
+                                                    width: 140,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    5)),
+                                                        border: Border.all(
+                                                          color: Colors.grey
+                                                              .withOpacity(0.4),
+                                                        ),
+                                                        color: Colors.white),
+                                                    child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(3.0),
+                                                        child: /* Image.asset(
                                                       imageList[i],
                                                       fit: BoxFit
-                                                          .cover) /* Image.network(
-                                                    'http://becknowledge.com/af24/storage/app/public/product/' +
-                                                        productlistContent[
-                                                                widget.index]
-                                                            .images[i],
-                                                    fit: BoxFit.cover,
-                                                    width: double.infinity,
-                                                  ) */
+                                                          .cover) */
+                                                            Image.network(
+                                                          'https://becktesting.site/workout-bud/public/storage/user/workout/' +
+                                                              profileInfo
+                                                                  .imageList[0]
+                                                                  .images[i],
+                                                          fit: BoxFit.cover,
+                                                          width:
+                                                              double.infinity,
+                                                        )),
                                                   ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                              right: 5,
-                                              top: 5,
-                                              child: InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      imageList.removeAt(i);
-                                                    });
+                                                ),
+                                                Positioned(
+                                                    right: 5,
+                                                    top: 5,
+                                                    child: InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            profileInfo
+                                                                .imageList[0]
+                                                                .images
+                                                                .removeAt(i);
+                                                            DataApiService
+                                                                .instance
+                                                                .deleteImage(
+                                                                    profileInfo
+                                                                        .imageList[
+                                                                            0]
+                                                                        .images[i],
+                                                                    context);
+                                                          });
 
-                                                    print("helooooooooooooo");
+                                                          print(
+                                                              "helooooooooooooo");
+                                                        },
+                                                        child:
+                                                            Icon(Icons.close)))
+                                              ],
+                                            ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          for (int i = 0;
+                                              i < multipleImages.length;
+                                              i++)
+                                            Stack(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () async {
+                                                    await selectMultipleImages();
+                                                    setState(() {});
                                                   },
-                                                  child: Icon(Icons.close)))
+                                                  child: Container(
+                                                    height: 140,
+                                                    width: 140,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    5)),
+                                                        border: Border.all(
+                                                          color: Colors.grey
+                                                              .withOpacity(0.4),
+                                                        ),
+                                                        color: Colors.white),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              3.0),
+                                                      child: imageList.isEmpty
+                                                          ? DottedBorder(
+                                                              dashPattern: [
+                                                                4,
+                                                                6
+                                                              ],
+                                                              strokeWidth: 2,
+                                                              color:
+                                                                  Colors.grey,
+                                                              child: Container(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child:
+                                                                    Image.asset(
+                                                                  'assets/images/upload.png',
+                                                                  height: 5.h,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      400],
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : Image.file(
+                                                              File(
+                                                                  multipleImages[
+                                                                          i]
+                                                                      .path),
+                                                              fit: BoxFit.cover,
+                                                              width: double
+                                                                  .infinity,
+                                                            ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                    right: 5,
+                                                    top: 5,
+                                                    child: InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            multipleImages
+                                                                .removeAt(i);
+                                                          });
+
+                                                          print(
+                                                              "helooooooooooooo");
+                                                        },
+                                                        child:
+                                                            Icon(Icons.close)))
+                                              ],
+                                            ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
                                         ],
                                       ),
-                                    SizedBox(
-                                      width: 5,
+                                      InkWell(
+                                        onTap: () async {
+                                          await selectMultipleImages();
+                                          setState(() {});
+                                        },
+                                        child: Container(
+                                          height: 140,
+                                          width: 140,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5)),
+                                              border: Border.all(
+                                                color: Colors.grey
+                                                    .withOpacity(0.4),
+                                              ),
+                                              color: Colors.white),
+                                          child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(3.0),
+                                              child: DottedBorder(
+                                                dashPattern: [4, 6],
+                                                strokeWidth: 2,
+                                                color: Colors.grey,
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  child: Image.asset(
+                                                    'assets/images/upload.png',
+                                                    height: 5.h,
+                                                    color: Colors.grey[400],
+                                                  ),
+                                                ),
+                                              )),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : multipleImages.isNotEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.only(left: 20.0),
+                                    child: SizedBox(
+                                      height: 150,
+                                      child: ListView.builder(
+                                        physics: BouncingScrollPhysics(),
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: 1,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Row(
+                                            children: [
+                                              for (int i = 0;
+                                                  i < multipleImages.length;
+                                                  i++)
+                                                Stack(
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: () async {
+                                                        await selectMultipleImages();
+                                                        setState(() {});
+                                                      },
+                                                      child: Container(
+                                                        height: 140,
+                                                        width: 140,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            5)),
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Colors
+                                                                      .grey
+                                                                      .withOpacity(
+                                                                          0.4),
+                                                                ),
+                                                                color: Colors
+                                                                    .white),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(3.0),
+                                                          child: imageList
+                                                                  .isEmpty
+                                                              ? DottedBorder(
+                                                                  dashPattern: [
+                                                                    4,
+                                                                    6
+                                                                  ],
+                                                                  strokeWidth:
+                                                                      2,
+                                                                  color: Colors
+                                                                      .grey,
+                                                                  child:
+                                                                      Container(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    child: Image
+                                                                        .file(
+                                                                      File(multipleImages[
+                                                                              index]
+                                                                          .path),
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                      width: double
+                                                                          .infinity,
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                              : Image.file(
+                                                                  File(multipleImages[
+                                                                          i]
+                                                                      .path),
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  width: double
+                                                                      .infinity,
+                                                                ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                        right: 5,
+                                                        top: 5,
+                                                        child: InkWell(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                multipleImages
+                                                                    .removeAt(
+                                                                        i);
+                                                              });
+
+                                                              print(
+                                                                  "helooooooooooooo");
+                                                            },
+                                                            child: Icon(
+                                                                Icons.close)))
+                                                  ],
+                                                ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ),
                                     ),
-                                    for (int i = 0;
-                                        i < multipleImages.length;
-                                        i++)
-                                      Stack(
-                                        children: [
-                                          InkWell(
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.only(left: 20.0),
+                                    child: SizedBox(
+                                      height: 150,
+                                      child: ListView.builder(
+                                        physics: BouncingScrollPhysics(),
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: 1,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return InkWell(
                                             onTap: () async {
                                               await selectMultipleImages();
                                               setState(() {});
                                             },
-                                            child: Container(
-                                              height: 140,
-                                              width: 140,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(5)),
-                                                  border: Border.all(
-                                                    color: Colors.grey
-                                                        .withOpacity(0.4),
-                                                  ),
-                                                  color: Colors.white),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(3.0),
-                                                child: imageList.isEmpty
-                                                    ? DottedBorder(
-                                                        dashPattern: [4, 6],
-                                                        strokeWidth: 2,
-                                                        color: Colors.grey,
-                                                        child: Container(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Image.asset(
-                                                            'assets/images/upload.png',
-                                                            height: 5.h,
-                                                            color: Colors
-                                                                .grey[400],
-                                                          ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Container(
+                                                height: 100,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                            Radius.circular(5)),
+                                                    border: Border.all(
+                                                      color: Colors.grey,
+                                                    ),
+                                                    color: Colors.white),
+                                                child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            3.0),
+                                                    child: /* myImages[i].isEmpty
+                                                    ?  */
+                                                        DottedBorder(
+                                                      dashPattern: [4, 6],
+                                                      strokeWidth: 2,
+                                                      color: Colors.grey,
+                                                      child: Container(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Image.asset(
+                                                          'assets/images/upload.png',
+                                                          height: 4.h,
                                                         ),
-                                                      )
-                                                    : Image.file(
-                                                        File(multipleImages[i]
-                                                            .path),
+                                                      ),
+                                                    )
+                                                    /* : Image.file(
+                                                        File(myImages[i]),
                                                         fit: BoxFit.cover,
                                                         width: double.infinity,
-                                                      ),
+                                                      ), */
+                                                    ),
                                               ),
                                             ),
-                                          ),
-                                          Positioned(
-                                              right: 5,
-                                              top: 5,
-                                              child: InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      multipleImages
-                                                          .removeAt(i);
-                                                    });
-
-                                                    print("helooooooooooooo");
-                                                  },
-                                                  child: Icon(Icons.close)))
-                                        ],
+                                          );
+                                        },
                                       ),
-                                    SizedBox(
-                                      width: 5,
                                     ),
-                                  ],
-                                ),
-                                InkWell(
-                                  onTap: () async {
-                                    await selectMultipleImages();
-                                    setState(() {});
-                                  },
-                                  child: Container(
-                                    height: 140,
-                                    width: 140,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5)),
-                                        border: Border.all(
-                                          color: Colors.grey.withOpacity(0.4),
-                                        ),
-                                        color: Colors.white),
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(3.0),
-                                        child: DottedBorder(
-                                          dashPattern: [4, 6],
-                                          strokeWidth: 2,
-                                          color: Colors.grey,
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            child: Image.asset(
-                                              'assets/images/upload.png',
-                                              height: 5.h,
-                                              color: Colors.grey[400],
-                                            ),
-                                          ),
-                                        )),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        /*  Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
-                          child: SizedBox(
-                            height: 150,
-                            child: ListView.builder(
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: multipleImages.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    height: 100,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(5)),
-                                        border: Border.all(
-                                          color: Colors.grey,
-                                        ),
-                                        color: Colors.white),
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(3.0),
-                                        child: /* myImages[i].isEmpty
-                                                  ?  */
-                                            DottedBorder(
-                                          dashPattern: [4, 6],
-                                          strokeWidth: 2,
-                                          color: Colors.grey,
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            child: Image.asset(
-                                              'assets/images/upload.png',
-                                              height: 4.h,
-                                            ),
-                                          ),
-                                        )
-                                        /* : Image.file(
-                                                      File(myImages[i]),
-                                                      fit: BoxFit.cover,
-                                                      width: double.infinity,
-                                                    ), */
-                                        ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ), */
                         /*       SizedBox(
                       height: 2.h,
                     ),
@@ -1149,8 +1310,14 @@ class _EditProfileState extends State<EditProfile> {
                                           await DataApiService.instance
                                               .updateProfileWithoutImage(
                                                   update, context);
+                                          if (multipleImages.isNotEmpty) {
+                                            await DataApiService.instance
+                                                .uploadImages(
+                                                    multipleImages, context);
+                                          }
                                           await DataApiService.instance
                                               .getprofileinfo(context);
+
                                           Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(
@@ -1171,8 +1338,14 @@ class _EditProfileState extends State<EditProfile> {
                                                   selectedIndex,
                                                   updateImage,
                                                   context);
+                                          if (multipleImages.isNotEmpty) {
+                                            await DataApiService.instance
+                                                .uploadImages(
+                                                    multipleImages, context);
+                                          }
                                           await DataApiService.instance
                                               .getprofileinfo(context);
+
                                           Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(

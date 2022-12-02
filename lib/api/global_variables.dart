@@ -16,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:co_op/models/Profile_Model.dart';
 
 final USER_TOKEN = ValueNotifier("");
-var profileInfo = GetProfileModel(goal: [], subCategoryId: []);
+var profileInfo = GetProfileModel(goal: [], subCategoryId: [], imageList: []);
 List<GetFilterModel> getfilterList = [];
 List<AddressModel> getAddrList = [];
 List<BookmarkModel> bookmarkList = [];

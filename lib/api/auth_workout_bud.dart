@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:co_op/constants/custom_dialog.dart';
@@ -1035,7 +1036,34 @@ class DataApiService {
     }
   }
 
-  Future uploadImages(context) async {
+  Future deleteImage(String image, context) async {
+    connected = await isNetworkAvailable();
+    if (connected) {
+      String url = baseUrl + delete_image_url;
+      print(url);
+
+      try {
+        http.Response response = await http.post(Uri.parse(url), body: {
+          'image': image,
+        }, headers: {
+          "Authorization": "Bearer ${USER_TOKEN.value}",
+        });
+        print(response.body);
+        final result = jsonDecode(response.body);
+        if (result['success']) {
+          print('Success');
+        } else {
+          print("unsuccess");
+        }
+      } on Exception {
+        rethrow;
+      } catch (e) {
+        rethrow;
+      }
+    }
+  }
+
+  Future uploadImages(List<File> images, context) async {
     String url = baseUrl + upload_imgaes_url;
     print(url);
     try {
@@ -1047,9 +1075,9 @@ class DataApiService {
       late http.MultipartFile multipartFile;
       List<http.MultipartFile> newList = <http.MultipartFile>[];
 
-      for (int i = 0; i < files.length; i++) {
+      for (int i = 0; i < images.length; i++) {
         multipartFile =
-            await http.MultipartFile.fromPath('images[]', files[i].path);
+            await http.MultipartFile.fromPath('images[]', images[i].path);
         newList.add(multipartFile);
       }
       request.files.addAll(newList);

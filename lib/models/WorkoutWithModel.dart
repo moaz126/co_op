@@ -107,6 +107,7 @@ class WorkoutUser {
     required this.updatedAt,
     required this.otp,
     required this.fcmTokken,
+    required this.images,
   });
 
   int id;
@@ -130,6 +131,7 @@ class WorkoutUser {
   DateTime updatedAt;
   dynamic otp;
   dynamic fcmTokken;
+  Images images;
 
   factory WorkoutUser.fromJson(Map<String, dynamic> json) => WorkoutUser(
         id: json["id"],
@@ -153,6 +155,7 @@ class WorkoutUser {
         updatedAt: DateTime.parse(json["updated_at"]),
         otp: json["otp"],
         fcmTokken: json["fcm_tokken"],
+        images: Images.fromJson(json["images"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -177,5 +180,37 @@ class WorkoutUser {
         "updated_at": updatedAt.toIso8601String(),
         "otp": otp,
         "fcm_tokken": fcmTokken,
+      };
+}
+
+class Images {
+  Images({
+    required this.id,
+    required this.userId,
+    required this.images,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  int id;
+  int userId;
+  List<String> images;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory Images.fromJson(Map<String, dynamic> json) => Images(
+        id: json["id"],
+        userId: json["user_id"],
+        images: List<String>.from(json["images"].map((x) => x)),
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "user_id": userId,
+        "images": List<dynamic>.from(images.map((x) => x)),
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
       };
 }
