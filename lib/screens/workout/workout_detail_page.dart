@@ -133,38 +133,100 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                     Stack(
                       alignment: Alignment.bottomCenter,
                       children: [
-                        CarouselSlider(
-                          carouselController: controller,
-                          items: imageList.map((e) {
-                            return InkWell(
-                              onTap: () {
-                                if (selectedIndexDots == imageList.length - 1) {
-                                  print('click');
-                                }
-                              },
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(0)),
-                                ),
-                                color: Colors.transparent,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Image.asset(e.trim().toString()),
-                                ),
+                        users.userData!.getWorkoutImages.isEmpty
+                            ? CarouselSlider(
+                                carouselController: controller,
+                                items: imageList.map((e) {
+                                  return InkWell(
+                                    onTap: () {
+                                      if (selectedIndexDots ==
+                                          imageList.length - 1) {
+                                        print('click');
+                                      }
+                                    },
+                                    child: Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(0)),
+                                      ),
+                                      color: Colors.transparent,
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Image.asset(e.trim().toString()),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                                options: CarouselOptions(
+                                    viewportFraction: 1,
+                                    height: 260,
+                                    onPageChanged: (val, _) {
+                                      setState(() {
+                                        selectedIndexDots = val;
+                                        controller.jumpToPage(val);
+                                      });
+                                    }),
+                              )
+                            : CarouselSlider(
+                                carouselController: controller,
+                                items: users
+                                    .userData!.getWorkoutImages[0].images
+                                    .map((e) {
+                                  return InkWell(
+                                    onTap: () {
+                                      if (selectedIndexDots ==
+                                          users.userData!.getWorkoutImages[0]
+                                                  .images.length -
+                                              1) {
+                                        print('click');
+                                      }
+                                    },
+                                    child: Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(0)),
+                                      ),
+                                      color: Colors.transparent,
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: CachedNetworkImage(
+                                          height: 34.h,
+                                          width: 100.w,
+                                          fit: BoxFit.contain,
+                                          imageUrl:
+                                              'https://becktesting.site/workout-bud/public/storage/user/workout/' +
+                                                  e,
+                                          placeholder: (context, url) =>
+                                              Image.asset(
+                                            'assets/images/stretching.jpg',
+                                            fit: BoxFit.cover,
+                                            height: 34.h,
+                                            width: 70.w,
+                                          ),
+                                          errorWidget: (context, url,
+                                                  error) => /* Icon(Icons
+                              .person) */
+                                              Image.asset(
+                                            'assets/images/stretching.jpg',
+                                            fit: BoxFit.cover,
+                                            height: 34.h,
+                                            width: 70.w,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                                options: CarouselOptions(
+                                    viewportFraction: 1,
+                                    height: 260,
+                                    onPageChanged: (val, _) {
+                                      setState(() {
+                                        selectedIndexDots = val;
+                                        controller.jumpToPage(val);
+                                      });
+                                    }),
                               ),
-                            );
-                          }).toList(),
-                          options: CarouselOptions(
-                              viewportFraction: 1,
-                              height: 260,
-                              onPageChanged: (val, _) {
-                                setState(() {
-                                  selectedIndexDots = val;
-                                  controller.jumpToPage(val);
-                                });
-                              }),
-                        ),
                         Positioned(
                           bottom: 10,
                           child: AnimatedSmoothIndicator(

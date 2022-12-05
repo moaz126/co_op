@@ -33,6 +33,7 @@ class GetUsersModel {
     required this.createdAt,
     required this.updatedAt,
     required this.isVisible,
+    required this.getWorkoutImages,
   });
 
   int id;
@@ -55,6 +56,7 @@ class GetUsersModel {
   DateTime createdAt;
   DateTime updatedAt;
   bool? isVisible;
+  List<GetWorkoutImage> getWorkoutImages;
 
   factory GetUsersModel.fromJson(Map<String, dynamic> json) => GetUsersModel(
         id: json["id"],
@@ -78,6 +80,10 @@ class GetUsersModel {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         isVisible: json["is_visible"],
+        getWorkoutImages: json.containsKey("get_workout_images")
+            ? List<GetWorkoutImage>.from(json["get_workout_images"]
+                .map((x) => GetWorkoutImage.fromJson(x)))
+            : [],
       );
 
   Map<String, dynamic> toJson() => {
@@ -101,5 +107,38 @@ class GetUsersModel {
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "is_visible": isVisible,
+      };
+}
+
+class GetWorkoutImage {
+  GetWorkoutImage({
+    required this.id,
+    required this.userId,
+    required this.images,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  int id;
+  int userId;
+  List<String> images;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory GetWorkoutImage.fromJson(Map<String, dynamic> json) =>
+      GetWorkoutImage(
+        id: json["id"],
+        userId: json["user_id"],
+        images: List<String>.from(json["images"].map((x) => x)),
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "user_id": userId,
+        "images": List<dynamic>.from(images.map((x) => x)),
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
       };
 }

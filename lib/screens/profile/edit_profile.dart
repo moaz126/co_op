@@ -90,7 +90,8 @@ class _EditProfileState extends State<EditProfile> {
     );
 
     if (result != null) {
-      multipleImages = result.paths.map((path) => File(path!)).toList();
+      multipleImages =
+          multipleImages + result.paths.map((path) => File(path!)).toList();
     } else {
       // User canceled the picker
     }
@@ -925,7 +926,7 @@ class _EditProfileState extends State<EditProfile> {
                                                   children: [
                                                     InkWell(
                                                       onTap: () async {
-                                                        await selectMultipleImages();
+                                                        // await selectMultipleImages();
                                                         setState(() {});
                                                       },
                                                       child: Container(
@@ -1010,6 +1011,55 @@ class _EditProfileState extends State<EditProfile> {
                                                 ),
                                               SizedBox(
                                                 width: 5,
+                                              ),
+                                              InkWell(
+                                                onTap: () async {
+                                                  await selectMultipleImages();
+                                                  setState(() {});
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Container(
+                                                    height: 140,
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            const BorderRadius
+                                                                    .all(
+                                                                Radius.circular(
+                                                                    5)),
+                                                        border: Border.all(
+                                                          color: Colors.grey,
+                                                        ),
+                                                        color: Colors.white),
+                                                    child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(3.0),
+                                                        child: /* myImages[i].isEmpty
+                                                      ?  */
+                                                            DottedBorder(
+                                                          dashPattern: [4, 6],
+                                                          strokeWidth: 2,
+                                                          color: Colors.grey,
+                                                          child: Container(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: Image.asset(
+                                                              'assets/images/upload.png',
+                                                              height: 4.h,
+                                                            ),
+                                                          ),
+                                                        )
+                                                        /* : Image.file(
+                                                          File(myImages[i]),
+                                                          fit: BoxFit.cover,
+                                                          width: double.infinity,
+                                                        ), */
+                                                        ),
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           );

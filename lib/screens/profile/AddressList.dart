@@ -4,6 +4,7 @@ import 'package:co_op/constants/constants.dart';
 import 'package:co_op/constants/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
@@ -167,9 +168,9 @@ class _AddressListState extends State<AddressList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        backgroundColor: Colors.grey[100],
         centerTitle: true,
         leading: InkWell(
             onTap: () {
@@ -221,334 +222,377 @@ class _AddressListState extends State<AddressList> {
                       EdgeInsets.symmetric(horizontal: (20 / 375.0) * 100.w),
                   child: ListView.builder(
                     itemCount: getAddrList.length,
-                    itemBuilder: (context, index) => Padding(
-                      padding: EdgeInsets.symmetric(vertical: 3),
-                      child: Container(
-                        padding: EdgeInsets.all(10.0),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      getAddrList[index].name.toString(),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(fontSize: 13.sp),
-                                    ),
-                                    /*  Text(
-                                      'Address#${index + 1}',
-                                      style: TextStyle(fontSize: 13.sp),
-                                    ), */
+                    itemBuilder: (context, index) =>
+                        AnimationConfiguration.staggeredList(
+                      position: index,
+                      duration: const Duration(milliseconds: 375),
+                      child: SlideAnimation(
+                        verticalOffset: 50.0,
+                        child: FadeInAnimation(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 3),
+                            child: Container(
+                              padding: EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            getAddrList[index].name.toString(),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(fontSize: 13.sp),
+                                          ),
+                                          /*  Text(
+                                            'Address#${index + 1}',
+                                            style: TextStyle(fontSize: 13.sp),
+                                          ), */
 
-                                    /*   Text(
-                                  useraddr[index].useraddress.toString(),
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.5),
-                                      fontSize: 11.sp),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ), */
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    /*   Text('Code' + ": ",
-                                    style: TextStyle(fontSize: 13.sp)), */
-                                    Container(
-                                      width: 55.w,
-                                      child: Text(
-                                        getAddrList[index]
-                                            .locationName
-                                            .toString(),
+                                          /*   Text(
+                                        useraddr[index].useraddress.toString(),
                                         style: TextStyle(
-                                            color:
-                                                Colors.black.withOpacity(0.5),
+                                            color: Colors.black.withOpacity(0.5),
+                                            fontSize: 11.sp),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ), */
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          /*   Text('Code' + ": ",
+                                          style: TextStyle(fontSize: 13.sp)), */
+                                          Container(
+                                            width: 55.w,
+                                            child: Text(
+                                              getAddrList[index]
+                                                  .locationName
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  color: Colors.black
+                                                      .withOpacity(0.5),
+                                                  fontSize: 11.sp),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      /* Row(
+                                    children: [
+                                      Text(
+                                        'City' + ": ",
+                                        style: TextStyle(fontSize: 13.sp),
+                                      ),
+                                      Text(
+                                        useraddr[index].city.toString(),
+                                        style: TextStyle(
+                                            color: Colors.black.withOpacity(0.5),
                                             fontSize: 11.sp),
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                /* Row(
-                              children: [
-                                Text(
-                                  'City' + ": ",
-                                  style: TextStyle(fontSize: 13.sp),
-                                ),
-                                Text(
-                                  useraddr[index].city.toString(),
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.5),
-                                      fontSize: 11.sp),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ), */
-                                /*   Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  'Country' + ": ",
-                                  style: TextStyle(fontSize: 13.sp),
-                                ),
-                                Text.rich(
-                                  TextSpan(
-                                    text: useraddr[index].country,
-                                    style: TextStyle(
-                                        color: Colors.black.withOpacity(0.5),
-                                        fontSize: 11.sp),
+                                    ],
+                                  ), */
+                                      /*   Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      /*   TextSpan(
-                                    text: " x2",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1), */
+                                      Text(
+                                        'Country' + ": ",
+                                        style: TextStyle(fontSize: 13.sp),
+                                      ),
+                                      Text.rich(
+                                        TextSpan(
+                                          text: useraddr[index].country,
+                                          style: TextStyle(
+                                              color: Colors.black.withOpacity(0.5),
+                                              fontSize: 11.sp),
+                                          children: [
+                                            /*   TextSpan(
+                                          text: " x2",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1), */
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 23.w,
+                                      ),
+                                    ],
+                                  ) */
                                     ],
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 23.w,
-                                ),
-                              ],
-                            ) */
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                getAddrList[index].lat == profileInfo.lat &&
-                                        getAddrList[index].long ==
-                                            profileInfo.lng
-                                    ? Container(
-                                        width: 24.w,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            color: Colors.green,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Text(
-                                          'Primary Address',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 10),
-                                        ))
-                                    : SizedBox(
-                                        height: 10,
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      getAddrList[index].lat ==
+                                                  profileInfo.lat &&
+                                              getAddrList[index].long ==
+                                                  profileInfo.lng
+                                          ? Container(
+                                              width: 24.w,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.green,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: Text(
+                                                'Primary Address',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 10),
+                                              ))
+                                          : SizedBox(
+                                              height: 10,
+                                            ),
+                                      SizedBox(
+                                        height: 2.h,
                                       ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                Row(
-                                  children: [
-                                    InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => PlacePicker(
-                                                apiKey:
-                                                    "AIzaSyBDOMNCVC2eacCxKYuRxIwCz4w-QjV_l5Y",
-                                                onPlacePicked: (result) {
-                                                  print(result
-                                                      .geometry!.location);
-                                                  final tagName = result
-                                                      .formattedAddress
-                                                      .toString();
-                                                  print(
-                                                      result.formattedAddress);
-                                                  final split =
-                                                      tagName.split(',');
-                                                  final Map<int, String>
-                                                      values = {
-                                                    for (int i = 0;
-                                                        i < split.length;
-                                                        i++)
-                                                      i: split[i]
-                                                  };
-                                                  final value1 = values[0];
-                                                  final value2 = values[1];
-                                                  final value3 = values[2];
-                                                  final value4 = values[3];
-                                                  setState(() async {
-                                                    if (getAddrList[index]
-                                                                .lat ==
-                                                            profileInfo.lat &&
-                                                        getAddrList[index]
-                                                                .long ==
-                                                            profileInfo.lng) {
-                                                      Map<String, dynamic>
-                                                          address = {
-                                                        'lat': result.geometry!
-                                                            .location.lat
-                                                            .toString(),
-                                                        'long': result.geometry!
-                                                            .location.lng
-                                                            .toString(),
-                                                      };
-                                                      print(address);
-                                                      await DataApiService
-                                                          .instance
-                                                          .updateAddress(
-                                                              address, context);
-                                                    }
-                                                    Map<String, dynamic>
-                                                        update_address = {
-                                                      'id': getAddrList[index]
-                                                          .id
-                                                          .toString(),
-                                                      'location_name': result
-                                                          .formattedAddress
-                                                          .toString(),
-                                                      'lat': result.geometry!
-                                                          .location.lat
-                                                          .toString(),
-                                                      'long': result.geometry!
-                                                          .location.lng
-                                                          .toString(),
-                                                      'name': getAddrList[index]
-                                                          .name
-                                                          .toString()
-                                                    };
-                                                    print(update_address);
+                                      Row(
+                                        children: [
+                                          InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PlacePicker(
+                                                      apiKey:
+                                                          "AIzaSyBDOMNCVC2eacCxKYuRxIwCz4w-QjV_l5Y",
+                                                      onPlacePicked: (result) {
+                                                        print(result.geometry!
+                                                            .location);
+                                                        final tagName = result
+                                                            .formattedAddress
+                                                            .toString();
+                                                        print(result
+                                                            .formattedAddress);
+                                                        final split =
+                                                            tagName.split(',');
+                                                        final Map<int, String>
+                                                            values = {
+                                                          for (int i = 0;
+                                                              i < split.length;
+                                                              i++)
+                                                            i: split[i]
+                                                        };
+                                                        final value1 =
+                                                            values[0];
+                                                        final value2 =
+                                                            values[1];
+                                                        final value3 =
+                                                            values[2];
+                                                        final value4 =
+                                                            values[3];
+                                                        setState(() async {
+                                                          if (getAddrList[index]
+                                                                      .lat ==
+                                                                  profileInfo
+                                                                      .lat &&
+                                                              getAddrList[index]
+                                                                      .long ==
+                                                                  profileInfo
+                                                                      .lng) {
+                                                            Map<String, dynamic>
+                                                                address = {
+                                                              'lat': result
+                                                                  .geometry!
+                                                                  .location
+                                                                  .lat
+                                                                  .toString(),
+                                                              'long': result
+                                                                  .geometry!
+                                                                  .location
+                                                                  .lng
+                                                                  .toString(),
+                                                            };
+                                                            print(address);
+                                                            await DataApiService
+                                                                .instance
+                                                                .updateAddress(
+                                                                    address,
+                                                                    context);
+                                                          }
+                                                          Map<String, dynamic>
+                                                              update_address = {
+                                                            'id': getAddrList[
+                                                                    index]
+                                                                .id
+                                                                .toString(),
+                                                            'location_name': result
+                                                                .formattedAddress
+                                                                .toString(),
+                                                            'lat': result
+                                                                .geometry!
+                                                                .location
+                                                                .lat
+                                                                .toString(),
+                                                            'long': result
+                                                                .geometry!
+                                                                .location
+                                                                .lng
+                                                                .toString(),
+                                                            'name': getAddrList[
+                                                                    index]
+                                                                .name
+                                                                .toString()
+                                                          };
+                                                          print(update_address);
+                                                          await DataApiService
+                                                              .instance
+                                                              .updateUserAddress(
+                                                                  update_address,
+                                                                  context);
+
+                                                          useraddr.clear();
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                          await callApi();
+
+                                                          /*  useraddr.insert(
+                                      0,
+                                      Address(
+                                          useraddress: value1,
+                                          hashcode: value2,
+                                          city: value3,
+                                          country: value4)); */
+                                                          /*   if(value1!=null) {
+                                                        address.text = value1.toString();
+                                                      }
+                                                      if(value2!=null) {
+                                                        houseNo.text = value2.toString();
+                                                      }
+                                                      if(value3!=null) {
+                                                        city.text = value3.toString();
+                                                      } */
+                                                        });
+                                                      },
+                                                      useCurrentLocation: false,
+                                                      initialPosition: LatLng(
+                                                          getAddrList[index]
+                                                              .lat,
+                                                          getAddrList[index]
+                                                              .long),
+                                                    ),
+                                                  ),
+                                                );
+                                                // Get.to(EditAddress(index));
+                                              },
+                                              child: Icon(
+                                                Icons.edit,
+                                                color: Colors.blue,
+                                              )),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          InkWell(
+                                              onTap: () async {
+                                                // Get.to(EditAddress(index));
+                                                print('delete');
+                                                Map<String, dynamic>
+                                                    deleteUser = {
+                                                  'id': getAddrList[index]
+                                                      .id
+                                                      .toString(),
+                                                };
+                                                setState(() {
+                                                  pageLoader = true;
+                                                });
+                                                bool status =
                                                     await DataApiService
                                                         .instance
-                                                        .updateUserAddress(
-                                                            update_address,
+                                                        .deleteUserAddress(
+                                                            deleteUser,
                                                             context);
-
-                                                    useraddr.clear();
-                                                    Navigator.of(context).pop();
-                                                    await callApi();
-
-                                                    /*  useraddr.insert(
-                                0,
-                                Address(
-                                    useraddress: value1,
-                                    hashcode: value2,
-                                    city: value3,
-                                    country: value4)); */
-                                                    /*   if(value1!=null) {
-                                                  address.text = value1.toString();
+                                                if (status) {
+                                                  getAddrList.removeAt(index);
+                                                } else {
+                                                  GlobalSnackBar.show(context,
+                                                      'Something bad happened!');
                                                 }
-                                                if(value2!=null) {
-                                                  houseNo.text = value2.toString();
-                                                }
-                                                if(value3!=null) {
-                                                  city.text = value3.toString();
-                                                } */
-                                                  });
-                                                },
-                                                useCurrentLocation: false,
-                                                initialPosition: LatLng(
-                                                    getAddrList[index].lat,
-                                                    getAddrList[index].long),
+                                                setState(() {
+                                                  pageLoader = false;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.delete,
+                                                color: Colors.red,
+                                              )),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 2.h,
+                                      ),
+                                      getAddrList[index].lat !=
+                                                  profileInfo.lat &&
+                                              getAddrList[index].long !=
+                                                  profileInfo.lng
+                                          ? InkWell(
+                                              onTap: () async {
+                                                print('click');
+                                                setState(() {
+                                                  pageLoader = true;
+                                                });
+                                                Map<String, dynamic>
+                                                    update_address = {
+                                                  'lat': getAddrList[index]
+                                                      .lat
+                                                      .toString(),
+                                                  'long': getAddrList[index]
+                                                      .long
+                                                      .toString(),
+                                                };
+                                                print(update_address);
+                                                await DataApiService.instance
+                                                    .updateAddress(
+                                                        update_address,
+                                                        context);
+                                                await DataApiService.instance
+                                                    .getprofileinfo(context);
+                                                setState(() {
+                                                  pageLoader = false;
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 24.w,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    color: secondaryColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                child: Text(
+                                                  'Change Primary',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 10),
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                          // Get.to(EditAddress(index));
-                                        },
-                                        child: Icon(
-                                          Icons.edit,
-                                          color: Colors.blue,
-                                        )),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    InkWell(
-                                        onTap: () async {
-                                          // Get.to(EditAddress(index));
-                                          print('delete');
-                                          Map<String, dynamic> deleteUser = {
-                                            'id': getAddrList[index]
-                                                .id
-                                                .toString(),
-                                          };
-                                          setState(() {
-                                            pageLoader = true;
-                                          });
-                                          bool status = await DataApiService
-                                              .instance
-                                              .deleteUserAddress(
-                                                  deleteUser, context);
-                                          if (status) {
-                                            getAddrList.removeAt(index);
-                                          } else {
-                                            GlobalSnackBar.show(context,
-                                                'Something bad happened!');
-                                          }
-                                          setState(() {
-                                            pageLoader = false;
-                                          });
-                                        },
-                                        child: Icon(
-                                          Icons.delete,
-                                          color: Colors.red,
-                                        )),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                getAddrList[index].lat != profileInfo.lat &&
-                                        getAddrList[index].long !=
-                                            profileInfo.lng
-                                    ? InkWell(
-                                        onTap: () async {
-                                          print('click');
-                                          setState(() {
-                                            pageLoader = true;
-                                          });
-                                          Map<String, dynamic> update_address =
-                                              {
-                                            'lat': getAddrList[index]
-                                                .lat
-                                                .toString(),
-                                            'long': getAddrList[index]
-                                                .long
-                                                .toString(),
-                                          };
-                                          print(update_address);
-                                          await DataApiService.instance
-                                              .updateAddress(
-                                                  update_address, context);
-                                          await DataApiService.instance
-                                              .getprofileinfo(context);
-                                          setState(() {
-                                            pageLoader = false;
-                                          });
-                                        },
-                                        child: Container(
-                                          width: 24.w,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                              color: secondaryColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Text(
-                                            'Change Primary',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 10),
-                                          ),
-                                        ),
-                                      )
-                                    : SizedBox()
-                              ],
+                                            )
+                                          : SizedBox()
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),

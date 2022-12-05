@@ -8,6 +8,7 @@ import 'package:co_op/search/clock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
@@ -236,226 +237,224 @@ class _HomePageState extends State<HomePage> {
                             scrollDirection: Axis.horizontal,
                             itemCount: dashbarodUsersList.length,
                             itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 2.0, vertical: 8.0),
-                                child: InkWell(
-                                  onTap: () {
-                                    Get.to(() => WorkoutDetail(
-                                        dashbarodUsersList[index]
-                                            .id
-                                            .toString()));
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8.0, right: 8.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Stack(
-                                            alignment: Alignment.bottomCenter,
+                              return AnimationConfiguration.staggeredList(
+                                position: index,
+                                duration: const Duration(milliseconds: 375),
+                                child: SlideAnimation(
+                                  horizontalOffset: 50.0,
+                                  child: FadeInAnimation(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 2.0, vertical: 8.0),
+                                      child: InkWell(
+                                        onTap: () {
+                                          Get.to(() => WorkoutDetail(
+                                              dashbarodUsersList[index]
+                                                  .id
+                                                  .toString()));
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0, right: 8.0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                child: CachedNetworkImage(
-                                                  height: 34.h,
-                                                  width: 70.w,
-                                                  fit: BoxFit.fill,
-                                                  imageUrl:
-                                                      'https://becktesting.site/workout-bud/public/storage/user/' +
-                                                          dashbarodUsersList[
-                                                                  index]
-                                                              .image
-                                                              .toString(),
-                                                  placeholder: (context, url) =>
-                                                      Image.asset(
-                                                    images[0],
-                                                    fit: BoxFit.cover,
-                                                    height: 34.h,
-                                                    width: 70.w,
-                                                  ),
-                                                  errorWidget: (context, url,
-                                                          error) => /* Icon(Icons
-                              .person) */
-                                                      Image.asset(
-                                                    images[0],
-                                                    fit: BoxFit.cover,
-                                                    height: 34.h,
-                                                    width: 70.w,
-                                                  ),
-                                                ),
-                                              ),
-                                              Opacity(
-                                                opacity: 0.4,
-                                                child: Container(
-                                                  height: 34.h,
-                                                  width: 70.w,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.black,
+                                              Stack(
+                                                  alignment:
+                                                      Alignment.bottomCenter,
+                                                  children: [
+                                                    ClipRRect(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              20)),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 8.0),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      dashbarodUsersList[index]
-                                                          .userName,
-                                                      style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 22),
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Row(
-                                                          children: [
-                                                            AbsorbPointer(
-                                                              absorbing: true,
-                                                              child: RatingBar(
-                                                                  tapOnlyMode:
-                                                                      false,
-                                                                  updateOnDrag:
-                                                                      false,
-                                                                  initialRating: dashbarodUsersList[index].avg ==
-                                                                          null
-                                                                      ? 0.0
-                                                                      : dashbarodUsersList[
-                                                                              index]
-                                                                          .avg
-                                                                          .toDouble()
-                                                                  /*  ratings[
-                                                                          index] */
-                                                                  ,
-                                                                  direction: Axis
-                                                                      .horizontal,
-                                                                  allowHalfRating:
-                                                                      true,
-                                                                  itemCount: 5,
-                                                                  itemSize: 24,
-                                                                  ratingWidget:
-                                                                      RatingWidget(
-                                                                          full: const Icon(Icons.star,
-                                                                              color:
-                                                                                  secondaryColor),
-                                                                          half:
-                                                                              const Icon(
-                                                                            Icons.star_half,
-                                                                            color:
-                                                                                secondaryColor,
-                                                                          ),
-                                                                          empty:
-                                                                              const Icon(
-                                                                            Icons.star_outline,
-                                                                            color:
-                                                                                secondaryColor,
-                                                                          )),
-                                                                  onRatingUpdate:
-                                                                      (value) {}),
-                                                            ),
-                                                            Container(
-                                                              width: 30,
-                                                              height: 30,
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: Text(
-                                                                dashbarodUsersList[index]
-                                                                            .avg ==
-                                                                        null
-                                                                    ? '0.0'
-                                                                    : dashbarodUsersList[
-                                                                            index]
-                                                                        .avg
-                                                                        .toString()
-                                                                /*   ratings[index]
-                                                                    .toString() */
-                                                                ,
-                                                                style: const TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                        dashbarodUsersList[
+                                                              20),
+                                                      child: CachedNetworkImage(
+                                                        height: 34.h,
+                                                        width: 70.w,
+                                                        fit: BoxFit.fill,
+                                                        imageUrl:
+                                                            'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                                dashbarodUsersList[
                                                                         index]
-                                                                    .bookmark ==
-                                                                0
-                                                            ? InkWell(
-                                                                onTap: () {
-                                                                  setState(() {
-                                                                    DataApiService
-                                                                        .instance
-                                                                        .addBookmark(
-                                                                            dashbarodUsersList[index].id.toString(),
-                                                                            context);
-                                                                    dashbarodUsersList[
-                                                                            index]
-                                                                        .bookmark = 1;
-                                                                  });
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  height: 20,
-                                                                  child:
-                                                                      const Icon(
-                                                                    Icons
-                                                                        .bookmark_border,
-                                                                    color: Colors
-                                                                        .white,
+                                                                    .image
+                                                                    .toString(),
+                                                        placeholder:
+                                                            (context, url) =>
+                                                                Image.asset(
+                                                          images[0],
+                                                          fit: BoxFit.cover,
+                                                          height: 34.h,
+                                                          width: 70.w,
+                                                        ),
+                                                        errorWidget: (context,
+                                                                url,
+                                                                error) => /* Icon(Icons
+                                    .person) */
+                                                            Image.asset(
+                                                          images[0],
+                                                          fit: BoxFit.cover,
+                                                          height: 34.h,
+                                                          width: 70.w,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Opacity(
+                                                      opacity: 0.4,
+                                                      child: Container(
+                                                        height: 34.h,
+                                                        width: 70.w,
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.black,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20)),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 8.0),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            dashbarodUsersList[
+                                                                    index]
+                                                                .userName,
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 22),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  AbsorbPointer(
+                                                                    absorbing:
+                                                                        true,
+                                                                    child: RatingBar(
+                                                                        tapOnlyMode: false,
+                                                                        updateOnDrag: false,
+                                                                        initialRating: dashbarodUsersList[index].avg == null ? 0.0 : dashbarodUsersList[index].avg.toDouble()
+                                                                        /*  ratings[
+                                                                                index] */
+                                                                        ,
+                                                                        direction: Axis.horizontal,
+                                                                        allowHalfRating: true,
+                                                                        itemCount: 5,
+                                                                        itemSize: 24,
+                                                                        ratingWidget: RatingWidget(
+                                                                            full: const Icon(Icons.star, color: secondaryColor),
+                                                                            half: const Icon(
+                                                                              Icons.star_half,
+                                                                              color: secondaryColor,
+                                                                            ),
+                                                                            empty: const Icon(
+                                                                              Icons.star_outline,
+                                                                              color: secondaryColor,
+                                                                            )),
+                                                                        onRatingUpdate: (value) {}),
                                                                   ),
-                                                                ),
-                                                              )
-                                                            : InkWell(
-                                                                onTap: () {
-                                                                  setState(() {
-                                                                    DataApiService
-                                                                        .instance
-                                                                        .deleteBookmark(
-                                                                            dashbarodUsersList[index].id.toString(),
-                                                                            context);
-                                                                    dashbarodUsersList[
-                                                                            index]
-                                                                        .bookmark = 0;
-                                                                  });
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  child:
-                                                                      const Icon(
-                                                                    Icons
-                                                                        .bookmark,
-                                                                    color:
-                                                                        secondaryColor,
-                                                                  ),
-                                                                ),
-                                                              )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ]),
-                                        // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
-                                      ],
+                                                                  Container(
+                                                                    width: 30,
+                                                                    height: 30,
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    child: Text(
+                                                                      dashbarodUsersList[index].avg ==
+                                                                              null
+                                                                          ? '0.0'
+                                                                          : dashbarodUsersList[index]
+                                                                              .avg
+                                                                              .toString()
+                                                                      /*   ratings[index]
+                                                                          .toString() */
+                                                                      ,
+                                                                      style: const TextStyle(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              dashbarodUsersList[
+                                                                              index]
+                                                                          .bookmark ==
+                                                                      0
+                                                                  ? InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        setState(
+                                                                            () {
+                                                                          DataApiService.instance.addBookmark(
+                                                                              dashbarodUsersList[index].id.toString(),
+                                                                              context);
+                                                                          dashbarodUsersList[index].bookmark =
+                                                                              1;
+                                                                        });
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        height:
+                                                                            20,
+                                                                        child:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .bookmark_border,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  : InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        setState(
+                                                                            () {
+                                                                          DataApiService.instance.deleteBookmark(
+                                                                              dashbarodUsersList[index].id.toString(),
+                                                                              context);
+                                                                          dashbarodUsersList[index].bookmark =
+                                                                              0;
+                                                                        });
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        child:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .bookmark,
+                                                                          color:
+                                                                              secondaryColor,
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ]),
+                                              // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -628,217 +627,216 @@ class _HomePageState extends State<HomePage> {
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 itemBuilder: (BuildContext context, int index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16.0, vertical: 8.0),
-                                    child: InkWell(
-                                      onTap: () {
-                                        Get.to(() => WorkoutDetail(
-                                            activityUsers[index]
-                                                .id
-                                                .toString()));
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 8.0, right: 8.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Stack(
-                                                alignment:
-                                                    Alignment.bottomCenter,
+                                  return AnimationConfiguration.staggeredList(
+                                    position: index,
+                                    duration: const Duration(milliseconds: 375),
+                                    child: SlideAnimation(
+                                      verticalOffset: 50.0,
+                                      child: FadeInAnimation(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0, vertical: 8.0),
+                                          child: InkWell(
+                                            onTap: () {
+                                              Get.to(() => WorkoutDetail(
+                                                  activityUsers[index]
+                                                      .id
+                                                      .toString()));
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8.0, right: 8.0),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    child: CachedNetworkImage(
-                                                      height: 12.h,
-                                                      width: double.infinity,
-                                                      fit: BoxFit.cover,
-                                                      imageUrl:
-                                                          'https://becktesting.site/workout-bud/public/storage/user/' +
-                                                              activityUsers[
-                                                                      index]
-                                                                  .image
-                                                                  .toString(),
-                                                      placeholder:
-                                                          (context, url) =>
-                                                              Image.asset(
-                                                        images[0],
-                                                        fit: BoxFit.cover,
-                                                        height: 12.h,
-                                                        width: double.infinity,
-                                                      ),
-                                                      errorWidget: (context,
-                                                              url,
-                                                              error) => /* Icon(Icons
-                              .person) */
-                                                          Image.asset(
-                                                        images[0],
-                                                        fit: BoxFit.cover,
-                                                        height: 12.h,
-                                                        width: double.infinity,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Opacity(
-                                                    opacity: 0.4,
-                                                    child: Container(
-                                                      height: 12.h,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.black,
+                                                  Stack(
+                                                      alignment: Alignment
+                                                          .bottomCenter,
+                                                      children: [
+                                                        ClipRRect(
                                                           borderRadius:
                                                               BorderRadius
-                                                                  .circular(
-                                                                      20)),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 18.0,
-                                                        vertical: 8),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          activityUsers[index]
-                                                              .userName,
-                                                          style:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 22),
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Row(
-                                                              children: [
-                                                                Row(
-                                                                  children: [
-                                                                    AbsorbPointer(
-                                                                      absorbing:
-                                                                          true,
-                                                                      child: RatingBar(
-                                                                          tapOnlyMode: false,
-                                                                          updateOnDrag: false,
-                                                                          initialRating: activityUsers[index].avg == null ? 0.0 : activityUsers[index].avg.toDouble()
-
-                                                                          /*   ratings[
-                                                                                  index] */
-                                                                          ,
-                                                                          direction: Axis.horizontal,
-                                                                          allowHalfRating: true,
-                                                                          itemCount: 5,
-                                                                          itemSize: 24,
-                                                                          ratingWidget: RatingWidget(
-                                                                              full: const Icon(Icons.star, color: secondaryColor),
-                                                                              half: const Icon(
-                                                                                Icons.star_half,
-                                                                                color: secondaryColor,
-                                                                              ),
-                                                                              empty: const Icon(
-                                                                                Icons.star_outline,
-                                                                                color: secondaryColor,
-                                                                              )),
-                                                                          onRatingUpdate: (value) {}),
-                                                                    ),
-                                                                    Container(
-                                                                      width: 30,
-                                                                      height:
-                                                                          30,
-                                                                      alignment:
-                                                                          Alignment
-                                                                              .center,
-                                                                      child:
-                                                                          Text(
-                                                                        activityUsers[index].avg ==
-                                                                                null
-                                                                            ? '0.0'
-                                                                            : activityUsers[index].avg.toString()
-                                                                        /*  ratings[index]
-                                                                            .toString() */
-                                                                        ,
-                                                                        style: const TextStyle(
-                                                                            color: Colors
-                                                                                .white,
-                                                                            fontSize:
-                                                                                14,
-                                                                            fontWeight:
-                                                                                FontWeight.bold),
-                                                                      ),
-                                                                    )
-                                                                  ],
-                                                                )
-                                                              ],
+                                                                  .circular(20),
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            height: 12.h,
+                                                            width:
+                                                                double.infinity,
+                                                            fit: BoxFit.cover,
+                                                            imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                                activityUsers[
+                                                                        index]
+                                                                    .image
+                                                                    .toString(),
+                                                            placeholder:
+                                                                (context,
+                                                                        url) =>
+                                                                    Image.asset(
+                                                              images[0],
+                                                              fit: BoxFit.cover,
+                                                              height: 12.h,
+                                                              width: double
+                                                                  .infinity,
                                                             ),
-                                                            activityUsers[index]
-                                                                        .bookmark ==
-                                                                    0
-                                                                ? InkWell(
-                                                                    onTap: () {
-                                                                      setState(
-                                                                          () {
-                                                                        DataApiService.instance.addBookmark(
-                                                                            activityUsers[index].id.toString(),
-                                                                            context);
-                                                                        activityUsers[index]
-                                                                            .bookmark = 1;
-                                                                      });
-                                                                    },
-                                                                    child:
-                                                                        Container(
-                                                                      height:
-                                                                          20,
-                                                                      child:
-                                                                          const Icon(
-                                                                        Icons
-                                                                            .bookmark_border,
-                                                                        color: Colors
-                                                                            .white,
-                                                                      ),
-                                                                    ),
-                                                                  )
-                                                                : InkWell(
-                                                                    onTap: () {
-                                                                      setState(
-                                                                          () {
-                                                                        DataApiService.instance.deleteBookmark(
-                                                                            activityUsers[index].id.toString(),
-                                                                            context);
-                                                                        activityUsers[index]
-                                                                            .bookmark = 0;
-                                                                      });
-                                                                    },
-                                                                    child:
-                                                                        Container(
-                                                                      child:
-                                                                          const Icon(
-                                                                        Icons
-                                                                            .bookmark,
-                                                                        color:
-                                                                            secondaryColor,
-                                                                      ),
-                                                                    ),
-                                                                  )
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ]),
-                                            // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
-                                          ],
+                                                            errorWidget: (context,
+                                                                    url,
+                                                                    error) => /* Icon(Icons
+                                                                    .person) */
+                                                                Image.asset(
+                                                              images[0],
+                                                              fit: BoxFit.cover,
+                                                              height: 12.h,
+                                                              width: double
+                                                                  .infinity,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Opacity(
+                                                          opacity: 0.4,
+                                                          child: Container(
+                                                            height: 12.h,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .black,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20)),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      18.0,
+                                                                  vertical: 8),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                activityUsers[
+                                                                        index]
+                                                                    .userName,
+                                                                style: const TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        22),
+                                                              ),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Row(
+                                                                    children: [
+                                                                      Row(
+                                                                        children: [
+                                                                          AbsorbPointer(
+                                                                            absorbing:
+                                                                                true,
+                                                                            child: RatingBar(
+                                                                                tapOnlyMode: false,
+                                                                                updateOnDrag: false,
+                                                                                initialRating: activityUsers[index].avg == null ? 0.0 : activityUsers[index].avg.toDouble()
+
+                                                                                /*   ratings[
+                                                                                        index] */
+                                                                                ,
+                                                                                direction: Axis.horizontal,
+                                                                                allowHalfRating: true,
+                                                                                itemCount: 5,
+                                                                                itemSize: 24,
+                                                                                ratingWidget: RatingWidget(
+                                                                                    full: const Icon(Icons.star, color: secondaryColor),
+                                                                                    half: const Icon(
+                                                                                      Icons.star_half,
+                                                                                      color: secondaryColor,
+                                                                                    ),
+                                                                                    empty: const Icon(
+                                                                                      Icons.star_outline,
+                                                                                      color: secondaryColor,
+                                                                                    )),
+                                                                                onRatingUpdate: (value) {}),
+                                                                          ),
+                                                                          Container(
+                                                                            width:
+                                                                                30,
+                                                                            height:
+                                                                                30,
+                                                                            alignment:
+                                                                                Alignment.center,
+                                                                            child:
+                                                                                Text(
+                                                                              activityUsers[index].avg == null ? '0.0' : activityUsers[index].avg.toString()
+                                                                              /*  ratings[index]
+                                                                                  .toString() */
+                                                                              ,
+                                                                              style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                          )
+                                                                        ],
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                  activityUsers[index]
+                                                                              .bookmark ==
+                                                                          0
+                                                                      ? InkWell(
+                                                                          onTap:
+                                                                              () {
+                                                                            setState(() {
+                                                                              DataApiService.instance.addBookmark(activityUsers[index].id.toString(), context);
+                                                                              activityUsers[index].bookmark = 1;
+                                                                            });
+                                                                          },
+                                                                          child:
+                                                                              Container(
+                                                                            height:
+                                                                                20,
+                                                                            child:
+                                                                                const Icon(
+                                                                              Icons.bookmark_border,
+                                                                              color: Colors.white,
+                                                                            ),
+                                                                          ),
+                                                                        )
+                                                                      : InkWell(
+                                                                          onTap:
+                                                                              () {
+                                                                            setState(() {
+                                                                              DataApiService.instance.deleteBookmark(activityUsers[index].id.toString(), context);
+                                                                              activityUsers[index].bookmark = 0;
+                                                                            });
+                                                                          },
+                                                                          child:
+                                                                              Container(
+                                                                            child:
+                                                                                const Icon(
+                                                                              Icons.bookmark,
+                                                                              color: secondaryColor,
+                                                                            ),
+                                                                          ),
+                                                                        )
+                                                                ],
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ]),
+                                                  // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),

@@ -4,6 +4,7 @@ import 'package:co_op/api/global_variables.dart';
 import 'package:co_op/constants/constants.dart';
 import 'package:co_op/screens/workout/workout_detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -68,105 +69,123 @@ class _NotificationPageState extends State<NotificationPage> {
                     itemCount: notificationList.length,
                     padding: EdgeInsets.only(bottom: 80),
                     itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 8.0),
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {});
-                            if (notificationList[index].title.toUpperCase() ==
-                                'YOU HAVE A NEW NOTIFICATION') {
-                              Get.to(() => WorkoutDetail(notificationList[index]
-                                  .requestedById
-                                  .toString()));
-                            } else if (notificationList[index]
-                                    .title
-                                    .toUpperCase() ==
-                                ' ACCEPT YOUR REQUEST ') {
-                              Get.to(() => WorkoutDetail(notificationList[index]
-                                  .requestedById
-                                  .toString()));
-                            }
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2,
-                                      blurRadius: 3,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        duration: const Duration(milliseconds: 375),
+                        child: SlideAnimation(
+                          verticalOffset: 50.0,
+                          child: FadeInAnimation(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 8.0),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {});
+                                  if (notificationList[index]
+                                          .title
+                                          .toUpperCase() ==
+                                      'YOU HAVE A NEW NOTIFICATION') {
+                                    Get.to(() => WorkoutDetail(
+                                        notificationList[index]
+                                            .requestedById
+                                            .toString()));
+                                  } else if (notificationList[index]
+                                          .title
+                                          .toUpperCase() ==
+                                      ' ACCEPT YOUR REQUEST ') {
+                                    Get.to(() => WorkoutDetail(
+                                        notificationList[index]
+                                            .requestedById
+                                            .toString()));
+                                  }
+                                },
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(20),
-                                          topLeft: Radius.circular(20)),
-                                      child: CachedNetworkImage(
-                                        height: 12.h,
-                                        width: 12.h,
-                                        fit: BoxFit.fill,
-                                        imageUrl:
-                                            'https://becktesting.site/workout-bud/public/storage/user/' +
-                                                notificationList[index]
-                                                    .requestedByUser[0]
-                                                    .image
-                                                    .toString(),
-                                        placeholder: (context, url) =>
-                                            Image.asset(
-                                          'assets/images/stretching.jpg',
-                                          fit: BoxFit.cover,
-                                          height: 12.h,
-                                          width: 12.h,
-                                        ),
-                                        errorWidget: (context, url,
-                                                error) => /* Icon(Icons
-                              .person) */
-                                            Image.asset(
-                                          'assets/images/stretching.jpg',
-                                          fit: BoxFit.cover,
-                                          height: 7.h,
-                                          width: 7.h,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(notificationList[index].title,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText2),
-                                          SizedBox(
-                                            height: 5,
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.5),
+                                            spreadRadius: 2,
+                                            blurRadius: 3,
+                                            offset: Offset(0,
+                                                3), // changes position of shadow
                                           ),
-                                          SizedBox(
-                                              width: 60.w,
-                                              child: Text(
-                                                  notificationList[index]
-                                                      .description,
-                                                  style: TextStyle(
-                                                      color: Colors.grey)))
+                                        ],
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(20),
+                                                topLeft: Radius.circular(20)),
+                                            child: CachedNetworkImage(
+                                              height: 12.h,
+                                              width: 12.h,
+                                              fit: BoxFit.fill,
+                                              imageUrl:
+                                                  'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                      notificationList[index]
+                                                          .requestedByUser[0]
+                                                          .image
+                                                          .toString(),
+                                              placeholder: (context, url) =>
+                                                  Image.asset(
+                                                'assets/images/stretching.jpg',
+                                                fit: BoxFit.cover,
+                                                height: 12.h,
+                                                width: 12.h,
+                                              ),
+                                              errorWidget: (context, url,
+                                                      error) => /* Icon(Icons
+                                    .person) */
+                                                  Image.asset(
+                                                'assets/images/stretching.jpg',
+                                                fit: BoxFit.cover,
+                                                height: 7.h,
+                                                width: 7.h,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                    notificationList[index]
+                                                        .title,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText2),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                SizedBox(
+                                                    width: 60.w,
+                                                    child: Text(
+                                                        notificationList[index]
+                                                            .description,
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.grey)))
+                                              ],
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
+                                    // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
                                   ],
                                 ),
                               ),
-                              // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
-                            ],
+                            ),
                           ),
                         ),
                       );
