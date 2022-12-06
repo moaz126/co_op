@@ -155,7 +155,7 @@ class _AddressListState extends State<AddressList> {
                         ),
                       );
                     } else {
-                      GlobalSnackBar.show(context, 'Please add address name');
+                      GlobalToast.show( 'Please add address name');
                     }
                   });
                 },
@@ -524,7 +524,7 @@ class _AddressListState extends State<AddressList> {
                                                 if (status) {
                                                   getAddrList.removeAt(index);
                                                 } else {
-                                                  GlobalSnackBar.show(context,
+                                                  GlobalToast.show(
                                                       'Something bad happened!');
                                                 }
                                                 setState(() {

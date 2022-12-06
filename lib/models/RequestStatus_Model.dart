@@ -59,11 +59,11 @@ class Request {
   int id;
   int requestedById;
   int requestedToId;
-  int long;
-  int lat;
+  double long;
+  double lat;
   DateTime meetUpDate;
-  DateTime meetUpTime;
-  DateTime endTime;
+  String meetUpTime;
+  String endTime;
   int status;
   int view;
   DateTime createdAt;

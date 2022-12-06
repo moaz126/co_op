@@ -191,7 +191,7 @@ class _SetGoalState extends State<SetGoal> {
                                   direction: AxisDirection.left),
                             );
                           } else {
-                            GlobalSnackBar.show(context, 'Please select goal');
+                            GlobalToast.show('Please select goal');
                           }
                         },
                         child: Container(

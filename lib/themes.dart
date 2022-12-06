@@ -9,7 +9,6 @@ import 'package:sizer/sizer.dart';
 class Styles {
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
     return ThemeData(
-
       primaryColor: isDarkTheme ? Colors.black : Colors.white,
       scaffoldBackgroundColor: isDarkTheme ? Colors.black : Colors.white,
       backgroundColor: isDarkTheme ? Colors.black : const Color(0xffF1F5FB),
@@ -72,7 +71,6 @@ class Styles {
         subtitle2: GoogleFonts.openSans(
             fontSize: 10, fontWeight: FontWeight.w500, letterSpacing: 0.1),
         bodyText1: GoogleFonts.manrope(
-
             fontSize: 20, fontWeight: FontWeight.w400, letterSpacing: 0.5),
         bodyText2: GoogleFonts.manrope(
           fontSize: 14,

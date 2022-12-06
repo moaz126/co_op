@@ -110,6 +110,7 @@ class DataApiService {
         'Accept': 'application/json',
       };
       var request = http.MultipartRequest('POST', Uri.parse(url));
+      print('phone number');
       print(phonenumber);
       request.fields.addAll({
         'name': name,
@@ -127,7 +128,7 @@ class DataApiService {
         'password': password,
         if (fullname != '') 'full_name': fullname,
         if (nickname != '') 'nick_name': nickname,
-        if (phonenumber != '') 'phone_number': phonenumber,
+        if (phonenumber != 'null') 'phone_number': phonenumber,
         'lat': lat,
         'long': long,
         'sub_category_id': filterList.join(','),

@@ -278,8 +278,7 @@ class _ChooseInterestState extends State<ChooseInterest> {
                                     direction: AxisDirection.left),
                               );
                             } else {
-                              GlobalSnackBar.show(
-                                  context, 'Please select atleast one option');
+                              GlobalToast.show('Please select atleast one option');
                             }
                           } else {
                             setState(() {

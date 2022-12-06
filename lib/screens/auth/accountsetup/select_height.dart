@@ -53,10 +53,24 @@ class _SelectHeightState extends State<SelectHeight> {
               ],
             ),
             Expanded(
-              child: Column(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SelectHeightNumber(),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SelectHeightNumber(),
+                    ],
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SelectHeightdecimal(),
+                    ],
+                  ),
                 ],
               ),
             ),

@@ -52,7 +52,7 @@ class _SignUpState extends State<SignUp> {
                 setState(() {});
               },
               controller: AddressNameController,
-              decoration: InputDecoration(hintText: "Address Name"),
+              decoration: InputDecoration(hintText: "Enter address"),
             ),
             actions: <Widget>[
               TextButton(
@@ -121,7 +121,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       );
                     } else {
-                      GlobalSnackBar.show(context, 'Please add address name');
+                      GlobalToast.show('Please add address name');
                     }
                   });
                 },
@@ -388,7 +388,7 @@ class _SignUpState extends State<SignUp> {
                             child: Padding(
                               padding: EdgeInsets.only(left: 20),
                               child:
-                                  Text('Password should atleast 12 characters'),
+                                  Text('Password should atleast 8 characters'),
                             ),
                           ),
 
@@ -929,61 +929,66 @@ class _SignUpState extends State<SignUp> {
                                     PasswordController.text.isNotEmpty &&
                                     ConfirmPasswordController.text.isNotEmpty) {
                                   if (PasswordController.text ==
-                                          ConfirmPasswordController.text &&
-                                      PasswordController.text.length > 11) {
-                                    if (loader == false) {
-                                      bool status = false;
-                                      Map<String, dynamic> registerUser = {
-                                        'user_name': UserNameController.text,
-                                        /* 'nick_name': 'nifty', */
-                                        'gender': select_gender.toString(),
-                                        'age': select_age.toString(),
-                                        'weight': select_weight.toString(),
-                                        'height': select_height.toString(),
-                                        'goal': select_goal.join(','),
-                                        'activity_level': select_level,
-                                        /* 'phone_number': '03067100021', */
-                                        'email': EmailController.text,
-                                        'password': PasswordController.text,
-                                        'full_name': profileDetail.fullName,
-                                        'nick_name': profileDetail.nickName,
-                                        'phone_number':
-                                            profileDetail.phoneNumber,
-                                        'lat': latitude,
-                                        'long': longitude,
-                                        // 'sub_category_id':'1,2,3'
-                                      };
-                                      print(fullName);
-                                      setState(() {
-                                        loader = true;
-                                      });
-                                      status = await DataApiService.instance
-                                          .register(
-                                              UserNameController.text,
-                                              select_gender.toString(),
-                                              select_age.toString(),
-                                              select_weight.toString(),
-                                              select_height.toString(),
-                                              select_goal.join(','),
-                                              select_level.toString(),
-                                              EmailController.text,
-                                              PasswordController.text,
-                                              profileDetail.fullName.toString(),
-                                              profileDetail.nickName.toString(),
-                                              profileDetail.phoneNumber
-                                                  .toString(),
-                                              latitude,
-                                              longitude,
-                                              AddressController.text,
-                                              AddressNameController.text,
-                                              imagepath,
-                                              context);
+                                      ConfirmPasswordController.text) {
+                                    if (PasswordController.text.length > 7) {
+                                      if (loader == false) {
+                                        bool status = false;
+                                        Map<String, dynamic> registerUser = {
+                                          'user_name': UserNameController.text,
+                                          /* 'nick_name': 'nifty', */
+                                          'gender': select_gender.toString(),
+                                          'age': select_age.toString(),
+                                          'weight': select_weight.toString(),
+                                          'height': select_height.toString(),
+                                          'goal': select_goal.join(','),
+                                          'activity_level': select_level,
+                                          /* 'phone_number': '03067100021', */
+                                          'email': EmailController.text,
+                                          'password': PasswordController.text,
+                                          'full_name': profileDetail.fullName,
+                                          'nick_name': profileDetail.nickName,
+                                          'phone_number':
+                                              profileDetail.phoneNumber,
+                                          'lat': latitude,
+                                          'long': longitude,
+                                          // 'sub_category_id':'1,2,3'
+                                        };
+                                        print(fullName);
+                                        setState(() {
+                                          loader = true;
+                                        });
+                                        status = await DataApiService.instance
+                                            .register(
+                                                UserNameController.text,
+                                                select_gender.toString(),
+                                                select_age.toString(),
+                                                select_weight.toString(),
+                                                select_height.toString() +
+                                                    '.' +
+                                                    select_height_decimal
+                                                        .toString(),
+                                                select_goal.join(','),
+                                                select_level.toString(),
+                                                EmailController.text,
+                                                PasswordController.text,
+                                                profileDetail.fullName
+                                                    .toString(),
+                                                profileDetail.nickName
+                                                    .toString(),
+                                                profileDetail.phoneNumber
+                                                    .toString(),
+                                                latitude,
+                                                longitude,
+                                                AddressController.text,
+                                                AddressNameController.text,
+                                                imagepath,
+                                                context);
 
-                                      setState(() {
-                                        loader = false;
-                                      });
-                                      if (status) {
-                                        /*  customDialog(
+                                        setState(() {
+                                          loader = false;
+                                        });
+                                        if (status) {
+                                          /*  customDialog(
                                           context: context,
                                           title: 'Sign Up',
                                           middleText: SnackMessage.toString(),
@@ -993,37 +998,40 @@ class _SignUpState extends State<SignUp> {
                                               },
                                               child: Text("Login")),
                                           hasContent: true); */
-                                        AwesomeDialog(
-                                          context: context,
-                                          dialogType: DialogType.SUCCES,
-                                          animType: AnimType.BOTTOMSLIDE,
-                                          title: 'Sign Up',
-                                          desc: SnackMessage,
-                                          btnOkOnPress: () {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        SignIn()));
-                                          },
-                                        ).show();
-                                      } else {
-                                        AwesomeDialog(
-                                          context: context,
-                                          dialogType: DialogType.error,
-                                          animType: AnimType.bottomSlide,
-                                          title: 'Sign Up',
-                                          desc: SnackMessage,
-                                          btnOkOnPress: () {
-                                            UserNameController.clear();
-                                            EmailController.clear();
-                                            PasswordController.clear();
-                                          },
-                                        ).show();
+                                          AwesomeDialog(
+                                            context: context,
+                                            dialogType: DialogType.SUCCES,
+                                            animType: AnimType.BOTTOMSLIDE,
+                                            title: 'Sign Up',
+                                            desc: SnackMessage,
+                                            btnOkOnPress: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          SignIn()));
+                                            },
+                                          ).show();
+                                        } else {
+                                          AwesomeDialog(
+                                            context: context,
+                                            dialogType: DialogType.error,
+                                            animType: AnimType.bottomSlide,
+                                            title: 'Sign Up',
+                                            desc: SnackMessage,
+                                            btnOkOnPress: () {
+                                              UserNameController.clear();
+                                              EmailController.clear();
+                                              PasswordController.clear();
+                                            },
+                                          ).show();
+                                        }
                                       }
+                                    } else {
+                                      GlobalToast.show(
+                                          'Password should atleast 8 characters');
                                     }
                                   } else {
-                                    GlobalSnackBar.show(
-                                        context, 'Passwords do not match');
+                                    GlobalToast.show( 'Passwords do not match');
                                   }
                                 }
                               }

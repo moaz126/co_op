@@ -219,7 +219,7 @@ class _SelectGenderState extends State<SelectGender> {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const SelectAge()));
                       } else {
-                        GlobalSnackBar.show(context, 'Please select gender');
+                        GlobalToast.show('Please select gender');
                       }
                     }),
               ),

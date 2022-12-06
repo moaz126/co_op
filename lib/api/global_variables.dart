@@ -73,6 +73,7 @@ int select_gender = -1;
 int select_age = 10;
 int select_weight = 10;
 int select_height = 70;
+int select_height_decimal = 0;
 int otp = -1;
 List<String> select_goal = [];
 List<String> filterList = [];

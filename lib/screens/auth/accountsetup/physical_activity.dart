@@ -233,8 +233,7 @@ class _PhysicalActivityState extends State<PhysicalActivity> {
                                   direction: AxisDirection.left),
                             );
                           } else {
-                            GlobalSnackBar.show(
-                                context, 'Please select acitivity level');
+                            GlobalToast.show( 'Please select acitivity level');
                           }
                         },
                         child: Container(

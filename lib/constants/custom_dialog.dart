@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:co_op/constants/constants.dart';
 
@@ -105,5 +106,25 @@ class GlobalSnackBar {
         ),
       ),
     );
+  }
+}
+
+class GlobalToast {
+  final String message;
+
+  const GlobalToast({
+    required this.message,
+  });
+
+  static show(
+    String message,
+  ) {
+    Fluttertoast.showToast(
+        msg: message.toString(),
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }

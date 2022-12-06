@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:co_op/api/global_variables.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -30,7 +31,8 @@ class NavigateScreen extends StatefulWidget {
 
 class _NavigateScreenState extends State<NavigateScreen> {
   final Completer<GoogleMapController> _controller = Completer();
-  static const LatLng sourceLocation = LatLng(31.43873, 73.126844);
+  static LatLng sourceLocation =
+      LatLng(profileInfo.lat!.toDouble(), profileInfo.lng!.toDouble());
   static const LatLng destination = LatLng(31.432354, 73.121249);
   List<LatLng> polylineCoordinates = [];
   String? mtoken = " ";
@@ -393,8 +395,25 @@ class _NavigateScreenState extends State<NavigateScreen> {
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       google_api_key, // Your Google Map Key
+      PointLatLng(sourceLt, sourceLo), avoidFerries: true, avoidHighways: true,
+      PointLatLng(users.request[0].lat, users.request[0].long),
+    );
+    if (result.points.isNotEmpty) {
+      result.points.forEach(
+        (PointLatLng point) => polylineCoordinates.add(
+          LatLng(point.latitude, point.longitude),
+        ),
+      );
+      setState(() {});
+    }
+  }
+
+  void getSecongCustomePolyPoints(sourceLt, sourceLo) async {
+    PolylinePoints polylinePoints = PolylinePoints();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      google_api_key, // Your Google Map Key
       PointLatLng(sourceLt, sourceLo),
-      PointLatLng(destination.latitude, destination.longitude),
+      PointLatLng(users.request[0].lat, users.request[0].long),
     );
     if (result.points.isNotEmpty) {
       result.points.forEach(
@@ -439,17 +458,15 @@ class _NavigateScreenState extends State<NavigateScreen> {
     location.onLocationChanged.listen(
       (newLoc) async {
         currentLocation = newLoc;
-        googleMapController.animateCamera(
+        /*    googleMapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
               zoom: 15.5,
               target: LatLng(
-                newLoc.latitude!,
-                newLoc.longitude!,
-              ),
+                  profileInfo.lat!.toDouble(), profileInfo.lng!.toDouble()),
             ),
           ),
-        );
+        ); */
         // File myfile = await getImageFileFromAssets('images/profile.png');
         /*  BitmapDescriptor myBitmap =
             await convertImageFileToCustomBitmapDescriptor(file); */
@@ -458,13 +475,12 @@ class _NavigateScreenState extends State<NavigateScreen> {
           _markers.add(Marker(
               onTap: () {
                 polylineCoordinates.clear();
-                getCustomePolyPoints(
-                    newLoc.latitude ?? 0.0, newLoc.longitude ?? 0.0);
+                getCustomePolyPoints(profileInfo.lat, profileInfo.lng);
               },
               markerId: MarkerId('Home'),
               icon: BitmapDescriptor.fromBytes(markerIcon),
-              position:
-                  LatLng(newLoc.latitude ?? 0.0, newLoc.longitude ?? 0.0)));
+              position: LatLng(
+                  profileInfo.lat!.toDouble(), profileInfo.lng!.toDouble())));
 
           _markers.add(Marker(
               onTap: () {
@@ -474,41 +490,19 @@ class _NavigateScreenState extends State<NavigateScreen> {
               },
               markerId: MarkerId('new4'),
               icon: BitmapDescriptor.fromBytes(markerGym),
-              position: LatLng(31.432354, 73.121249)));
+              position: LatLng(users.request[0].lat, users.request[0].long)));
 
           _markers.add(Marker(
               onTap: () {
                 polylineCoordinates.clear();
                 print('click');
-                getCustomePolyPoints(31.43873, 73.126844);
+                getCustomePolyPoints(users.userData!.lat, users.userData!.long);
 
                 setState(() {});
               },
               markerId: MarkerId('new5'),
-              icon: BitmapDescriptor.fromBytes(marker3),
-              position: LatLng(31.43873, 73.126844)));
-          _markers.add(Marker(
-              onTap: () {
-                print('click');
-                polylineCoordinates.clear();
-                getCustomePolyPoints(31.428348, 73.123838);
-
-                setState(() {});
-              },
-              markerId: MarkerId('new6'),
-              icon: BitmapDescriptor.fromBytes(marker1),
-              position: LatLng(31.428348, 73.123838)));
-          _markers.add(Marker(
-              onTap: () {
-                print('click');
-                polylineCoordinates.clear();
-                getCustomePolyPoints(31.436785, 73.121203);
-
-                setState(() {});
-              },
-              markerId: MarkerId('new7'),
-              icon: BitmapDescriptor.fromBytes(marker2),
-              position: LatLng(31.436785, 73.121203)));
+              icon: BitmapDescriptor.defaultMarker,
+              position: LatLng(users.userData!.lat, users.userData!.long)));
         });
       },
     );
@@ -562,13 +556,8 @@ class _NavigateScreenState extends State<NavigateScreen> {
 
     getCurrentLocation();
 
-    requestPermission();
-
-    loadFCM();
-
-    listenFCM();
-
-    getToken();
+    getCustomePolyPoints(profileInfo.lat, profileInfo.lng);
+    getSecongCustomePolyPoints(users.userData!.lat, users.userData!.long);
 
     // FirebaseMessaging.instance.subscribeToTopic("Animal");
 
@@ -653,8 +642,9 @@ class _NavigateScreenState extends State<NavigateScreen> {
         ],
       ),
       body: GoogleMap(
-        initialCameraPosition: const CameraPosition(
-          target: sourceLocation,
+        initialCameraPosition: CameraPosition(
+          target:
+              LatLng(profileInfo.lat!.toDouble(), profileInfo.lng!.toDouble()),
           zoom: 13.5,
         ),
         markers: _markers,

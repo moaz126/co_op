@@ -8,6 +8,7 @@ import 'package:co_op/screens/workout/workout_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_event_calendar/flutter_event_calendar.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:horizontal_calendar/horizontal_calendar.dart';
 import 'package:intl/intl.dart';
@@ -63,10 +64,10 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
     'assets/images/intro1.png',
     'assets/images/intro1.png',
   ];
-  List<RequestedUser> yogaUsers = [];
-  List<RequestedUser> sportsUsers = [];
-  List<RequestedUser> weightLisftUsers = [];
-  List<RequestedUser> cardioUsers = [];
+  List<InsightModel> yogaUsers = [];
+  List<InsightModel> sportsUsers = [];
+  List<InsightModel> weightLisftUsers = [];
+  List<InsightModel> cardioUsers = [];
   String? selectedDate;
   DateTime select = DateTime.now();
   bool loader = false;
@@ -79,13 +80,21 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
     for (var i = 0; i < insightList.length; i++) {
       for (var j = 0; j < insightList[i].userData.length; j++) {
         if (insightList[i].userData[j].filterId == 1) {
-          yogaUsers.add(insightList[i].requestedByUser[0]);
+          if (yogaUsers.contains(insightList[i]) == false) {
+            yogaUsers.add(insightList[i]);
+          }
         } else if (insightList[i].userData[j].filterId == 2) {
-          sportsUsers.add(insightList[i].requestedByUser[0]);
+          if (insightList.contains(insightList[i] == false)) {
+            sportsUsers.add(insightList[i]);
+          }
         } else if (insightList[i].userData[j].filterId == 3) {
-          weightLisftUsers.add(insightList[i].requestedByUser[0]);
+          if (weightLisftUsers.contains(insightList[i]) == false) {
+            weightLisftUsers.add(insightList[i]);
+          }
         } else if (insightList[i].userData[j].filterId == 4) {
-          cardioUsers.add(insightList[i].requestedByUser[0]);
+          if (cardioUsers.contains(insightList[i]) == false) {
+            cardioUsers.add(insightList[i]);
+          }
         }
       }
     }
@@ -309,212 +318,244 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                 itemCount: yogaUsers.length,
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 0, vertical: 0.0),
-                                    child: InkWell(
-                                      onTap: () {
-                                        Get.to(() => WorkoutDetail(
-                                            yogaUsers[index].id.toString()));
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 8.0, right: 8.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Stack(
-                                                alignment:
-                                                    Alignment.bottomCenter,
-                                                children: [
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    child: CachedNetworkImage(
-                                                      fit: BoxFit.cover,
-                                                      height: 22.h,
-                                                      width: double.infinity,
-                                                      imageUrl:
-                                                          'https://becktesting.site/workout-bud/public/storage/user/' +
-                                                              yogaUsers[index]
-                                                                  .image
-                                                                  .toString(),
-                                                      placeholder:
-                                                          (context, url) =>
-                                                              Image.asset(
-                                                        images[0],
+                                  return InkWell(
+                                    onTap: () {
+                                      Get.to(() => WorkoutDetail(
+                                          yogaUsers[index].id.toString()));
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8.0, right: 8.0),
+                                      child: ClipRRect(
+                                        child: Banner(
+                                          textStyle: TextStyle(fontSize: 10),
+                                          message: yogaUsers[index].status == 0
+                                              ? 'In Progress'
+                                              : 'Completed',
+                                          color: yogaUsers[index].status == 0
+                                              ? Colors.green
+                                              : secondaryColor,
+                                          location: BannerLocation.topEnd,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Stack(
+                                                  alignment:
+                                                      Alignment.bottomCenter,
+                                                  children: [
+                                                    ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                      child: CachedNetworkImage(
                                                         fit: BoxFit.cover,
                                                         height: 22.h,
                                                         width: double.infinity,
+                                                        imageUrl:
+                                                            'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                                yogaUsers[index]
+                                                                    .requestedToUser[
+                                                                        0]
+                                                                    .image
+                                                                    .toString(),
+                                                        placeholder:
+                                                            (context, url) =>
+                                                                Image.asset(
+                                                          images[0],
+                                                          fit: BoxFit.cover,
+                                                          height: 22.h,
+                                                          width:
+                                                              double.infinity,
+                                                        ),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Image.asset(
+                                                          images[0],
+                                                          fit: BoxFit.cover,
+                                                          height: 22.h,
+                                                          width:
+                                                              double.infinity,
+                                                        ),
                                                       ),
-                                                      errorWidget: (context,
-                                                              url, error) =>
-                                                          Image.asset(
-                                                        images[0],
-                                                        fit: BoxFit.cover,
+                                                    ),
+                                                    Opacity(
+                                                      opacity: 0.4,
+                                                      child: Container(
                                                         height: 22.h,
-                                                        width: double.infinity,
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.black,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20)),
                                                       ),
                                                     ),
-                                                  ),
-                                                  Opacity(
-                                                    opacity: 0.4,
-                                                    child: Container(
-                                                      height: 22.h,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.black,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20)),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 18.0,
-                                                        vertical: 8),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          yogaUsers[index]
-                                                              .userName,
-                                                          style:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 18),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Row(
-                                                              children: [
-                                                                Text(
-                                                                  '10Min',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          3.w),
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
-                                                                Container(
-                                                                  height: 15,
-                                                                  width: 2,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
-                                                                Text(
-                                                                  'Football',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          3.w),
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
-                                                                Container(
-                                                                  height: 15,
-                                                                  width: 2,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
-                                                                Row(
-                                                                  children: [
-                                                                    Icon(
-                                                                      Icons
-                                                                          .star_rate_rounded,
-                                                                      size: 3.w,
-                                                                      color: Colors
-                                                                          .orange,
-                                                                    ),
-                                                                    Text(
-                                                                      yogaUsers[index].rating ==
-                                                                              null
-                                                                          ? '0.0'
-                                                                          : yogaUsers[index]
-                                                                              .rating
-                                                                              .toString(),
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .white,
-                                                                          fontWeight: FontWeight
-                                                                              .bold,
-                                                                          fontSize:
-                                                                              3.w),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        /*   InkWell(
-                                                          onTap: () {},
-                                                          child: Container(
-                                                            height: 4.h,
-                                                            width:
-                                                                double.infinity,
-                                                            decoration: BoxDecoration(
-                                                                color:
-                                                                    secondaryColor,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10)),
-                                                            child: Center(
-                                                                child: Text(
-                                                              "Send Request",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      1.8.h,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
-                                                            )),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 18.0,
+                                                          vertical: 8),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            yogaUsers[index]
+                                                                .requestedToUser[
+                                                                    0]
+                                                                .userName,
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 18),
                                                           ),
-                                                        ), */
-                                                      ],
+                                                          const SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  /*  Text(
+                                                                    '10Min',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            3.w),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    width: 4,
+                                                                  ),
+                                                                  Container(
+                                                                    height: 15,
+                                                                    width: 2,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    width: 4,
+                                                                  ),
+                                                                  Text(
+                                                                    'Football',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            3.w),
+                                                                  ), */
+                                                                  AbsorbPointer(
+                                                                    absorbing:
+                                                                        true,
+                                                                    child: RatingBar(
+                                                                        tapOnlyMode: false,
+                                                                        updateOnDrag: false,
+                                                                        initialRating: yogaUsers[index].requestedToUser[0].rating == null ? 0.0 : yogaUsers[index].requestedToUser[0].rating!.toDouble(),
+                                                                        direction: Axis.horizontal,
+                                                                        allowHalfRating: true,
+                                                                        itemCount: 5,
+                                                                        itemSize: 20,
+                                                                        ratingWidget: RatingWidget(
+                                                                            full: const Icon(Icons.star, color: secondaryColor),
+                                                                            half: const Icon(
+                                                                              Icons.star_half,
+                                                                              color: secondaryColor,
+                                                                            ),
+                                                                            empty: const Icon(
+                                                                              Icons.star_outline,
+                                                                              color: secondaryColor,
+                                                                            )),
+                                                                        onRatingUpdate: (value) {}),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    width: 4,
+                                                                  ),
+                                                                  /*   Container(
+                                                                    height: 15,
+                                                                    width: 2,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    width: 4,
+                                                                  ), */
+                                                                  Row(
+                                                                    children: [
+                                                                      /*     Icon(
+                                                                        Icons
+                                                                            .star_rate_rounded,
+                                                                        size: 3.w,
+                                                                        color: Colors
+                                                                            .orange,
+                                                                      ), */
+                                                                      Text(
+                                                                        yogaUsers[index].requestedToUser[0].rating ==
+                                                                                null
+                                                                            ? '0.0'
+                                                                            : yogaUsers[index].requestedToUser[0].rating.toString(),
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontWeight: FontWeight.bold,
+                                                                            fontSize: 3.w),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          /*   InkWell(
+                                                            onTap: () {},
+                                                            child: Container(
+                                                              height: 4.h,
+                                                              width:
+                                                                  double.infinity,
+                                                              decoration: BoxDecoration(
+                                                                  color:
+                                                                      secondaryColor,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10)),
+                                                              child: Center(
+                                                                  child: Text(
+                                                                "Send Request",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        1.8.h,
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                              )),
+                                                            ),
+                                                          ), */
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ]),
-                                            // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
-                                          ],
+                                                  ]),
+                                              // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -557,203 +598,201 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             left: 8.0, right: 8.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Stack(
-                                                alignment:
-                                                    Alignment.bottomCenter,
-                                                children: [
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    child: CachedNetworkImage(
-                                                      fit: BoxFit.cover,
-                                                      height: 22.h,
-                                                      width: double.infinity,
-                                                      imageUrl:
-                                                          'https://becktesting.site/workout-bud/public/storage/user/' +
+                                        child: ClipRRect(
+                                          child: Banner(
+                                            textStyle: TextStyle(fontSize: 10),
+                                            message:
+                                                sportsUsers[index].status == 0
+                                                    ? 'In Progress'
+                                                    : 'Completed',
+                                            color:
+                                                sportsUsers[index].status == 0
+                                                    ? Colors.green
+                                                    : secondaryColor,
+                                            location: BannerLocation.topEnd,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Stack(
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          fit: BoxFit.cover,
+                                                          height: 22.h,
+                                                          width:
+                                                              double.infinity,
+                                                          imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
                                                               sportsUsers[index]
+                                                                  .requestedToUser[
+                                                                      0]
                                                                   .image
                                                                   .toString(),
-                                                      placeholder:
-                                                          (context, url) =>
+                                                          placeholder:
+                                                              (context, url) =>
+                                                                  Image.asset(
+                                                            images[0],
+                                                            fit: BoxFit.cover,
+                                                            height: 22.h,
+                                                            width:
+                                                                double.infinity,
+                                                          ),
+                                                          errorWidget: (context,
+                                                                  url,
+                                                                  error) => /* Icon(Icons
+                                                                        .person) */
                                                               Image.asset(
-                                                        images[0],
-                                                        fit: BoxFit.cover,
-                                                        height: 22.h,
-                                                        width: double.infinity,
+                                                            images[0],
+                                                            fit: BoxFit.cover,
+                                                            height: 22.h,
+                                                            width:
+                                                                double.infinity,
+                                                          ),
+                                                        ),
                                                       ),
-                                                      errorWidget: (context,
-                                                              url,
-                                                              error) => /* Icon(Icons
-                              .person) */
-                                                          Image.asset(
-                                                        images[0],
-                                                        fit: BoxFit.cover,
-                                                        height: 22.h,
-                                                        width: double.infinity,
+                                                      Opacity(
+                                                        opacity: 0.4,
+                                                        child: Container(
+                                                          height: 22.h,
+                                                          decoration: BoxDecoration(
+                                                              color:
+                                                                  Colors.black,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          20)),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                  Opacity(
-                                                    opacity: 0.4,
-                                                    child: Container(
-                                                      height: 22.h,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.black,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20)),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 18.0,
-                                                        vertical: 8),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          sportsUsers[index]
-                                                              .userName,
-                                                          style:
-                                                              const TextStyle(
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal:
+                                                                    18.0,
+                                                                vertical: 8),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              sportsUsers[index]
+                                                                  .requestedToUser[
+                                                                      0]
+                                                                  .userName,
+                                                              style: const TextStyle(
                                                                   color: Colors
                                                                       .white,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
                                                                   fontSize: 18),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 5,
+                                                            ),
                                                             Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
                                                               children: [
-                                                                Text(
-                                                                  '10Min',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          3.w),
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
-                                                                Container(
-                                                                  height: 15,
-                                                                  width: 2,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
-                                                                Text(
-                                                                  'Football',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          3.w),
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
-                                                                Container(
-                                                                  height: 15,
-                                                                  width: 2,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
                                                                 Row(
                                                                   children: [
-                                                                    Icon(
-                                                                      Icons
-                                                                          .star_rate_rounded,
-                                                                      size: 3.w,
-                                                                      color: Colors
-                                                                          .orange,
+                                                                    AbsorbPointer(
+                                                                      absorbing:
+                                                                          true,
+                                                                      child: RatingBar(
+                                                                          tapOnlyMode: false,
+                                                                          updateOnDrag: false,
+                                                                          initialRating: sportsUsers[index].requestedToUser[0].rating == null ? 0.0 : sportsUsers[index].requestedToUser[0].rating!.toDouble(),
+                                                                          direction: Axis.horizontal,
+                                                                          allowHalfRating: true,
+                                                                          itemCount: 5,
+                                                                          itemSize: 20,
+                                                                          ratingWidget: RatingWidget(
+                                                                              full: const Icon(Icons.star, color: secondaryColor),
+                                                                              half: const Icon(
+                                                                                Icons.star_half,
+                                                                                color: secondaryColor,
+                                                                              ),
+                                                                              empty: const Icon(
+                                                                                Icons.star_outline,
+                                                                                color: secondaryColor,
+                                                                              )),
+                                                                          onRatingUpdate: (value) {}),
                                                                     ),
-                                                                    Text(
-                                                                      sportsUsers[index].rating ==
-                                                                              null
-                                                                          ? '0.0'
-                                                                          : sportsUsers[index]
-                                                                              .rating
-                                                                              .toString(),
-                                                                      style: TextStyle(
+                                                                    const SizedBox(
+                                                                      width: 4,
+                                                                    ),
+                                                                    Row(
+                                                                      children: [
+                                                                        /*   Icon(
+                                                                          Icons
+                                                                              .star_rate_rounded,
+                                                                          size: 3.w,
                                                                           color: Colors
-                                                                              .white,
-                                                                          fontWeight: FontWeight
-                                                                              .bold,
-                                                                          fontSize:
-                                                                              3.w),
+                                                                              .orange,
+                                                                        ), */
+                                                                        Text(
+                                                                          sportsUsers[index].requestedToUser[0].rating == null
+                                                                              ? '0.0'
+                                                                              : sportsUsers[index].requestedToUser[0].rating.toString(),
+                                                                          style: TextStyle(
+                                                                              color: Colors.white,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 3.w),
+                                                                        ),
+                                                                      ],
                                                                     ),
                                                                   ],
                                                                 ),
                                                               ],
                                                             ),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            /*  InkWell(
+                                                              onTap: () {},
+                                                              child: Container(
+                                                                height: 4.h,
+                                                                width:
+                                                                    double.infinity,
+                                                                decoration: BoxDecoration(
+                                                                    color:
+                                                                        secondaryColor,
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                                10)),
+                                                                child: Center(
+                                                                    child: Text(
+                                                                  "Send Request",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          1.8.h,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700),
+                                                                )),
+                                                              ),
+                                                            ), */
                                                           ],
                                                         ),
-                                                        const SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        /*  InkWell(
-                                                          onTap: () {},
-                                                          child: Container(
-                                                            height: 4.h,
-                                                            width:
-                                                                double.infinity,
-                                                            decoration: BoxDecoration(
-                                                                color:
-                                                                    secondaryColor,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10)),
-                                                            child: Center(
-                                                                child: Text(
-                                                              "Send Request",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      1.8.h,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
-                                                            )),
-                                                          ),
-                                                        ), */
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ]),
-                                            // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
-                                          ],
+                                                      ),
+                                                    ]),
+                                                // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
+                                              ],
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -796,203 +835,201 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             left: 8.0, right: 8.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Stack(
-                                                alignment:
-                                                    Alignment.bottomCenter,
-                                                children: [
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    child: CachedNetworkImage(
-                                                      fit: BoxFit.cover,
-                                                      height: 22.h,
-                                                      width: double.infinity,
-                                                      imageUrl:
-                                                          'https://becktesting.site/workout-bud/public/storage/user/' +
+                                        child: ClipRRect(
+                                          child: Banner(
+                                            textStyle: TextStyle(fontSize: 10),
+                                            message:
+                                                cardioUsers[index].status == 0
+                                                    ? 'In Progress'
+                                                    : 'Completed',
+                                            color:
+                                                cardioUsers[index].status == 0
+                                                    ? Colors.green
+                                                    : secondaryColor,
+                                            location: BannerLocation.topEnd,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Stack(
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          fit: BoxFit.cover,
+                                                          height: 22.h,
+                                                          width:
+                                                              double.infinity,
+                                                          imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
                                                               cardioUsers[index]
+                                                                  .requestedToUser[
+                                                                      0]
                                                                   .image
                                                                   .toString(),
-                                                      placeholder:
-                                                          (context, url) =>
+                                                          placeholder:
+                                                              (context, url) =>
+                                                                  Image.asset(
+                                                            images[0],
+                                                            fit: BoxFit.cover,
+                                                            height: 22.h,
+                                                            width:
+                                                                double.infinity,
+                                                          ),
+                                                          errorWidget: (context,
+                                                                  url,
+                                                                  error) => /* Icon(Icons
+                                                                        .person) */
                                                               Image.asset(
-                                                        images[0],
-                                                        fit: BoxFit.cover,
-                                                        height: 22.h,
-                                                        width: double.infinity,
+                                                            images[0],
+                                                            fit: BoxFit.cover,
+                                                            height: 22.h,
+                                                            width:
+                                                                double.infinity,
+                                                          ),
+                                                        ),
                                                       ),
-                                                      errorWidget: (context,
-                                                              url,
-                                                              error) => /* Icon(Icons
-                              .person) */
-                                                          Image.asset(
-                                                        images[0],
-                                                        fit: BoxFit.cover,
-                                                        height: 22.h,
-                                                        width: double.infinity,
+                                                      Opacity(
+                                                        opacity: 0.4,
+                                                        child: Container(
+                                                          height: 22.h,
+                                                          decoration: BoxDecoration(
+                                                              color:
+                                                                  Colors.black,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          20)),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                  Opacity(
-                                                    opacity: 0.4,
-                                                    child: Container(
-                                                      height: 22.h,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.black,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20)),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 18.0,
-                                                        vertical: 8),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          cardioUsers[index]
-                                                              .userName,
-                                                          style:
-                                                              const TextStyle(
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal:
+                                                                    18.0,
+                                                                vertical: 8),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              cardioUsers[index]
+                                                                  .requestedToUser[
+                                                                      0]
+                                                                  .userName,
+                                                              style: const TextStyle(
                                                                   color: Colors
                                                                       .white,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
                                                                   fontSize: 18),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 5,
+                                                            ),
                                                             Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
                                                               children: [
-                                                                Text(
-                                                                  '10Min',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          3.w),
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
-                                                                Container(
-                                                                  height: 15,
-                                                                  width: 2,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
-                                                                Text(
-                                                                  'Football',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          3.w),
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
-                                                                Container(
-                                                                  height: 15,
-                                                                  width: 2,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
                                                                 Row(
                                                                   children: [
-                                                                    Icon(
-                                                                      Icons
-                                                                          .star_rate_rounded,
-                                                                      size: 3.w,
-                                                                      color: Colors
-                                                                          .orange,
+                                                                    AbsorbPointer(
+                                                                      absorbing:
+                                                                          true,
+                                                                      child: RatingBar(
+                                                                          tapOnlyMode: false,
+                                                                          updateOnDrag: false,
+                                                                          initialRating: cardioUsers[index].requestedToUser[0].rating == null ? 0.0 : cardioUsers[index].requestedToUser[0].rating!.toDouble(),
+                                                                          direction: Axis.horizontal,
+                                                                          allowHalfRating: true,
+                                                                          itemCount: 5,
+                                                                          itemSize: 20,
+                                                                          ratingWidget: RatingWidget(
+                                                                              full: const Icon(Icons.star, color: secondaryColor),
+                                                                              half: const Icon(
+                                                                                Icons.star_half,
+                                                                                color: secondaryColor,
+                                                                              ),
+                                                                              empty: const Icon(
+                                                                                Icons.star_outline,
+                                                                                color: secondaryColor,
+                                                                              )),
+                                                                          onRatingUpdate: (value) {}),
                                                                     ),
-                                                                    Text(
-                                                                      cardioUsers[index].rating ==
-                                                                              null
-                                                                          ? '0.0'
-                                                                          : cardioUsers[index]
-                                                                              .rating
-                                                                              .toString(),
-                                                                      style: TextStyle(
+                                                                    const SizedBox(
+                                                                      width: 4,
+                                                                    ),
+                                                                    Row(
+                                                                      children: [
+                                                                        /*  Icon(
+                                                                          Icons
+                                                                              .star_rate_rounded,
+                                                                          size: 3.w,
                                                                           color: Colors
-                                                                              .white,
-                                                                          fontWeight: FontWeight
-                                                                              .bold,
-                                                                          fontSize:
-                                                                              3.w),
+                                                                              .orange,
+                                                                        ), */
+                                                                        Text(
+                                                                          cardioUsers[index].requestedToUser[0].rating == null
+                                                                              ? '0.0'
+                                                                              : cardioUsers[index].requestedToUser[0].rating.toString(),
+                                                                          style: TextStyle(
+                                                                              color: Colors.white,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 3.w),
+                                                                        ),
+                                                                      ],
                                                                     ),
                                                                   ],
                                                                 ),
                                                               ],
                                                             ),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            /*   InkWell(
+                                                              onTap: () {},
+                                                              child: Container(
+                                                                height: 4.h,
+                                                                width:
+                                                                    double.infinity,
+                                                                decoration: BoxDecoration(
+                                                                    color:
+                                                                        secondaryColor,
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                                10)),
+                                                                child: Center(
+                                                                    child: Text(
+                                                                  "Send Request",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          1.8.h,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700),
+                                                                )),
+                                                              ),
+                                                            ), */
                                                           ],
                                                         ),
-                                                        const SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        /*   InkWell(
-                                                          onTap: () {},
-                                                          child: Container(
-                                                            height: 4.h,
-                                                            width:
-                                                                double.infinity,
-                                                            decoration: BoxDecoration(
-                                                                color:
-                                                                    secondaryColor,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10)),
-                                                            child: Center(
-                                                                child: Text(
-                                                              "Send Request",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      1.8.h,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
-                                                            )),
-                                                          ),
-                                                        ), */
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ]),
-                                            // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
-                                          ],
+                                                      ),
+                                                    ]),
+                                                // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
+                                              ],
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -1037,205 +1074,205 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             left: 8.0, right: 8.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Stack(
-                                                alignment:
-                                                    Alignment.bottomCenter,
-                                                children: [
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    child: CachedNetworkImage(
-                                                      fit: BoxFit.cover,
-                                                      height: 22.h,
-                                                      width: double.infinity,
-                                                      imageUrl:
-                                                          'https://becktesting.site/workout-bud/public/storage/user/' +
+                                        child: ClipRRect(
+                                          child: Banner(
+                                            textStyle: TextStyle(fontSize: 10),
+                                            message: weightLisftUsers[index]
+                                                        .status ==
+                                                    0
+                                                ? 'In Progress'
+                                                : 'Completed',
+                                            color: weightLisftUsers[index]
+                                                        .status ==
+                                                    0
+                                                ? Colors.green
+                                                : secondaryColor,
+                                            location: BannerLocation.topEnd,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Stack(
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          fit: BoxFit.cover,
+                                                          height: 22.h,
+                                                          width:
+                                                              double.infinity,
+                                                          imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
                                                               weightLisftUsers[
                                                                       index]
+                                                                  .requestedToUser[
+                                                                      0]
                                                                   .image
                                                                   .toString(),
-                                                      placeholder:
-                                                          (context, url) =>
+                                                          placeholder:
+                                                              (context, url) =>
+                                                                  Image.asset(
+                                                            images[0],
+                                                            fit: BoxFit.cover,
+                                                            height: 22.h,
+                                                            width:
+                                                                double.infinity,
+                                                          ),
+                                                          errorWidget: (context,
+                                                                  url,
+                                                                  error) => /* Icon(Icons
+                                                                        .person) */
                                                               Image.asset(
-                                                        images[0],
-                                                        fit: BoxFit.cover,
-                                                        height: 22.h,
-                                                        width: double.infinity,
+                                                            images[0],
+                                                            fit: BoxFit.cover,
+                                                            height: 22.h,
+                                                            width:
+                                                                double.infinity,
+                                                          ),
+                                                        ),
                                                       ),
-                                                      errorWidget: (context,
-                                                              url,
-                                                              error) => /* Icon(Icons
-                              .person) */
-                                                          Image.asset(
-                                                        images[0],
-                                                        fit: BoxFit.cover,
-                                                        height: 22.h,
-                                                        width: double.infinity,
+                                                      Opacity(
+                                                        opacity: 0.4,
+                                                        child: Container(
+                                                          height: 22.h,
+                                                          decoration: BoxDecoration(
+                                                              color:
+                                                                  Colors.black,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          20)),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                  Opacity(
-                                                    opacity: 0.4,
-                                                    child: Container(
-                                                      height: 22.h,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.black,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20)),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 18.0,
-                                                        vertical: 8),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          weightLisftUsers[
-                                                                  index]
-                                                              .userName,
-                                                          style:
-                                                              const TextStyle(
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal:
+                                                                    18.0,
+                                                                vertical: 8),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              weightLisftUsers[
+                                                                      index]
+                                                                  .requestedToUser[
+                                                                      0]
+                                                                  .userName,
+                                                              style: const TextStyle(
                                                                   color: Colors
                                                                       .white,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
                                                                   fontSize: 18),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 5,
+                                                            ),
                                                             Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
                                                               children: [
-                                                                Text(
-                                                                  '10Min',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          3.w),
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
-                                                                Container(
-                                                                  height: 15,
-                                                                  width: 2,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
-                                                                Text(
-                                                                  'Football',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          3.w),
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
-                                                                Container(
-                                                                  height: 15,
-                                                                  width: 2,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 4,
-                                                                ),
                                                                 Row(
                                                                   children: [
-                                                                    Icon(
-                                                                      Icons
-                                                                          .star_rate_rounded,
-                                                                      size: 3.w,
-                                                                      color: Colors
-                                                                          .orange,
+                                                                    AbsorbPointer(
+                                                                      absorbing:
+                                                                          true,
+                                                                      child: RatingBar(
+                                                                          tapOnlyMode: false,
+                                                                          updateOnDrag: false,
+                                                                          initialRating: weightLisftUsers[index].requestedToUser[0].rating == null ? 0.0 : weightLisftUsers[index].requestedToUser[0].rating!.toDouble(),
+                                                                          direction: Axis.horizontal,
+                                                                          allowHalfRating: true,
+                                                                          itemCount: 5,
+                                                                          itemSize: 20,
+                                                                          ratingWidget: RatingWidget(
+                                                                              full: const Icon(Icons.star, color: secondaryColor),
+                                                                              half: const Icon(
+                                                                                Icons.star_half,
+                                                                                color: secondaryColor,
+                                                                              ),
+                                                                              empty: const Icon(
+                                                                                Icons.star_outline,
+                                                                                color: secondaryColor,
+                                                                              )),
+                                                                          onRatingUpdate: (value) {}),
                                                                     ),
-                                                                    Text(
-                                                                      weightLisftUsers[index].rating ==
-                                                                              null
-                                                                          ? '0.0'
-                                                                          : weightLisftUsers[index]
-                                                                              .rating
-                                                                              .toString(),
-                                                                      style: TextStyle(
+                                                                    const SizedBox(
+                                                                      width: 4,
+                                                                    ),
+                                                                    Row(
+                                                                      children: [
+                                                                        /*  Icon(
+                                                                          Icons
+                                                                              .star_rate_rounded,
+                                                                          size: 3.w,
                                                                           color: Colors
-                                                                              .white,
-                                                                          fontWeight: FontWeight
-                                                                              .bold,
-                                                                          fontSize:
-                                                                              3.w),
+                                                                              .orange,
+                                                                        ), */
+                                                                        Text(
+                                                                          weightLisftUsers[index].requestedToUser[0].rating == null
+                                                                              ? '0.0'
+                                                                              : weightLisftUsers[index].requestedToUser[0].rating.toString(),
+                                                                          style: TextStyle(
+                                                                              color: Colors.white,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 3.w),
+                                                                        ),
+                                                                      ],
                                                                     ),
                                                                   ],
                                                                 ),
                                                               ],
                                                             ),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            /*  InkWell(
+                                                              onTap: () {},
+                                                              child: Container(
+                                                                height: 4.h,
+                                                                width:
+                                                                    double.infinity,
+                                                                decoration: BoxDecoration(
+                                                                    color:
+                                                                        secondaryColor,
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                                10)),
+                                                                child: Center(
+                                                                    child: Text(
+                                                                  "Send Request",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          1.8.h,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700),
+                                                                )),
+                                                              ),
+                                                            ), */
                                                           ],
                                                         ),
-                                                        const SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        /*  InkWell(
-                                                          onTap: () {},
-                                                          child: Container(
-                                                            height: 4.h,
-                                                            width:
-                                                                double.infinity,
-                                                            decoration: BoxDecoration(
-                                                                color:
-                                                                    secondaryColor,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10)),
-                                                            child: Center(
-                                                                child: Text(
-                                                              "Send Request",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      1.8.h,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
-                                                            )),
-                                                          ),
-                                                        ), */
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ]),
-                                            // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
-                                          ],
+                                                      ),
+                                                    ]),
+                                                // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
+                                              ],
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),

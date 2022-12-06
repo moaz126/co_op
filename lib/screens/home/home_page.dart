@@ -401,6 +401,8 @@ class _HomePageState extends State<HomePage> {
                                                                           () {
                                                                         setState(
                                                                             () {
+                                                                          Vibration
+                                                                              .vibrate();
                                                                           DataApiService.instance.addBookmark(
                                                                               dashbarodUsersList[index].id.toString(),
                                                                               context);
@@ -476,6 +478,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               InkWell(
                                 onTap: () async {
+                                  // Get.to(() => NavigateScreen());
                                   if (await Vibration.hasVibrator() != null) {
                                     Vibration.vibrate();
                                   }
@@ -794,6 +797,7 @@ class _HomePageState extends State<HomePage> {
                                                                           onTap:
                                                                               () {
                                                                             setState(() {
+                                                                              Vibration.vibrate();
                                                                               DataApiService.instance.addBookmark(activityUsers[index].id.toString(), context);
                                                                               activityUsers[index].bookmark = 1;
                                                                             });

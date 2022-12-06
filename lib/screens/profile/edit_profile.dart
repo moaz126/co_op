@@ -59,10 +59,10 @@ class _EditProfileState extends State<EditProfile> {
   ];
 
   initialize() {
-    if (profileInfo.fullName != null) {
+    if (profileInfo.fullName != 'null') {
       FullNameController.text = profileInfo.fullName.toString();
     }
-    if (profileInfo.nickName != null) {
+    if (profileInfo.nickName != 'null') {
       NickNameController.text = profileInfo.nickName.toString();
     }
     if (profileInfo.phone != null) {
