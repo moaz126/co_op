@@ -1540,105 +1540,109 @@ class _TrackScreenState extends State<TrackScreen> {
         builder: (BuildContext context) {
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
-              title: Text("Select Your Location"),
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    onTap: () async {
-                      setState(() {
-                        buttonLoader = true;
-                      });
-                      getUsersList.clear();
-                      await DataApiService.instance.getprofileinfo(context);
-                      await DataApiService.instance.getUsers(context);
+                title: Text("Select Your Location"),
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      onTap: () async {
+                        setState(() {
+                          buttonLoader = true;
+                        });
+                        getUsersList.clear();
+                        await DataApiService.instance.getprofileinfo(context);
+                        await DataApiService.instance.getUsers(context);
 
-                      getCurrentLocation();
-                      sourceLocation =
-                          LatLng(profileInfo.lat!, profileInfo.lng!);
+                        getCurrentLocation();
+                        sourceLocation =
+                            LatLng(profileInfo.lat!, profileInfo.lng!);
 
-                      setState(() {
-                        buttonLoader = false;
-                      });
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      width: 100,
-                      height: 40,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(5)),
-                      child: buttonLoader
-                          ? spinkit
-                          : Text(
-                              'Ok',
-                              style: TextStyle(color: Colors.white),
-                            ),
+                        setState(() {
+                          buttonLoader = false;
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        width: 100,
+                        height: 40,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: buttonLoader
+                            ? spinkit
+                            : Text(
+                                'Ok',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                      ),
                     ),
-                  ),
-                )
-              ],
-              content: alertLoader
-                  ? Container(height: 80.h, child: pageSpinkit)
-                  : ListView.builder(
-                      itemCount: getAddrList.length,
-                      itemBuilder: (context, index) => Padding(
-                        padding: EdgeInsets.symmetric(vertical: 3),
-                        child: Column(
-                          children: [
-                            index == 0
-                                ? ListTile(
-                                    contentPadding: EdgeInsets.zero,
-                                    dense: false,
-                                    minLeadingWidth: 10,
-                                    leading: SizedBox(
-                                      width: 20,
-                                      height: 70,
-                                      child: Checkbox(
-                                        materialTapTargetSize:
-                                            MaterialTapTargetSize.shrinkWrap,
-                                        onChanged: (x) async {
-                                          setState(() {
-                                            locationCheck = !locationCheck;
+                  )
+                ],
+                content: Container(
+                  height: 40.h,
+                  child: alertLoader
+                      ? Container(height: 80.h, child: pageSpinkit)
+                      : ListView.builder(
+                          itemCount: getAddrList.length,
+                          itemBuilder: (context, index) => Padding(
+                            padding: EdgeInsets.symmetric(vertical: 3),
+                            child: Column(
+                              children: [
+                                index == 0
+                                    ? ListTile(
+                                        contentPadding: EdgeInsets.zero,
+                                        dense: false,
+                                        minLeadingWidth: 10,
+                                        leading: SizedBox(
+                                          width: 20,
+                                          height: 70,
+                                          child: Checkbox(
+                                            materialTapTargetSize:
+                                                MaterialTapTargetSize
+                                                    .shrinkWrap,
+                                            onChanged: (x) async {
+                                              setState(() {
+                                                locationCheck = !locationCheck;
 
-                                            addresslist.clear();
-                                          });
-                                        },
-                                        activeColor: secondaryColor,
-                                        value: locationCheck,
-                                      ),
-                                    ),
-                                    title: InkWell(
-                                      onTap: () async {
-                                        setState(() {
-                                          locationCheck = !locationCheck;
+                                                addresslist.clear();
+                                              });
+                                            },
+                                            activeColor: secondaryColor,
+                                            value: locationCheck,
+                                          ),
+                                        ),
+                                        title: InkWell(
+                                          onTap: () async {
+                                            setState(() {
+                                              locationCheck = !locationCheck;
 
-                                          addresslist.clear();
-                                        });
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(10.0),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              addresslist.clear();
+                                            });
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.all(10.0),
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                Row(
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(
-                                                      'Current Location',
-                                                      style: TextStyle(
-                                                          fontSize: 13.sp),
-                                                    ),
-                                                    /*   Text(
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          'Current Location',
+                                                          style: TextStyle(
+                                                              fontSize: 13.sp),
+                                                        ),
+                                                        /*   Text(
                                           useraddr[index].useraddress.toString(),
                                           style: TextStyle(
                                               color: Colors.black.withOpacity(0.5),
@@ -1646,119 +1650,130 @@ class _TrackScreenState extends State<TrackScreen> {
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                         ), */
+                                                      ],
+                                                    ),
                                                   ],
                                                 ),
                                               ],
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  )
-                                : SizedBox(),
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              dense: false,
-                              minLeadingWidth: 10,
-                              leading: SizedBox(
-                                width: 20,
-                                height: 70,
-                                child: Checkbox(
-                                  materialTapTargetSize:
-                                      MaterialTapTargetSize.shrinkWrap,
-                                  onChanged: (x) async {
-                                    _markers.clear();
-                                    setState(() {
-                                      locationCheck = false;
-                                      if (addresslist
-                                          .contains(getAddrList[index].id)) {
-                                        addresslist
-                                            .remove(getAddrList[index].id);
-                                      } else {
-                                        addresslist.clear();
-                                        addresslist.add(getAddrList[index].id);
-                                      }
-                                      alertLoader = true;
-                                    });
-                                    Map<String, dynamic> update_address = {
-                                      'lat': getAddrList[index].lat.toString(),
-                                      'long':
-                                          getAddrList[index].long.toString(),
-                                    };
-                                    print(update_address);
-                                    await DataApiService.instance
-                                        .updateAddress(update_address, context);
-                                    /*  await DataApiService.instance
+                                      )
+                                    : SizedBox(),
+                                ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  dense: false,
+                                  minLeadingWidth: 10,
+                                  leading: SizedBox(
+                                    width: 20,
+                                    height: 70,
+                                    child: Checkbox(
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      onChanged: (x) async {
+                                        _markers.clear();
+                                        setState(() {
+                                          locationCheck = false;
+                                          if (addresslist.contains(
+                                              getAddrList[index].id)) {
+                                            addresslist
+                                                .remove(getAddrList[index].id);
+                                          } else {
+                                            addresslist.clear();
+                                            addresslist
+                                                .add(getAddrList[index].id);
+                                          }
+                                          alertLoader = true;
+                                        });
+                                        Map<String, dynamic> update_address = {
+                                          'lat':
+                                              getAddrList[index].lat.toString(),
+                                          'long': getAddrList[index]
+                                              .long
+                                              .toString(),
+                                        };
+                                        print(update_address);
+                                        await DataApiService.instance
+                                            .updateAddress(
+                                                update_address, context);
+                                        /*  await DataApiService.instance
                                         .getprofileinfo(context);
                                     sourceLocation = LatLng(
                                         profileInfo.lat!, profileInfo.lng!); */
 
-                                    setState(() {
-                                      alertLoader = false;
-                                    });
-                                    GlobalSnackBar.show(
-                                        context, SnackMessage.toString());
-                                  },
-                                  activeColor: secondaryColor,
-                                  value: addresslist
-                                      .contains(getAddrList[index].id),
-                                ),
-                              ),
-                              title: InkWell(
-                                onTap: () async {
-                                  _markers.clear();
-                                  setState(() {
-                                    locationCheck = false;
-                                    if (addresslist
-                                        .contains(getAddrList[index].id)) {
-                                      addresslist.remove(getAddrList[index].id);
-                                    } else {
-                                      addresslist.clear();
-                                      addresslist.add(getAddrList[index].id);
-                                    }
-                                    alertLoader = true;
-                                  });
-                                  Map<String, dynamic> updateAddress = {
-                                    'lat': getAddrList[index].lat.toString(),
-                                    'long': getAddrList[index].long.toString(),
-                                  };
-                                  print(updateAddress);
-                                  await DataApiService.instance
-                                      .updateAddress(updateAddress, context);
-                                  /*  await DataApiService.instance
+                                        setState(() {
+                                          alertLoader = false;
+                                        });
+                                        GlobalSnackBar.show(
+                                            context, SnackMessage.toString());
+                                      },
+                                      activeColor: secondaryColor,
+                                      value: addresslist
+                                          .contains(getAddrList[index].id),
+                                    ),
+                                  ),
+                                  title: InkWell(
+                                    onTap: () async {
+                                      _markers.clear();
+                                      setState(() {
+                                        locationCheck = false;
+                                        if (addresslist
+                                            .contains(getAddrList[index].id)) {
+                                          addresslist
+                                              .remove(getAddrList[index].id);
+                                        } else {
+                                          addresslist.clear();
+                                          addresslist
+                                              .add(getAddrList[index].id);
+                                        }
+                                        alertLoader = true;
+                                      });
+                                      Map<String, dynamic> updateAddress = {
+                                        'lat':
+                                            getAddrList[index].lat.toString(),
+                                        'long':
+                                            getAddrList[index].long.toString(),
+                                      };
+                                      print(updateAddress);
+                                      await DataApiService.instance
+                                          .updateAddress(
+                                              updateAddress, context);
+                                      /*  await DataApiService.instance
                                       .getprofileinfo(context);
                                   sourceLocation = LatLng(
                                       profileInfo.lat!, profileInfo.lng!); */
 
-                                  setState(() {
-                                    alertLoader = false;
-                                  });
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(10.0),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                      setState(() {
+                                        alertLoader = false;
+                                      });
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(10.0),
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Row(
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                getAddrList[index]
-                                                    .name
-                                                    .toString(),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style:
-                                                    TextStyle(fontSize: 13.sp),
-                                              ),
-                                              /*   Text(
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    getAddrList[index]
+                                                        .name
+                                                        .toString(),
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        fontSize: 13.sp),
+                                                  ),
+                                                  /*   Text(
                                               useraddr[index].useraddress.toString(),
                                               style: TextStyle(
                                                   color: Colors.black.withOpacity(0.5),
@@ -1766,34 +1781,35 @@ class _TrackScreenState extends State<TrackScreen> {
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                             ), */
+                                                ],
+                                              ),
+                                              Container(
+                                                width: 45.w,
+                                                child: Text(
+                                                  getAddrList[index]
+                                                      .locationName
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.black
+                                                          .withOpacity(0.5),
+                                                      fontSize: 11.sp),
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
                                             ],
-                                          ),
-                                          Container(
-                                            width: 45.w,
-                                            child: Text(
-                                              getAddrList[index]
-                                                  .locationName
-                                                  .toString(),
-                                              style: TextStyle(
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
-                                                  fontSize: 11.sp),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
                                           ),
                                         ],
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-            );
+                ));
           });
         });
   }

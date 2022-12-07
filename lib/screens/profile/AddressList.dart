@@ -86,7 +86,7 @@ class _AddressListState extends State<AddressList> {
                 setState(() {});
               },
               controller: AddressNameController,
-              decoration: InputDecoration(hintText: "Address Name"),
+              decoration: InputDecoration(hintText: "Enter Address"),
             ),
             actions: <Widget>[
               TextButton(
@@ -155,7 +155,7 @@ class _AddressListState extends State<AddressList> {
                         ),
                       );
                     } else {
-                      GlobalToast.show( 'Please add address name');
+                      GlobalToast.show('Please add address name');
                     }
                   });
                 },
@@ -502,39 +502,45 @@ class _AddressListState extends State<AddressList> {
                                           SizedBox(
                                             width: 10,
                                           ),
-                                          InkWell(
-                                              onTap: () async {
-                                                // Get.to(EditAddress(index));
-                                                print('delete');
-                                                Map<String, dynamic>
-                                                    deleteUser = {
-                                                  'id': getAddrList[index]
-                                                      .id
-                                                      .toString(),
-                                                };
-                                                setState(() {
-                                                  pageLoader = true;
-                                                });
-                                                bool status =
-                                                    await DataApiService
-                                                        .instance
-                                                        .deleteUserAddress(
-                                                            deleteUser,
-                                                            context);
-                                                if (status) {
-                                                  getAddrList.removeAt(index);
-                                                } else {
-                                                  GlobalToast.show(
-                                                      'Something bad happened!');
-                                                }
-                                                setState(() {
-                                                  pageLoader = false;
-                                                });
-                                              },
-                                              child: Icon(
-                                                Icons.delete,
-                                                color: Colors.red,
-                                              )),
+                                          getAddrList[index].lat ==
+                                                      profileInfo.lat &&
+                                                  getAddrList[index].long ==
+                                                      profileInfo.lng
+                                              ? SizedBox()
+                                              : InkWell(
+                                                  onTap: () async {
+                                                    // Get.to(EditAddress(index));
+                                                    print('delete');
+                                                    Map<String, dynamic>
+                                                        deleteUser = {
+                                                      'id': getAddrList[index]
+                                                          .id
+                                                          .toString(),
+                                                    };
+                                                    setState(() {
+                                                      pageLoader = true;
+                                                    });
+                                                    bool status =
+                                                        await DataApiService
+                                                            .instance
+                                                            .deleteUserAddress(
+                                                                deleteUser,
+                                                                context);
+                                                    if (status) {
+                                                      getAddrList
+                                                          .removeAt(index);
+                                                    } else {
+                                                      GlobalToast.show(
+                                                          'Something bad happened!');
+                                                    }
+                                                    setState(() {
+                                                      pageLoader = false;
+                                                    });
+                                                  },
+                                                  child: Icon(
+                                                    Icons.delete,
+                                                    color: Colors.red,
+                                                  )),
                                         ],
                                       ),
                                       SizedBox(

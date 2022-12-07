@@ -379,7 +379,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
-                    _pass.length > 11 || _pass == ''
+                    _pass.length > 7 || _pass == ''
                         ? SizedBox(
                             height: 2.h,
                           )
@@ -1031,7 +1031,7 @@ class _SignUpState extends State<SignUp> {
                                           'Password should atleast 8 characters');
                                     }
                                   } else {
-                                    GlobalToast.show( 'Passwords do not match');
+                                    GlobalToast.show('Passwords do not match');
                                   }
                                 }
                               }

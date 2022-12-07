@@ -268,7 +268,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           },
                         ),
                       ),
-                      Card(
+                      /* Card(
                         child: ListTile(
                           onTap: () {
                             DataApiService.instance.getUsers(context);
@@ -285,7 +285,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             DataApiService.instance.getFiltersList(context);
                           },
                         ),
-                      ),
+                      ), */
                       Card(
                         child: ListTile(
                           onTap: () {
@@ -316,6 +316,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               btnOkText: 'Yes',
                               btnOkOnPress: () async {
                                 setUserLoggedIn(false);
+                                firstHome = false;
                                 DataApiService.instance.logout(context);
                                 Get.offAll(SignIn());
                               },

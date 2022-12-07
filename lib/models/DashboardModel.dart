@@ -59,7 +59,7 @@ class DashboardModel {
   String? otp;
   String? fcmTokken;
   dynamic avg;
-  int bookmark;
+  int? bookmark;
   int? bookmarkId;
   List<dynamic> getReviews;
 

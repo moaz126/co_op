@@ -59,13 +59,13 @@ class _EditProfileState extends State<EditProfile> {
   ];
 
   initialize() {
-    if (profileInfo.fullName != 'null') {
+    if (profileInfo.fullName != null && profileInfo.fullName != 'null') {
       FullNameController.text = profileInfo.fullName.toString();
     }
-    if (profileInfo.nickName != 'null') {
+    if (profileInfo.nickName != 'null' && profileInfo.nickName != null) {
       NickNameController.text = profileInfo.nickName.toString();
     }
-    if (profileInfo.phone != null) {
+    if (profileInfo.phone != null && profileInfo.phone != 'null') {
       PhoneNumberController.text = profileInfo.phone.toString();
     }
     if (profileInfo.activityLevel == 'Beginner') {
@@ -160,7 +160,7 @@ class _EditProfileState extends State<EditProfile> {
                                       child: CachedNetworkImage(
                                         height: 20.h,
                                         width: 20.h,
-                                        fit: BoxFit.fill,
+                                        fit: BoxFit.cover,
                                         imageUrl:
                                             'https://becktesting.site/workout-bud/public/storage/user/' +
                                                 profileInfo.image.toString(),
@@ -760,10 +760,6 @@ class _EditProfileState extends State<EditProfile> {
                                                     child: InkWell(
                                                         onTap: () {
                                                           setState(() {
-                                                            profileInfo
-                                                                .imageList[0]
-                                                                .images
-                                                                .removeAt(i);
                                                             DataApiService
                                                                 .instance
                                                                 .deleteImage(
@@ -772,7 +768,16 @@ class _EditProfileState extends State<EditProfile> {
                                                                             0]
                                                                         .images[i],
                                                                     context);
+                                                            profileInfo
+                                                                .imageList[0]
+                                                                .images
+                                                                .removeAt(i);
                                                           });
+                                                          print(i);
+                                                          print(profileInfo
+                                                              .imageList[0]
+                                                              .images
+                                                              .length);
 
                                                           print(
                                                               "helooooooooooooo");

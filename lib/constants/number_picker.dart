@@ -209,7 +209,7 @@ class SelectNumber extends StatefulWidget {
 }
 
 class _SelectNumberState extends State<SelectNumber> {
-  int _currentIntValue = 10;
+  int _currentIntValue = 20;
 
   @override
   Widget build(BuildContext context) {

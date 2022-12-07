@@ -29,6 +29,9 @@ class GetProfileModel {
     this.updatedAt,
     this.lat,
     this.lng,
+    this.complete,
+    this.inProgress,
+    this.time,
   });
 
   int? id;
@@ -52,6 +55,9 @@ class GetProfileModel {
   DateTime? updatedAt;
   double? lat;
   double? lng;
+  int? complete;
+  int? inProgress;
+  int? time;
 
   factory GetProfileModel.fromJson(Map<String, dynamic> json) =>
       GetProfileModel(
@@ -76,8 +82,11 @@ class GetProfileModel {
         nickName: json["nick_name"],
         phone: json["phone"],
         emailVerifiedAt: json["email_verified_at"],
-        lat: json["lat"] as double?,
-        lng: json["long"],
+        lat: json["lat"].toDouble(),
+        lng: json["long"].toDouble(),
+        complete: json["completed"],
+        inProgress: json["inprogress"],
+        time: json["time_in_minutes"],
       );
 }
 

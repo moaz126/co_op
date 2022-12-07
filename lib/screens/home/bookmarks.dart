@@ -65,116 +65,137 @@ class _BookmarksPageState extends State<BookmarksPage> {
           : Column(
               children: [
                 Expanded(
-                  child: GridView.builder(
-                      itemCount: bookmarkList.length,
-                      padding: const EdgeInsets.all(16),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.94,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                      ),
-                      itemBuilder: (c, index) {
-                        return AnimationConfiguration.staggeredGrid(
-                          position: index,
-                          duration: const Duration(milliseconds: 375),
-                          columnCount: 2,
-                          child: ScaleAnimation(
-                            child: FadeInAnimation(
-                              child: InkWell(
-                                onTap: () {
-                                  Get.to(() => WorkoutDetail(
-                                      bookmarkList[index].user.id.toString()));
-                                },
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 2,
-                                            blurRadius: 3,
-                                            offset: Offset(0,
-                                                3), // changes position of shadow
-                                          ),
-                                        ],
-                                      ),
-                                      child: Stack(
-                                        alignment: Alignment.bottomCenter,
-                                        children: [
-                                          ClipRRect(
+                  child: bookmarkList.isEmpty
+                      ? Column(
+                          children: [
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                            Center(
+                              child: Container(
+                                height: 20.h,
+                                child: emptyAnimation,
+                              ),
+                            ),
+                            Text('No Bookmark yet')
+                          ],
+                        )
+                      : GridView.builder(
+                          itemCount: bookmarkList.length,
+                          padding: const EdgeInsets.all(16),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.94,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                          ),
+                          itemBuilder: (c, index) {
+                            return AnimationConfiguration.staggeredGrid(
+                              position: index,
+                              duration: const Duration(milliseconds: 375),
+                              columnCount: 2,
+                              child: ScaleAnimation(
+                                child: FadeInAnimation(
+                                  child: InkWell(
+                                    onTap: () {
+                                      Get.to(() => WorkoutDetail(
+                                          bookmarkList[index]
+                                              .user
+                                              .id
+                                              .toString()));
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            child: CachedNetworkImage(
-                                              height: 45.w,
-                                              width: 45.w,
-                                              fit: BoxFit.fill,
-                                              imageUrl:
-                                                  'https://becktesting.site/workout-bud/public/storage/user/' +
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.5),
+                                                spreadRadius: 2,
+                                                blurRadius: 3,
+                                                offset: Offset(0,
+                                                    3), // changes position of shadow
+                                              ),
+                                            ],
+                                          ),
+                                          child: Stack(
+                                            alignment: Alignment.bottomCenter,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                child: CachedNetworkImage(
+                                                  height: 45.w,
+                                                  width: 45.w,
+                                                  fit: BoxFit.fill,
+                                                  imageUrl:
+                                                      'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                          bookmarkList[index]
+                                                              .user
+                                                              .image
+                                                              .toString(),
+                                                  placeholder: (context, url) =>
+                                                      Image.asset(
+                                                    images[0],
+                                                    fit: BoxFit.cover,
+                                                    height: 45.w,
+                                                    width: 45.w,
+                                                  ),
+                                                  errorWidget: (context, url,
+                                                          error) => /* Icon(Icons
+                                    .person) */
+                                                      Image.asset(
+                                                    images[0],
+                                                    fit: BoxFit.cover,
+                                                    height: 45.w,
+                                                    width: 45.w,
+                                                  ),
+                                                ),
+                                              ),
+                                              Opacity(
+                                                opacity: 0.4,
+                                                child: Container(
+                                                  height: 45.w,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.black,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
                                                       bookmarkList[index]
                                                           .user
-                                                          .image
+                                                          .userName
                                                           .toString(),
-                                              placeholder: (context, url) =>
-                                                  Image.asset(
-                                                images[0],
-                                                fit: BoxFit.cover,
-                                                height: 45.w,
-                                                width: 45.w,
-                                              ),
-                                              errorWidget: (context, url,
-                                                      error) => /* Icon(Icons
-                                    .person) */
-                                                  Image.asset(
-                                                images[0],
-                                                fit: BoxFit.cover,
-                                                height: 45.w,
-                                                width: 45.w,
-                                              ),
-                                            ),
-                                          ),
-                                          Opacity(
-                                            opacity: 0.4,
-                                            child: Container(
-                                              height: 45.w,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.black,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20)),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  bookmarkList[index]
-                                                      .user
-                                                      .userName
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 16),
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 16),
+                                                    ),
                                                     Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
                                                       children: [
-                                                        /*  Text(
+                                                        Row(
+                                                          children: [
+                                                            /*  Text(
                                                           '10Min',
                                                           style: TextStyle(
                                                               color: Colors.white,
@@ -193,43 +214,43 @@ class _BookmarksPageState extends State<BookmarksPage> {
                                                         SizedBox(
                                                           width: 5,
                                                         ), */
-                                                        Text(
-                                                          bookmarkList[index]
+                                                            Text(
+                                                              bookmarkList[index]
+                                                                          .user
+                                                                          .activityLevel ==
+                                                                      'null'
+                                                                  ? 'Beginner'
+                                                                  : bookmarkList[
+                                                                          index]
                                                                       .user
-                                                                      .activityLevel ==
-                                                                  'null'
-                                                              ? 'Beginner'
-                                                              : bookmarkList[
-                                                                      index]
-                                                                  .user
-                                                                  .activityLevel,
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 12),
+                                                                      .activityLevel,
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 12),
+                                                            ),
+                                                          ],
                                                         ),
+                                                        // Icon(Icons.bookmark, color: Colors.white,)
                                                       ],
-                                                    ),
-                                                    // Icon(Icons.bookmark, color: Colors.white,)
+                                                    )
                                                   ],
-                                                )
-                                              ],
-                                            ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                        // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
+                                      ],
                                     ),
-                                    // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
-                      }),
+                            );
+                          }),
                 ),
                 // Expanded(
                 //   child: ListView.builder(

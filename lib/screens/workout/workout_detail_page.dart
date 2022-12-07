@@ -259,8 +259,8 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                   )),
                               Row(
                                 children: [
-                                  Icon(Icons.bookmark, color: Colors.white),
-                                  InkWell(
+                                  /*  Icon(Icons.bookmark, color: Colors.white), */
+                                  /*  InkWell(
                                       onTap: () async {
                                         /*             await selectFile();
                                         print(files.length);
@@ -268,7 +268,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                             .uploadImages(context); */
                                       },
                                       child: Icon(Icons.menu,
-                                          color: Colors.white)),
+                                          color: Colors.white)), */
                                 ],
                               )
                             ],
