@@ -57,7 +57,7 @@ class WorkoutWithModel {
         meetUpTime: json["meet_up_time"],
         status: json["status"],
         view: json["view"],
-        rating: json["u_rating"].toDouble(),
+        rating: json["u_rating"] == null ? 0.0 : json["u_rating"].toDouble(),
         bookmark: json["is_bookmark"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),

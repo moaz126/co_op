@@ -30,5 +30,6 @@ String upload_imgaes_url = 'upload/images';
 String insight_url = 'requested/category';
 String notification_count_url = 'notification/count';
 String delete_image_url = 'delete/image';
+String complete_request_url = 'completed';
 String filter_url =
     'https://becktesting.site/workout-bud/api/admin/get/filter/subfilter';

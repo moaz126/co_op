@@ -7,14 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:co_op/constants/constants.dart';
-import 'package:co_op/constants/number_picker.dart';
-import 'package:co_op/screens/auth/accountsetup/physical_activity.dart';
-import 'package:co_op/screens/auth/accountsetup/select_height.dart';
-import 'package:co_op/screens/auth/accountsetup/select_weight.dart';
+
 import 'package:co_op/screens/auth/sign_up.dart';
-import 'package:co_op/screens/auth/social_sign_in.dart';
-import 'package:co_op/screens/home/home_page.dart';
-import 'package:co_op/screens/onboarding.dart';
+
 
 import '../../../api/global_variables.dart';
 import '../../../constants/custom_page_route.dart';

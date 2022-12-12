@@ -352,6 +352,36 @@ class DataApiService {
       rethrow;
     }
   }
+  Future completeRequest(String id, context) async {
+    String url = baseUrl + complete_request_url;
+    print(url);
+
+    try {
+      http.Response response = await http.post(Uri.parse(url), body: {
+        'id': id,
+      }, headers: {
+        "Authorization": "Bearer ${USER_TOKEN.value}",
+      });
+      print(response.body);
+      final result = jsonDecode(response.body);
+      // requestList = jsonDecode(result['list']);
+     
+      if (result['success'] == true) {
+        print('true');
+   
+
+        return true;
+      } else {
+        print('false');
+     
+        return false;
+      }
+    } on Exception {
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   Future resposneRequest(String id, String status, context) async {
     String url = baseUrl + resoponse_url;

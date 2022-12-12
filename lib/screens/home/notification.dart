@@ -145,7 +145,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                   child: CachedNetworkImage(
                                                     height: 12.h,
                                                     width: 12.h,
-                                                    fit: BoxFit.fill,
+                                                    fit: BoxFit.cover,
                                                     imageUrl:
                                                         'https://becktesting.site/workout-bud/public/storage/user/' +
                                                             notificationList[

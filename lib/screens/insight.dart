@@ -77,9 +77,13 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
     });
     await DataApiService.instance
         .getInsightList(selectedDate.toString(), context);
+    print('length');
+    print(insightList.length);
+    print(insightList[0].userData.length);
     for (var i = 0; i < insightList.length; i++) {
       for (var j = 0; j < insightList[i].userData.length; j++) {
         if (insightList[i].userData[j].filterId == 1) {
+          print('object');
           if (yogaUsers.contains(insightList[i]) == false) {
             yogaUsers.add(insightList[i]);
           }
@@ -98,6 +102,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
         }
       }
     }
+    print('second');
     print(yogaUsers.length);
     print(sportsUsers.length);
     print(weightLisftUsers.length);
@@ -321,7 +326,9 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                   return InkWell(
                                     onTap: () {
                                       Get.to(() => WorkoutDetail(
-                                          yogaUsers[index].id.toString()));
+                                          yogaUsers[index]
+                                              .requestedToId
+                                              .toString()));
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.only(
@@ -593,7 +600,9 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                       onTap: () {
                                         setState(() {});
                                         Get.to(() => WorkoutDetail(
-                                            sportsUsers[index].id.toString()));
+                                            sportsUsers[index]
+                                                .requestedToId
+                                                .toString()));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -830,7 +839,9 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                       onTap: () {
                                         setState(() {});
                                         Get.to(() => WorkoutDetail(
-                                            cardioUsers[index].id.toString()));
+                                            cardioUsers[index]
+                                                .requestedToId
+                                                .toString()));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -1068,7 +1079,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                         setState(() {});
                                         Get.to(() => WorkoutDetail(
                                             weightLisftUsers[index]
-                                                .id
+                                                .requestedToId
                                                 .toString()));
                                       },
                                       child: Padding(

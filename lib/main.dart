@@ -78,7 +78,7 @@ Future<void> onSelectNotification(String? payload) async {
         }); */
     Get.to(() => WorkoutDetail(userId.toString()));
   } else if (type == '1') {
-    print('trueeeeeeeeeeeeeeeeeeeeeee');
+
     print(userId);
     Get.to(() => WorkoutDetail(userId.toString()));
   }

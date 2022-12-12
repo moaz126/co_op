@@ -47,10 +47,6 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
 
   List<String> imageList = [
     "assets/images/stretching.jpg",
-    "assets/images/stretching.jpg",
-    "assets/images/stretching.jpg",
-    "assets/images/stretching.jpg",
-    "assets/images/stretching.jpg",
   ];
   int selectedIndexDots = 0;
   int selectedIndex = 0;

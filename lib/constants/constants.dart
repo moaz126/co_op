@@ -27,7 +27,23 @@ final pageSpinkit = SizedBox(
   child: Lottie.asset(
     'assets/animations/page_loader.json',
   ),
-); /* SpinKitFadingCube(
+);
+final timeRemaining = SizedBox(
+  height: 20.h,
+  width: 20.h,
+  child: Lottie.asset(
+    'assets/animations/timeRemaining.json',
+  ),
+);
+final timeend = SizedBox(
+  height: 20.h,
+  width: 20.h,
+  child: Lottie.asset(
+    'assets/animations/timeEnd.json',
+  ),
+);
+
+/* SpinKitFadingCube(
   color: secondaryColor,
   size: 5.h,
 ); */

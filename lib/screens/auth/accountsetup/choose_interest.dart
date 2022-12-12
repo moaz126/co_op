@@ -69,8 +69,14 @@ class _ChooseInterestState extends State<ChooseInterest> {
     super.initState();
     if (interestNavigation == false) {
       filterList.clear();
-    } else
-      filterList = profileInfo.subCategoryId;
+    } else {
+      print(profileInfo.subCategoryId.length);
+      if (profileInfo.subCategoryId.isNotEmpty) {
+        filterList = profileInfo.subCategoryId;
+      } else {
+        filterList.clear();
+      }
+    }
   }
 
   @override
@@ -267,7 +273,6 @@ class _ChooseInterestState extends State<ChooseInterest> {
                       ),
                       InkWell(
                         onTap: () async {
-                          print(interestNavigation);
                           if (interestNavigation == false) {
                             if (filterList.isNotEmpty) {
                               ScaffoldMessenger.of(context).clearSnackBars();
@@ -278,21 +283,30 @@ class _ChooseInterestState extends State<ChooseInterest> {
                                     direction: AxisDirection.left),
                               );
                             } else {
-                              GlobalToast.show('Please select atleast one option');
+                              GlobalToast.show(
+                                  'Please select atleast one option');
                             }
                           } else {
                             setState(() {
                               buttonLoader = true;
                             });
-                            interestNavigation = false;
-                            await DataApiService.instance
-                                .updateInterest(filterList.join(','), context);
-                            await DataApiService.instance
-                                .getprofileinfo(context);
-                            setState(() {
-                              buttonLoader = false;
-                            });
-                            Get.back();
+
+                            if (filterList.isNotEmpty) {
+                              print(filterList.join(','));
+                              await DataApiService.instance.updateInterest(
+                                  filterList.join(','), context);
+                              await DataApiService.instance
+                                  .getprofileinfo(context);
+                              interestNavigation = false;
+
+                              Get.back();
+                            } else {
+                              setState(() {
+                                buttonLoader = false;
+                              });
+                              GlobalToast.show(
+                                  'Please select atleast one option');
+                            }
                           }
                         },
                         child: Container(

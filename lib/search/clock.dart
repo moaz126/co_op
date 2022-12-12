@@ -4,9 +4,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:co_op/api/auth_workout_bud.dart';
 import 'package:co_op/api/global_variables.dart';
 import 'package:co_op/constants/constants.dart';
+import 'package:co_op/screens/workout/workout_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart' as form;
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
@@ -103,6 +105,9 @@ class _ClockState extends State<Clock> {
     _duration = dif.inSeconds;
     print('duration');
     print(_duration);
+    if (_duration < 0)
+      DataApiService.instance
+          .completeRequest(users.requestId.toString(), context);
   }
 
   bool loader = false;
@@ -179,6 +184,20 @@ class _ClockState extends State<Clock> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Get Ready!'),
+          leading: InkWell(
+              onTap: () {
+                if (_duration < 0) {
+                  Navigator.pop(context);
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              WorkoutDetail(users.userData!.id.toString())));
+                } else {
+                  Get.back();
+                }
+              },
+              child: Icon(Icons.arrow_back)),
         ),
         body: loader
             ? Center(child: pageSpinkit)
@@ -188,219 +207,266 @@ class _ClockState extends State<Clock> {
                   SizedBox(
                     height: 2,
                   ),
-                  timerleft == 0 || timerleft < 0
-                      ? Center(
-                          child: CircularCountDownTimer(
-                            duration: _duration,
-                            initialDuration: _initDuration,
-                            controller: _controller,
-                            width: MediaQuery.of(context).size.width / 2,
-                            height: MediaQuery.of(context).size.height / 2,
-                            ringColor: Colors.grey[300]!,
-                            ringGradient: null,
-                            fillColor: Colors.purpleAccent[100]!,
-                            fillGradient: null,
-                            backgroundColor: Colors.purple[500],
-                            backgroundGradient: null,
-                            strokeWidth: 20.0,
-                            strokeCap: StrokeCap.round,
-                            textStyle: const TextStyle(
-                              fontSize: 33.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                  _duration < 0
+                      ? Column(
+                          children: [
+                            timeend,
+                            Center(
+                              child: Text(
+                                'Your time is over!',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
                             ),
-                            textFormat: CountdownTextFormat.HH_MM_SS,
-                            isReverse: false,
-                            isReverseAnimation: false,
-                            isTimerTextShown: true,
-                            autoStart: true,
-                            onStart: () {
-                              debugPrint('Countdown Started');
-                            },
-                            onComplete: () {
-                              debugPrint('Countdown Ended');
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    final themeChange =
-                                        Provider.of<DarkThemeProvider>(context);
+                          ],
+                        )
+                      : timerleft == 0 || timerleft < 0
+                          ? Center(
+                              child: CircularCountDownTimer(
+                                duration: _duration,
+                                initialDuration: _initDuration,
+                                controller: _controller,
+                                width: MediaQuery.of(context).size.width / 2,
+                                height: MediaQuery.of(context).size.height / 2,
+                                ringColor: Colors.grey[300]!,
+                                ringGradient: null,
+                                fillColor: Colors.purpleAccent[100]!,
+                                fillGradient: null,
+                                backgroundColor: Colors.purple[500],
+                                backgroundGradient: null,
+                                strokeWidth: 20.0,
+                                strokeCap: StrokeCap.round,
+                                textStyle: const TextStyle(
+                                  fontSize: 33.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textFormat: CountdownTextFormat.HH_MM_SS,
+                                isReverse: false,
+                                isReverseAnimation: false,
+                                isTimerTextShown: true,
+                                autoStart: true,
+                                onStart: () {
+                                  debugPrint('Countdown Started');
+                                },
+                                onComplete: () {
+                                  debugPrint('Countdown Ended');
+                                  DataApiService.instance.completeRequest(
+                                      users.requestId.toString(), context);
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        final themeChange =
+                                            Provider.of<DarkThemeProvider>(
+                                                context);
 
-                                    return StatefulBuilder(
-                                        builder: (context, setState) {
-                                      return Dialog(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20.0)),
-                                        child: Container(
-                                          color: Theme.of(context)
-                                              .scaffoldBackgroundColor,
-                                          height: 350,
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    SizedBox(height: 10),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
+                                        return StatefulBuilder(
+                                            builder: (context, setState) {
+                                          return Dialog(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        20.0)),
+                                            child: Container(
+                                              color: Theme.of(context)
+                                                  .scaffoldBackgroundColor,
+                                              height: 350,
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            10),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
                                                               .center,
                                                       children: [
-                                                        InkWell(
-                                                          onTap: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: ClipOval(
-                                                            child:
-                                                                CachedNetworkImage(
-                                                              height: 15.h,
-                                                              width: 15.h,
-                                                              fit: BoxFit.fill,
-                                                              imageUrl:
-                                                                  'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                        SizedBox(height: 10),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            InkWell(
+                                                              onTap: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              child: ClipOval(
+                                                                child:
+                                                                    CachedNetworkImage(
+                                                                  height: 15.h,
+                                                                  width: 15.h,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
                                                                       requestUser
                                                                           .image
                                                                           .toString(),
-                                                              placeholder:
-                                                                  (context,
+                                                                  placeholder: (context,
                                                                           url) =>
                                                                       Image
                                                                           .asset(
-                                                                'assets/images/profile.png',
-                                                                height: 70,
-                                                                width: 70,
-                                                                fit:
-                                                                    BoxFit.fill,
-                                                              ),
-                                                              errorWidget: (context,
-                                                                      url,
-                                                                      error) =>
-                                                                  Image.asset(
-                                                                'assets/images/profile.png',
-                                                                height: 70,
-                                                                width: 70,
-                                                                fit: BoxFit
-                                                                    .contain,
+                                                                    'assets/images/profile.png',
+                                                                    height: 70,
+                                                                    width: 70,
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                  ),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) =>
+                                                                      Image
+                                                                          .asset(
+                                                                    'assets/images/profile.png',
+                                                                    height: 70,
+                                                                    width: 70,
+                                                                    fit: BoxFit
+                                                                        .contain,
+                                                                  ),
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
+                                                          ],
                                                         ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(height: 10),
-                                                    Text(requestUser.userName,
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline3),
-                                                    SizedBox(height: 10),
-                                                    Text(
-                                                        'Rate Your Experience with ' +
+                                                        SizedBox(height: 10),
+                                                        Text(
                                                             requestUser
                                                                 .userName,
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyText2),
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(height: 5),
-                                              RatingBar(
-                                                  initialRating: 0.0,
-                                                  direction: Axis.horizontal,
-                                                  allowHalfRating: true,
-                                                  itemCount: 5,
-                                                  itemSize: 30,
-                                                  ratingWidget: RatingWidget(
-                                                      full: const Icon(
-                                                          Icons.star,
-                                                          color:
-                                                              secondaryColor),
-                                                      half: const Icon(
-                                                        Icons.star_half,
-                                                        color: secondaryColor,
-                                                      ),
-                                                      empty: const Icon(
-                                                        Icons.star_outline,
-                                                        color: secondaryColor,
-                                                      )),
-                                                  onRatingUpdate: (value) {
-                                                    rate = value;
-                                                  }),
-                                              Column(children: [
-                                                SizedBox(
-                                                  height: 20,
-                                                ),
-                                                Container(
-                                                  height: 6.h,
-                                                  width: 70.w,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                      color: primaryColor),
-                                                  child: InkWell(
-                                                    onTap: () async {
-                                                      DataApiService.instance
-                                                          .sendRating(
-                                                              requestUser.id
-                                                                  .toString(),
-                                                              rate.toString(),
-                                                              context);
-                                                      Navigator.pop(context);
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Center(
-                                                        child: Text("Submit",
-                                                            style: TextStyle(
-                                                                fontSize: 2.1.h,
-                                                                color: Colors
-                                                                    .white))),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .headline3),
+                                                        SizedBox(height: 10),
+                                                        Text(
+                                                            'Rate Your Experience with ' +
+                                                                requestUser
+                                                                    .userName,
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyText2),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ]),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    });
-                                  });
-                            },
+                                                  SizedBox(height: 5),
+                                                  RatingBar(
+                                                      initialRating: 0.0,
+                                                      direction:
+                                                          Axis.horizontal,
+                                                      allowHalfRating: true,
+                                                      itemCount: 5,
+                                                      itemSize: 30,
+                                                      ratingWidget:
+                                                          RatingWidget(
+                                                              full: const Icon(
+                                                                  Icons.star,
+                                                                  color:
+                                                                      secondaryColor),
+                                                              half: const Icon(
+                                                                Icons.star_half,
+                                                                color:
+                                                                    secondaryColor,
+                                                              ),
+                                                              empty: const Icon(
+                                                                Icons
+                                                                    .star_outline,
+                                                                color:
+                                                                    secondaryColor,
+                                                              )),
+                                                      onRatingUpdate: (value) {
+                                                        rate = value;
+                                                      }),
+                                                  Column(children: [
+                                                    SizedBox(
+                                                      height: 20,
+                                                    ),
+                                                    Container(
+                                                      height: 6.h,
+                                                      width: 70.w,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                          color: primaryColor),
+                                                      child: InkWell(
+                                                        onTap: () async {
+                                                          DataApiService
+                                                              .instance
+                                                              .sendRating(
+                                                                  requestUser.id
+                                                                      .toString(),
+                                                                  rate.toString(),
+                                                                  context);
+                                                          Navigator.pop(
+                                                              context);
+                                                          Navigator.pop(
+                                                              context);
+                                                          Navigator.pushReplacement(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (BuildContext
+                                                                          context) =>
+                                                                      WorkoutDetail(users
+                                                                          .userData!
+                                                                          .id
+                                                                          .toString())));
+                                                        },
+                                                        child: Center(
+                                                            child: Text(
+                                                                "Submit",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        2.1.h,
+                                                                    color: Colors
+                                                                        .white))),
+                                                      ),
+                                                    ),
+                                                  ]),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                      });
+                                },
 
-                            // This Callback will execute when the Countdown Changes.
-                            onChange: (String timeStamp) {
-                              // Here, do whatever you want
-                              // debugPrint('Countdown Changed $timeStamp');
-                            },
-                          ),
-                        )
-                      : Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Time remaining',
-                                style: TextStyle(fontSize: 20),
+                                // This Callback will execute when the Countdown Changes.
+                                onChange: (String timeStamp) {
+                                  // Here, do whatever you want
+                                  // debugPrint('Countdown Changed $timeStamp');
+                                },
                               ),
-                              SizedBox(
-                                height: 10,
+                            )
+                          : Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  timeRemaining,
+                                  Text(
+                                    'Time remaining',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    intToTimeLeft(timerleft),
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                intToTimeLeft(timerleft),
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ],
-                          ),
-                        ),
-                  timerleft == 0 || timerleft < 0
+                            ),
+                  SizedBox(
+                    height: 15.h,
+                  )
+                  /*  timerleft == 0 || timerleft < 0
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -435,8 +501,9 @@ class _ClockState extends State<Clock> {
                             ),
                           ],
                         )
-                      : SizedBox(),
+                      : SizedBox(), */
                 ],
+
                 /*        ),
         floatingActionButton: timerleft == 0 || timerleft < 0
             ? Row(
