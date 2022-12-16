@@ -10,14 +10,18 @@ import 'package:co_op/models/InsightModel.dart';
 import 'package:co_op/models/NotificationModel.dart';
 import 'package:co_op/models/RequestStatus_Model.dart';
 import 'package:co_op/models/WorkoutWithModel.dart';
+import 'package:co_op/screens/home/requestList.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:co_op/models/Profile_Model.dart';
 
+import '../models/MyRequestList.dart';
+
 final USER_TOKEN = ValueNotifier("");
 var profileInfo = GetProfileModel(goal: [], subCategoryId: [], imageList: []);
 List<GetFilterModel> getfilterList = [];
+List<MyRequestList> myReqeustList = [];
 List<AddressModel> getAddrList = [];
 List<BookmarkModel> bookmarkList = [];
 List<GetUsersModel> getUsersList = [];

@@ -79,29 +79,34 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
         .getInsightList(selectedDate.toString(), context);
     print('length');
     print(insightList.length);
-    print(insightList[0].userData.length);
-    for (var i = 0; i < insightList.length; i++) {
-      for (var j = 0; j < insightList[i].userData.length; j++) {
-        if (insightList[i].userData[j].filterId == 1) {
-          print('object');
-          if (yogaUsers.contains(insightList[i]) == false) {
-            yogaUsers.add(insightList[i]);
-          }
-        } else if (insightList[i].userData[j].filterId == 2) {
-          if (insightList.contains(insightList[i] == false)) {
-            sportsUsers.add(insightList[i]);
-          }
-        } else if (insightList[i].userData[j].filterId == 3) {
-          if (weightLisftUsers.contains(insightList[i]) == false) {
-            weightLisftUsers.add(insightList[i]);
-          }
-        } else if (insightList[i].userData[j].filterId == 4) {
-          if (cardioUsers.contains(insightList[i]) == false) {
-            cardioUsers.add(insightList[i]);
+    if(insightList.isNotEmpty){
+      print(insightList[0].userData.length);
+      for (var i = 0; i < insightList.length; i++) {
+        for (var j = 0; j < insightList[i].userData.length; j++) {
+          if (insightList[i].userData[j].filterId == 1) {
+            print('object');
+            if (yogaUsers.contains(insightList[i]) == false) {
+              yogaUsers.add(insightList[i]);
+            }
+          } else if (insightList[i].userData[j].filterId == 2) {
+
+            if (sportsUsers.contains(insightList[i]) == false) {
+              print('filterid');
+              sportsUsers.add(insightList[i]);
+            }
+          } else if (insightList[i].userData[j].filterId == 3) {
+            if (weightLisftUsers.contains(insightList[i]) == false) {
+              weightLisftUsers.add(insightList[i]);
+            }
+          } else if (insightList[i].userData[j].filterId == 4) {
+            if (cardioUsers.contains(insightList[i]) == false) {
+              cardioUsers.add(insightList[i]);
+            }
           }
         }
       }
     }
+
     print('second');
     print(yogaUsers.length);
     print(sportsUsers.length);

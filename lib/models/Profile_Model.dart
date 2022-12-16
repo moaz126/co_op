@@ -31,6 +31,7 @@ class GetProfileModel {
     this.lng,
     this.complete,
     this.inProgress,
+    this.requested,
     this.time,
   });
 
@@ -57,6 +58,7 @@ class GetProfileModel {
   double? lng;
   int? complete;
   int? inProgress;
+  int? requested;
   int? time;
 
   factory GetProfileModel.fromJson(Map<String, dynamic> json) =>
@@ -86,6 +88,7 @@ class GetProfileModel {
         lng: json["long"].toDouble(),
         complete: json["completed"],
         inProgress: json["inprogress"],
+        requested: json["requests"],
         time: json["time_in_minutes"],
       );
 }

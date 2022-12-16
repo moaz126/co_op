@@ -29,7 +29,6 @@ Future<void> _handleMessage(RemoteMessage message) async {
   await Future.delayed(Duration(seconds: 2));
 
   if (type == '0') {
-    print('trueeeeeeeeeeeeeeeeeeeeeee');
     /*  Get.defaultDialog(
         title: "Request",
         middleText: "",
@@ -53,7 +52,7 @@ Future<void> _handleMessage(RemoteMessage message) async {
 }
 
 Future<void> onSelectNotification(String? payload) async {
-  print('naviagate2');
+
 
   await Future.delayed(Duration(seconds: 2));
   if (type == '0') {

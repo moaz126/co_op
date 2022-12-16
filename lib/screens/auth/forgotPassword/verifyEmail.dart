@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:co_op/screens/auth/forgotPassword/new_password.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -89,7 +90,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                       animationType: AnimationType.fade,
                       validator: (v) {
                         if (v != otp.toString()) {
-                          return "Incorrect OTP";
+                          return "";
                         } else {
                           return null;
                         }
@@ -122,9 +123,9 @@ class _EmailVerifyState extends State<EmailVerify> {
                       ],
                       onCompleted: (v) {
                         debugPrint("Completed");
-                        if (otp.toString() == OtpController.text) {
-                          Get.to(() => NewPassword(widget.email));
-                        }
+                        // if (otp.toString() == OtpController.text) {
+                        //   Get.to(() => NewPassword(widget.email));
+                        // }
                       },
                       // onTap: () {
                       //   print("Pressed");
@@ -152,6 +153,20 @@ class _EmailVerifyState extends State<EmailVerify> {
                 onTap: () {
                   if (otp.toString() == OtpController.text) {
                     Get.to(() => NewPassword(widget.email));
+                  } else{
+                    Fluttertoast.showToast(
+                        msg: 'Invalid OTP'
+                            .toString(),
+                        toastLength: Toast
+                            .LENGTH_SHORT,
+                        gravity:
+                        ToastGravity
+                            .BOTTOM,
+                        timeInSecForIosWeb:
+                        1,
+                        textColor:
+                        Colors.white,
+                        fontSize: 16.0);
                   }
                 },
                 child: Container(

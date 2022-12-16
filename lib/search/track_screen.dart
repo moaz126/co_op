@@ -386,7 +386,7 @@ class _TrackScreenState extends State<TrackScreen> {
                     child: CachedNetworkImage(
                       height: 10.h,
                       width: 10.h,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                       imageUrl:
                           'https://becktesting.site/workout-bud/public/storage/user/' +
                               getUsersList[index].image.toString(),
@@ -399,7 +399,7 @@ class _TrackScreenState extends State<TrackScreen> {
                         'assets/images/profile.png',
                         height: 70,
                         width: 70,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                       errorWidget: (context, url,
                               error) => /* Icon(Icons
@@ -408,7 +408,7 @@ class _TrackScreenState extends State<TrackScreen> {
                         'assets/images/profile.png',
                         height: 70,
                         width: 70,
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),

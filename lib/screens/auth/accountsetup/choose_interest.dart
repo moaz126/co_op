@@ -275,7 +275,7 @@ class _ChooseInterestState extends State<ChooseInterest> {
                         onTap: () async {
                           if (interestNavigation == false) {
                             if (filterList.isNotEmpty) {
-                              ScaffoldMessenger.of(context).clearSnackBars();
+                              imagepath='';
                               Navigator.push(
                                 context,
                                 CustomPageRoute(

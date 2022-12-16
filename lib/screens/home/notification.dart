@@ -93,23 +93,27 @@ class _NotificationPageState extends State<NotificationPage> {
                                     child: InkWell(
                                       onTap: () {
                                         setState(() {});
-                                        if (notificationList[index]
-                                                .title
-                                                .toUpperCase() ==
-                                            'YOU HAVE A NEW NOTIFICATION') {
-                                          Get.to(() => WorkoutDetail(
-                                              notificationList[index]
-                                                  .requestedById
-                                                  .toString()));
-                                        } else if (notificationList[index]
-                                                .title
-                                                .toUpperCase() ==
-                                            ' ACCEPT YOUR REQUEST ') {
-                                          Get.to(() => WorkoutDetail(
-                                              notificationList[index]
-                                                  .requestedById
-                                                  .toString()));
-                                        }
+                                        Get.to(() => WorkoutDetail(
+                                            notificationList[index]
+                                                .requestedById
+                                                .toString()));
+                                        // if (notificationList[index]
+                                        //         .title
+                                        //         .toUpperCase() ==
+                                        //     'YOU HAVE A NEW NOTIFICATION') {
+                                        //   Get.to(() => WorkoutDetail(
+                                        //       notificationList[index]
+                                        //           .requestedById
+                                        //           .toString()));
+                                        // } else if (notificationList[index]
+                                        //         .title
+                                        //         .toUpperCase() ==
+                                        //     ' ACCEPT YOUR REQUEST ') {
+                                        //   Get.to(() => WorkoutDetail(
+                                        //       notificationList[index]
+                                        //           .requestedById
+                                        //           .toString()));
+                                        // }
                                       },
                                       child: Column(
                                         mainAxisAlignment:

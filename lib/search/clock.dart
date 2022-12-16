@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:co_op/api/auth_workout_bud.dart';
 import 'package:co_op/api/global_variables.dart';
@@ -103,11 +104,14 @@ class _ClockState extends State<Clock> {
     Duration dif = endTime.difference(DateTime.now());
     _initDuration = initDif.inSeconds;
     _duration = dif.inSeconds;
+    print('inital duration');
+    print(_initDuration);
     print('duration');
     print(_duration);
-    if (_duration < 0)
-      DataApiService.instance
-          .completeRequest(users.requestId.toString(), context);
+     if (_duration < 0 || _initDuration<0) {
+       DataApiService.instance
+           .completeRequest(users.requestId.toString(), context);
+     }
   }
 
   bool loader = false;
@@ -504,49 +508,70 @@ class _ClockState extends State<Clock> {
                       : SizedBox(), */
                 ],
 
-                /*        ),
-        floatingActionButton: timerleft == 0 || timerleft < 0
+                       ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: timerleft == 0 || timerleft < 0 && _duration>0
             ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // SizedBox(
+                  //   width: 23.w,
+                  //   child: _button(
+                  //     title: "Start",
+                  //     onPressed: () => _controller.start(),
+                  //   ),
+                  // ),
                   SizedBox(
-                    width: 23.w,
+                    width: 60.w,
                     child: _button(
-                      title: "Start",
-                      onPressed: () => _controller.start(),
+                      title: "Quit",
+                      onPressed: () {
+
+
+                        AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.question,
+                            animType: AnimType.BOTTOMSLIDE,
+                            title: 'Quit',
+                            desc:
+                            'Are you sure you want to quit?',
+                            btnOkOnPress: () async {
+                              _controller.pause();
+                              DataApiService.instance.quitTimer(profileInfo.id.toString(),getrequest.requestedToId.toString(),getrequest.id.toString(), context);
+                              DataApiService.instance
+                                     .completeRequest(users.requestId.toString(), context);
+                              Navigator.pop(context);
+
+                            },
+                            btnCancelOnPress: () {})
+                            .show();
+                      }
                     ),
                   ),
-                  SizedBox(
-                    width: 23.w,
-                    child: _button(
-                      title: "Pause",
-                      onPressed: () => _controller.pause(),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 25.w,
-                    child: _button(
-                      title: "Resume",
-                      onPressed: () => _controller.resume(),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 25.w,
-                    child: _button(
-                      title: "Restart",
-                      onPressed: () => _controller.restart(duration: _duration),
-                    ),
-                  ),
+                  // SizedBox(
+                  //   width: 25.w,
+                  //   child: _button(
+                  //     title: "Resume",
+                  //     onPressed: () => _controller.resume(),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   width: 25.w,
+                  //   child: _button(
+                  //     title: "Restart",
+                  //     onPressed: () => _controller.restart(duration: _duration),
+                  //   ),
+                  // ),
                 ],
               )
-            : SizedBox() */
-              ));
+            : SizedBox()
+              );
   }
 
   Widget _button({required String title, VoidCallback? onPressed}) {
     return ElevatedButton(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.purple),
+        backgroundColor: MaterialStateProperty.all(primaryColor),
       ),
       onPressed: onPressed,
       child: Text(

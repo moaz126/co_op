@@ -43,7 +43,7 @@ class _SelectHeightNumberState extends State<SelectHeightNumber> {
               icon: Icon(Icons.remove),
               onPressed: () => setState(() {
                 final newValue = _currentIntValue - 1;
-                _currentIntValue = newValue.clamp(70, 250);
+                _currentIntValue = newValue.clamp(3, 8);
               }),
             ),
             Text(
@@ -57,7 +57,7 @@ class _SelectHeightNumberState extends State<SelectHeightNumber> {
               icon: Icon(Icons.add),
               onPressed: () => setState(() {
                 final newValue = _currentIntValue + 1;
-                _currentIntValue = newValue.clamp(70, 250);
+                _currentIntValue = newValue.clamp(3, 8);
               }),
             ),
           ],
@@ -142,7 +142,7 @@ class _SelectHeightdecimalState extends State<SelectHeightdecimal> {
               icon: Icon(Icons.remove),
               onPressed: () => setState(() {
                 final newValue = _currentIntValue - 1;
-                _currentIntValue = newValue.clamp(70, 250);
+                _currentIntValue = newValue.clamp(0, 9);
               }),
             ),
             Text(
@@ -156,7 +156,7 @@ class _SelectHeightdecimalState extends State<SelectHeightdecimal> {
               icon: Icon(Icons.add),
               onPressed: () => setState(() {
                 final newValue = _currentIntValue + 1;
-                _currentIntValue = newValue.clamp(70, 250);
+                _currentIntValue = newValue.clamp(0, 9);
               }),
             ),
           ],
@@ -348,7 +348,7 @@ class _SelectNumberHorizontalState extends State<SelectNumberHorizontal> {
               icon: Icon(Icons.remove),
               onPressed: () => setState(() {
                 final newValue = _currentHorizontalIntValue - 1;
-                _currentHorizontalIntValue = newValue.clamp(0, 100);
+                _currentHorizontalIntValue = newValue.clamp(50, 300);
               }),
             ),
             Text(
@@ -362,7 +362,7 @@ class _SelectNumberHorizontalState extends State<SelectNumberHorizontal> {
               icon: Icon(Icons.add),
               onPressed: () => setState(() {
                 final newValue = _currentHorizontalIntValue + 1;
-                _currentHorizontalIntValue = newValue.clamp(0, 100);
+                _currentHorizontalIntValue = newValue.clamp(50, 300);
               }),
             ),
           ],

@@ -13,10 +13,12 @@ import 'package:co_op/models/InsightModel.dart';
 import 'package:co_op/models/NotificationModel.dart';
 import 'package:co_op/models/RequestStatus_Model.dart';
 import 'package:co_op/models/WorkoutWithModel.dart';
+import 'package:co_op/screens/home/requestList.dart';
 import 'package:co_op/screens/profile/AddressList.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import '../models/MyRequestList.dart';
 import '../models/Profile_Model.dart';
 import 'urls.dart';
 import 'global_variables.dart';
@@ -111,7 +113,7 @@ class DataApiService {
       };
       var request = http.MultipartRequest('POST', Uri.parse(url));
       print('phone number');
-      print(phonenumber);
+      print(image);
       request.fields.addAll({
         'name': name,
         'user_name': username,
@@ -134,7 +136,7 @@ class DataApiService {
         'sub_category_id': filterList.join(','),
         'location_name': address,
       });
-      print(address);
+
       if (image != '')
         request.files.add(await http.MultipartFile.fromPath('image', image));
       request.headers.addAll(headers);
@@ -441,6 +443,34 @@ class DataApiService {
       }
     }
   }
+  Future getMyRequestList(context) async {
+    connected = await isNetworkAvailable();
+    if (connected) {
+      String url =baseUrl+ myRequest_url;
+      print(url);
+
+      try {
+        http.Response response = await http.post(Uri.parse(url),body: {'flag':'1'}, headers: {
+          "Authorization": "Bearer ${USER_TOKEN.value}",
+        });
+        print(response.body);
+        final result = jsonDecode(response.body);
+        if (response.statusCode == 200) {
+          print('Success');
+
+          print("divider");
+          myReqeustList = List<MyRequestList>.from(
+              result['send_request'].map((x) => MyRequestList.fromJson(x)));
+        } else {
+          print("unsuccess");
+        }
+      } on Exception {
+        rethrow;
+      } catch (e) {
+        rethrow;
+      }
+    }
+  }
 
   Future getAddressList(context) async {
     connected = await isNetworkAvailable();
@@ -479,6 +509,35 @@ class DataApiService {
       try {
         http.Response response =
             await http.post(Uri.parse(url), body: address, headers: {
+          "Authorization": "Bearer ${USER_TOKEN.value}",
+        });
+        print(response.body);
+        final result = jsonDecode(response.body);
+        if (response.statusCode == 200) {
+          print('Success');
+        } else {
+          print("unsuccess");
+        }
+      } on Exception {
+        rethrow;
+      } catch (e) {
+        rethrow;
+      }
+    }
+  }
+  Future quitTimer(String id,String idto,String reqid, context) async {
+    connected = await isNetworkAvailable();
+    if (connected) {
+      String url = baseUrl + quit_url;
+      print(url);
+
+      try {
+        http.Response response =
+            await http.post(Uri.parse(url), body: {
+              'quiter':id,
+              'notifier':idto,
+              'request_id':reqid,
+            }, headers: {
           "Authorization": "Bearer ${USER_TOKEN.value}",
         });
         print(response.body);

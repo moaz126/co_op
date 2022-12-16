@@ -52,7 +52,7 @@ class _SignUpState extends State<SignUp> {
                 setState(() {});
               },
               controller: AddressNameController,
-              decoration: InputDecoration(hintText: "Enter address"),
+              decoration: InputDecoration(hintText: "Enter address title"),
             ),
             actions: <Widget>[
               TextButton(
@@ -186,7 +186,7 @@ class _SignUpState extends State<SignUp> {
                             child: TextFormField(
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'This field is required';
+                                  return 'Username is required';
                                 }
                               },
                               controller: UserNameController,
@@ -249,7 +249,7 @@ class _SignUpState extends State<SignUp> {
                               child: TextFormField(
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return 'This field is required';
+                                    return 'Email is required';
                                   }
                                 },
                                 controller: EmailController,
@@ -313,7 +313,7 @@ class _SignUpState extends State<SignUp> {
                             child: TextFormField(
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'This field is required';
+                                  return 'Password is required';
                                 }
                               },
                               onChanged: (value) {
@@ -388,7 +388,7 @@ class _SignUpState extends State<SignUp> {
                             child: Padding(
                               padding: EdgeInsets.only(left: 20),
                               child:
-                                  Text('Password should atleast 8 characters'),
+                                  Text('Password should atleast 8 characters',style: TextStyle(color: Colors.red),),
                             ),
                           ),
 
@@ -401,7 +401,7 @@ class _SignUpState extends State<SignUp> {
                             child: TextFormField(
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'This field is required';
+                                  return 'Confirm Password is required';
                                 }
                               },
                               controller: ConfirmPasswordController,
@@ -487,7 +487,7 @@ class _SignUpState extends State<SignUp> {
                                 child: TextFormField(
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return 'This field is required';
+                                      return 'Address is required';
                                     }
                                   },
                                   onTap: () async {
@@ -988,16 +988,7 @@ class _SignUpState extends State<SignUp> {
                                           loader = false;
                                         });
                                         if (status) {
-                                          /*  customDialog(
-                                          context: context,
-                                          title: 'Sign Up',
-                                          middleText: SnackMessage.toString(),
-                                          content: ElevatedButton(
-                                              onPressed: () {
-                                                Get.offAll(() => SignIn());
-                                              },
-                                              child: Text("Login")),
-                                          hasContent: true); */
+
                                           AwesomeDialog(
                                             context: context,
                                             dialogType: DialogType.SUCCES,
@@ -1019,9 +1010,9 @@ class _SignUpState extends State<SignUp> {
                                             title: 'Sign Up',
                                             desc: SnackMessage,
                                             btnOkOnPress: () {
-                                              UserNameController.clear();
-                                              EmailController.clear();
-                                              PasswordController.clear();
+                                              // UserNameController.clear();
+                                              // EmailController.clear();
+                                              // PasswordController.clear();
                                             },
                                           ).show();
                                         }

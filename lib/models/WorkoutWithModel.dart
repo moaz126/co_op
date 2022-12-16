@@ -27,6 +27,7 @@ class WorkoutWithModel {
     required this.meetupEndTime,
     required this.workoutUser,
     required this.rating,
+    required this.completed,
     required this.bookmark,
   });
 
@@ -43,6 +44,7 @@ class WorkoutWithModel {
   DateTime updatedAt;
   String meetupEndTime;
   double? rating;
+  int? completed;
   int bookmark;
   List<WorkoutUser> workoutUser;
 
@@ -58,6 +60,7 @@ class WorkoutWithModel {
         status: json["status"],
         view: json["view"],
         rating: json["u_rating"] == null ? 0.0 : json["u_rating"].toDouble(),
+        completed: json["completed_workouts"] == null ? 0 : json["completed_workouts"],
         bookmark: json["is_bookmark"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
