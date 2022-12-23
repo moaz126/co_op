@@ -130,7 +130,7 @@ class _ChooseInterestState extends State<ChooseInterest> {
                                   color: secondaryColor,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold)),
-                          subtitle: Text('Please choose your favourite sport'),
+                          subtitle: const Text('Please choose your interest'),
                           trailing: Icon(
                             _customTileExpandedSports
                                 ? Icons.arrow_drop_down_circle

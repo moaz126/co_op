@@ -24,6 +24,7 @@ class MyRequestList {
     required this.meetupEndTime,
     required this.isCompleted,
     required this.requestedToUser,
+    required this.duration,
   });
 
   int id;
@@ -39,6 +40,7 @@ class MyRequestList {
   DateTime updatedAt;
   String meetupEndTime;
   int isCompleted;
+  String duration;
   List<RequestedToUser> requestedToUser;
 
   factory MyRequestList.fromJson(Map<String, dynamic> json) => MyRequestList(
@@ -51,6 +53,7 @@ class MyRequestList {
     meetUpTime: json["meet_up_time"],
     status: json["status"],
     view: json["view"],
+    duration: json["duration"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
     meetupEndTime: json["meetup_end_time"],
@@ -115,7 +118,7 @@ class RequestedToUser {
   String activityLevel;
   String? image;
   dynamic fullName;
-  String nickName;
+  String? nickName;
   dynamic phone;
   dynamic emailVerifiedAt;
   DateTime createdAt;

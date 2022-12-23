@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:co_op/api/auth_workout_bud.dart';
+import 'package:co_op/constants/custom_dialog.dart';
 import 'package:co_op/screens/profile/profile_page.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
@@ -41,6 +43,7 @@ class _EditProfileState extends State<EditProfile> {
   bool view = true;
 
   int selectedIndex = 0;
+
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
 
@@ -98,6 +101,7 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   bool pageLoader = false;
+
   callApi() async {
     setState(() {
       pageLoader = true;
@@ -1250,7 +1254,7 @@ class _EditProfileState extends State<EditProfile> {
                                         final value3 = values[2];
                                         final value4 = values[3];
                                         setState(() {
-                                          
+
                                           addrUser.insert(
                                               0,
                                               Address(
@@ -1336,8 +1340,10 @@ class _EditProfileState extends State<EditProfile> {
 
                                         if (updateImage == '') {
                                           Map<String, dynamic> update = {
-                                            'user_name':
-                                                UsernameController.text,
+                                            if (profileInfo.userName !=
+                                                UsernameController.text)
+                                              'user_name':
+                                                  UsernameController.text,
                                             'gender':
                                                 profileInfo.gender.toString(),
                                             'age': AgeController.text,
@@ -1362,25 +1368,31 @@ class _EditProfileState extends State<EditProfile> {
                                             if (selectedIndex == 2)
                                               'activity_level': 'Advanced',
                                           };
-                                          await DataApiService.instance
+                                          bool status = await DataApiService
+                                              .instance
                                               .updateProfileWithoutImage(
                                                   update, context);
-                                          if (multipleImages.isNotEmpty) {
+                                          if (status) {
+                                            if (multipleImages.isNotEmpty) {
+                                              await DataApiService.instance
+                                                  .uploadImages(
+                                                      multipleImages, context);
+                                            }
                                             await DataApiService.instance
-                                                .uploadImages(
-                                                    multipleImages, context);
-                                          }
-                                          await DataApiService.instance
-                                              .getprofileinfo(context);
+                                                .getprofileinfo(context);
 
-                                          Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          ProfilePage()));
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        ProfilePage()));
+                                          } else {
+                                            GlobalToast.show(SnackMessage!);
+                                          }
                                         } else {
-                                          await DataApiService.instance
+                                          bool status1 = await DataApiService
+                                              .instance
                                               .updateProfile(
                                                   profileInfo.gender.toString(),
                                                   UsernameController.text,
@@ -1393,20 +1405,24 @@ class _EditProfileState extends State<EditProfile> {
                                                   selectedIndex,
                                                   updateImage,
                                                   context);
-                                          if (multipleImages.isNotEmpty) {
+                                          if (status1) {
+                                            if (multipleImages.isNotEmpty) {
+                                              await DataApiService.instance
+                                                  .uploadImages(
+                                                      multipleImages, context);
+                                            }
                                             await DataApiService.instance
-                                                .uploadImages(
-                                                    multipleImages, context);
-                                          }
-                                          await DataApiService.instance
-                                              .getprofileinfo(context);
+                                                .getprofileinfo(context);
 
-                                          Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          ProfilePage()));
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        ProfilePage()));
+                                          } else {
+                                            GlobalToast.show(SnackMessage!);
+                                          }
                                         }
                                         setState(() {
                                           loader = false;
@@ -1462,6 +1478,7 @@ class Address {
     this.longitude,
     this.AddController,
   });
+
   String? useraddress;
   String? hashcode;
   String? city;

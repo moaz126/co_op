@@ -234,6 +234,7 @@ class _PhysicalActivityState extends State<PhysicalActivity> {
                             );
                           } else {
                             GlobalToast.show( 'Please select acitivity level');
+
                           }
                         },
                         child: Container(

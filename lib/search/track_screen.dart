@@ -421,36 +421,37 @@ class _TrackScreenState extends State<TrackScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      RatingBar(
-                          initialRating: 0,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemSize: 24,
-                          ratingWidget: RatingWidget(
-                              full:
-                                  const Icon(Icons.star, color: secondaryColor),
-                              half: const Icon(
-                                Icons.star_half,
-                                color: secondaryColor,
-                              ),
-                              empty: const Icon(
-                                Icons.star_outline,
-                                color: secondaryColor,
-                              )),
-                          onRatingUpdate: (value) {
-                            setState(() {
-                              _userRating = value;
-                            });
-                          }),
+                      AbsorbPointer(
+                        absorbing: true,
+                        child: RatingBar(
+                            initialRating: getUsersList[index].rating,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemSize: 24,
+                            ratingWidget: RatingWidget(
+                                full:
+                                    const Icon(Icons.star, color: secondaryColor),
+                                half: const Icon(
+                                  Icons.star_half,
+                                  color: secondaryColor,
+                                ),
+                                empty: const Icon(
+                                  Icons.star_outline,
+                                  color: secondaryColor,
+                                )),
+                            onRatingUpdate: (value) {
+                              setState(() {
+                                _userRating = value;
+                              });
+                            }),
+                      ),
                       Container(
                         width: 30,
                         height: 30,
                         alignment: Alignment.center,
                         child: Text(
-                          _initialRating != null
-                              ? _userRating.toString()
-                              : 'Rate it!',
+                         getUsersList[index].rating.toString(),
                           style: const TextStyle(
                               color: secondaryColor,
                               fontSize: 14,

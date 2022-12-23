@@ -35,6 +35,7 @@ class _NotificationPageState extends State<NotificationPage> {
     'assets/images/muscles.webp',
   ];
   bool loader = false;
+
   callApi() async {
     setState(() {
       loader = true;
@@ -95,8 +96,14 @@ class _NotificationPageState extends State<NotificationPage> {
                                         setState(() {});
                                         Get.to(() => WorkoutDetail(
                                             notificationList[index]
-                                                .requestedById
-                                                .toString()));
+                                                        .requestedById ==
+                                                    profileInfo.id
+                                                ? notificationList[index]
+                                                    .requestedToId
+                                                    .toString()
+                                                : notificationList[index]
+                                                    .requestedById
+                                                    .toString()));
                                         // if (notificationList[index]
                                         //         .title
                                         //         .toUpperCase() ==
@@ -146,36 +153,67 @@ class _NotificationPageState extends State<NotificationPage> {
                                                           topLeft:
                                                               Radius.circular(
                                                                   20)),
-                                                  child: CachedNetworkImage(
-                                                    height: 12.h,
-                                                    width: 12.h,
-                                                    fit: BoxFit.cover,
-                                                    imageUrl:
-                                                        'https://becktesting.site/workout-bud/public/storage/user/' +
-                                                            notificationList[
-                                                                    index]
-                                                                .requestedByUser[
-                                                                    0]
-                                                                .image
-                                                                .toString(),
-                                                    placeholder:
-                                                        (context, url) =>
-                                                            Image.asset(
-                                                      'assets/images/stretching.jpg',
-                                                      fit: BoxFit.cover,
-                                                      height: 12.h,
-                                                      width: 12.h,
-                                                    ),
-                                                    errorWidget: (context, url,
-                                                            error) => /* Icon(Icons
+                                                  child: notificationList[index].requestedByUser[0].id==profileInfo.id
+                                                      ? CachedNetworkImage(
+                                                          height: 12.h,
+                                                          width: 12.h,
+                                                          fit: BoxFit.cover,
+                                                          imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                              notificationList[
+                                                                      index]
+                                                                  .requestedToUser[
+                                                                      0]
+                                                                  .image
+                                                                  .toString(),
+                                                          placeholder:
+                                                              (context, url) =>
+                                                                  Image.asset(
+                                                            'assets/images/stretching.jpg',
+                                                            fit: BoxFit.cover,
+                                                            height: 12.h,
+                                                            width: 12.h,
+                                                          ),
+                                                          errorWidget: (context,
+                                                                  url,
+                                                                  error) => /* Icon(Icons
                                     .person) */
-                                                        Image.asset(
-                                                      'assets/images/stretching.jpg',
-                                                      fit: BoxFit.cover,
-                                                      height: 7.h,
-                                                      width: 7.h,
-                                                    ),
-                                                  ),
+                                                              Image.asset(
+                                                            'assets/images/stretching.jpg',
+                                                            fit: BoxFit.cover,
+                                                            height: 7.h,
+                                                            width: 7.h,
+                                                          ),
+                                                        )
+                                                      : CachedNetworkImage(
+                                                          height: 12.h,
+                                                          width: 12.h,
+                                                          fit: BoxFit.cover,
+                                                          imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                              notificationList[
+                                                                      index]
+                                                                  .requestedByUser[
+                                                                      0]
+                                                                  .image
+                                                                  .toString(),
+                                                          placeholder:
+                                                              (context, url) =>
+                                                                  Image.asset(
+                                                            'assets/images/stretching.jpg',
+                                                            fit: BoxFit.cover,
+                                                            height: 12.h,
+                                                            width: 12.h,
+                                                          ),
+                                                          errorWidget: (context,
+                                                                  url,
+                                                                  error) => /* Icon(Icons
+                                    .person) */
+                                                              Image.asset(
+                                                            'assets/images/stretching.jpg',
+                                                            fit: BoxFit.cover,
+                                                            height: 7.h,
+                                                            width: 7.h,
+                                                          ),
+                                                        ),
                                                 ),
                                                 Padding(
                                                   padding:

@@ -122,7 +122,7 @@ class _SelectHeightdecimalState extends State<SelectHeightdecimal> {
         NumberPicker(
             value: _currentIntValue,
             minValue: 0,
-            maxValue: 9,
+            maxValue: 12,
             step: 1,
             haptics: true,
             itemHeight: 100,
@@ -142,7 +142,7 @@ class _SelectHeightdecimalState extends State<SelectHeightdecimal> {
               icon: Icon(Icons.remove),
               onPressed: () => setState(() {
                 final newValue = _currentIntValue - 1;
-                _currentIntValue = newValue.clamp(0, 9);
+                _currentIntValue = newValue.clamp(0, 12);
               }),
             ),
             Text(
@@ -156,7 +156,7 @@ class _SelectHeightdecimalState extends State<SelectHeightdecimal> {
               icon: Icon(Icons.add),
               onPressed: () => setState(() {
                 final newValue = _currentIntValue + 1;
-                _currentIntValue = newValue.clamp(0, 9);
+                _currentIntValue = newValue.clamp(0, 12);
               }),
             ),
           ],

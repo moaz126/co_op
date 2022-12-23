@@ -86,7 +86,7 @@ class _AddressListState extends State<AddressList> {
                 setState(() {});
               },
               controller: AddressNameController,
-              decoration: InputDecoration(hintText: "Enter Address"),
+              decoration: InputDecoration(hintText: "Enter Address Title"),
             ),
             actions: <Widget>[
               TextButton(

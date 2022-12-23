@@ -27,6 +27,12 @@ final pageSpinkit = SizedBox(
   child: Lottie.asset(
     'assets/animations/page_loader.json',
   ),
+);final requestButton = SizedBox(
+  height: 5,
+  width: 90.w,
+  child: Lottie.asset(
+    'assets/animations/requestButton.json',
+  ),
 );
 final timeRemaining = SizedBox(
   height: 20.h,

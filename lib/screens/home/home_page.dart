@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:co_op/constants/custom_dialog.dart';
 import 'package:co_op/constants/widgets.dart';
+import 'package:co_op/screens/home/inProgress.dart';
 import 'package:co_op/screens/home/requestList.dart';
 import 'package:co_op/screens/workout/navigate.dart';
 import 'package:co_op/screens/workout/workout_detail_page.dart';
@@ -28,6 +29,7 @@ import '../../api/auth_workout_bud.dart';
 import '../../api/global_variables.dart';
 import '../../constants/noInternet.dart';
 import '../../provider/dark_theme_provider.dart';
+import 'completed.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -94,13 +96,13 @@ class _HomePageState extends State<HomePage> {
     });
     await DataApiService.instance.getDashboard(context);
     await DataApiService.instance.getActivityUsers('Beginner', context);
-    await DataApiService.instance.getNotificationCount(context);
+    DataApiService.instance.getNotificationCount(context);
     setState(() {
       loader = false;
     });
   }
 
-  callNoLoadingApi() {
+  callNoLoadingApi() async {
     setState(() {
       loader = true;
     });
@@ -108,6 +110,19 @@ class _HomePageState extends State<HomePage> {
     DataApiService.instance.getDashboard(context);
     DataApiService.instance.getActivityUsers('Beginner', context);
     DataApiService.instance.getNotificationCount(context);
+    setState(() {
+      loader = false;
+    });
+  }
+
+  refreshApi() async {
+    setState(() {
+      loader = true;
+    });
+    await DataApiService.instance.getprofileinfo(context);
+    DataApiService.instance.getDashboard(context);
+    DataApiService.instance.getActivityUsers('Beginner', context);
+    await DataApiService.instance.getNotificationCount(context);
     setState(() {
       loader = false;
     });
@@ -129,7 +144,7 @@ class _HomePageState extends State<HomePage> {
       RefreshController(initialRefresh: false);
 
   Future<void> _pullRefresh() async {
-    callNoLoadingApi();
+    refreshApi();
     _refreshController.refreshCompleted();
   }
 
@@ -173,7 +188,12 @@ class _HomePageState extends State<HomePage> {
                   InkWell(
                       onTap: () {
                         setState(() {});
-                        Get.to(() => const NotificationPage());
+                        Get.to(
+                          () => const NotificationPage(),
+                          transition: Transition.fade,
+                          duration: const Duration(seconds: 1),
+                          curve: Curves.decelerate,
+                        );
                       },
                       child: Stack(
                         children: [
@@ -264,9 +284,10 @@ class _HomePageState extends State<HomePage> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          "Let's check your activity",
+                                          "Let's check your today's activity",
                                           style: TextStyle(
-                                              fontWeight: FontWeight.w700),
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 12.sp),
                                         )
                                       ],
                                     ),
@@ -292,7 +313,7 @@ class _HomePageState extends State<HomePage> {
                                                 profileInfo.image.toString(),
                                         placeholder: (context, url) =>
                                             Image.asset(
-                                          images[0],
+                                          'assets/images/intro1.png',
                                           fit: BoxFit.cover,
                                           height: 7.h,
                                           width: 7.h,
@@ -301,7 +322,7 @@ class _HomePageState extends State<HomePage> {
                                                 error) => /* Icon(Icons
                                             .person) */
                                             Image.asset(
-                                          images[0],
+                                          'assets/images/intro1.png',
                                           fit: BoxFit.cover,
                                           height: 7.h,
                                           width: 7.h,
@@ -394,18 +415,25 @@ class _HomePageState extends State<HomePage> {
                                 Column(
                                   children: <Widget>[
                                     InkWell(
-                                      onTap:(){
-                                        Get.to(()=>RequestList());
+                                      onTap: () {
+                                        Get.to(
+                                          () => RequestList(),
+                                          transition: Transition.fade,
+                                          duration: const Duration(seconds: 1),
+                                          curve: Curves.decelerate,
+                                        );
                                       },
                                       child: Container(
                                         height: 9.h,
                                         width: 18.h,
                                         decoration: BoxDecoration(
                                           color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           boxShadow: [
                                             BoxShadow(
-                                              color: Colors.grey.withOpacity(0.1),
+                                              color:
+                                                  Colors.grey.withOpacity(0.1),
                                               offset: Offset(
                                                 3.0,
                                                 3.0,
@@ -414,7 +442,8 @@ class _HomePageState extends State<HomePage> {
                                               spreadRadius: 4.0,
                                             ),
                                             BoxShadow(
-                                              color: Colors.grey.withOpacity(0.1),
+                                              color:
+                                                  Colors.grey.withOpacity(0.1),
                                               offset: Offset(
                                                 -3.0,
                                                 -1.0,
@@ -425,7 +454,8 @@ class _HomePageState extends State<HomePage> {
                                           ],
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: const EdgeInsets.only(
+                                              top: 8.0, left: 8),
                                           child: Column(
                                             children: <Widget>[
                                               Row(
@@ -443,7 +473,7 @@ class _HomePageState extends State<HomePage> {
                                                       'Sent Requests',
                                                       style: TextStyle(
                                                           fontWeight:
-                                                          FontWeight.bold,
+                                                              FontWeight.bold,
                                                           fontSize: 12),
                                                     ),
                                                   ),
@@ -456,14 +486,18 @@ class _HomePageState extends State<HomePage> {
                                                 children: <Widget>[
                                                   Padding(
                                                     padding:
-                                                    const EdgeInsets.only(
-                                                        left: 3.0),
-                                                    child: Text(profileInfo.requested==null?'0':
-                                                      profileInfo.requested
-                                                          .toString(),
+                                                        const EdgeInsets.only(
+                                                            left: 3.0),
+                                                    child: Text(
+                                                      profileInfo.requested ==
+                                                              null
+                                                          ? '0'
+                                                          : profileInfo
+                                                              .requested
+                                                              .toString(),
                                                       style: TextStyle(
                                                           fontWeight:
-                                                          FontWeight.bold,
+                                                              FontWeight.bold,
                                                           fontSize: 22),
                                                     ),
                                                   ),
@@ -475,7 +509,213 @@ class _HomePageState extends State<HomePage> {
                                                     style: TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
-                                                        FontWeight.w200),
+                                                            FontWeight.w200),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 2.h,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Get.to(
+                                          () => Completed(),
+                                        );
+                                      },
+                                      child: Container(
+                                        height: 9.h,
+                                        width: 18.h,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.1),
+                                              offset: Offset(
+                                                3.0,
+                                                3.0,
+                                              ),
+                                              blurRadius: 10.0,
+                                              spreadRadius: 4.0,
+                                            ),
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.1),
+                                              offset: Offset(
+                                                -3.0,
+                                                -1.0,
+                                              ),
+                                              blurRadius: 10.0,
+                                              spreadRadius: 4.0,
+                                            ),
+                                          ],
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 8.0, left: 8),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Row(
+                                                children: <Widget>[
+                                                  Container(
+                                                      width: 2.5.h,
+                                                      height: 2.5.h,
+                                                      child: Image.asset(
+                                                          'assets/icons/exercises.png')),
+                                                  SizedBox(
+                                                    width: 7,
+                                                  ),
+                                                  Container(
+                                                    child: Text(
+                                                      'Finished',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 15),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Row(
+                                                children: <Widget>[
+                                                  Text(
+                                                    profileInfo.complete
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 22),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(
+                                                    'Workouts',
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w200),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    InkWell(
+                                      onTap: () {
+                                        Get.to(
+                                          InProgressList(),
+                                          transition: Transition.fade,
+                                          duration: const Duration(seconds: 1),
+                                          curve: Curves.decelerate,
+                                        );
+                                      },
+                                      child: Container(
+                                        height: 9.h,
+                                        width: 19.h,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.1),
+                                              offset: Offset(
+                                                3.0,
+                                                3.0,
+                                              ),
+                                              blurRadius: 10.0,
+                                              spreadRadius: 4.0,
+                                            ),
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.1),
+                                              offset: Offset(
+                                                -3.0,
+                                                -1.0,
+                                              ),
+                                              blurRadius: 10.0,
+                                              spreadRadius: 4.0,
+                                            ),
+                                          ],
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 8.0, left: 8),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Row(
+                                                children: <Widget>[
+                                                  Container(
+                                                      width: 2.5.h,
+                                                      height: 2.h,
+                                                      child: Image.asset(
+                                                          'assets/icons/inProgress.png')),
+                                                  SizedBox(
+                                                    width: 7,
+                                                  ),
+                                                  Container(
+                                                    child: Text(
+                                                      'In progress',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 15),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Row(
+                                                children: <Widget>[
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 3.0),
+                                                    child: Text(
+                                                      profileInfo.inProgress ==
+                                                                  null ||
+                                                              profileInfo
+                                                                      .inProgress ==
+                                                                  'null'
+                                                          ? '0'
+                                                          : profileInfo
+                                                              .inProgress
+                                                              .toString(),
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 22),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(
+                                                    'Workouts',
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w200),
                                                   ),
                                                 ],
                                               )
@@ -489,90 +729,6 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Container(
                                       height: 9.h,
-                                      width: 18.h,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.1),
-                                            offset: Offset(
-                                              3.0,
-                                              3.0,
-                                            ),
-                                            blurRadius: 10.0,
-                                            spreadRadius: 4.0,
-                                          ),
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.1),
-                                            offset: Offset(
-                                              -3.0,
-                                              -1.0,
-                                            ),
-                                            blurRadius: 10.0,
-                                            spreadRadius: 4.0,
-                                          ),
-                                        ],
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Row(
-                                              children: <Widget>[
-                                                Container(
-                                                    width: 2.5.h,
-                                                    height: 2.5.h,
-                                                    child: Image.asset(
-                                                        'assets/icons/exercises.png')),
-                                                SizedBox(
-                                                  width: 7,
-                                                ),
-                                                Container(
-                                                  child: Text(
-                                                    'Finished',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                        FontWeight.bold,
-                                                        fontSize: 15),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Row(
-                                              children: <Widget>[
-                                                Text(
-                                                  profileInfo.complete.toString(),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                      FontWeight.bold,
-                                                      fontSize: 22),
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Text(
-                                                  'Workouts',
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                      FontWeight.w200),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    Container(
-                                      height: 9.h,
                                       width: 19.h,
                                       decoration: BoxDecoration(
                                         color: Colors.white,
@@ -599,96 +755,8 @@ class _HomePageState extends State<HomePage> {
                                         ],
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Row(
-                                              children: <Widget>[
-                                                Container(
-                                                    width: 2.5.h,
-                                                    height: 2.h,
-                                                    child: Image.asset(
-                                                        'assets/icons/inProgress.png')),
-                                                SizedBox(
-                                                  width: 7,
-                                                ),
-                                                Container(
-                                                  child: Text(
-                                                    'In progress',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 15),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Row(
-                                              children: <Widget>[
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 3.0),
-                                                  child: Text(
-                                                    profileInfo.inProgress
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 22),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Text(
-                                                  'Workouts',
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w200),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 2.h,
-                                    ),
-                                    Container(
-                                      height: 9.h,
-                                      width: 19.h,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.1),
-                                            offset: Offset(
-                                              3.0,
-                                              3.0,
-                                            ),
-                                            blurRadius: 10.0,
-                                            spreadRadius: 4.0,
-                                          ),
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.1),
-                                            offset: Offset(
-                                              -3.0,
-                                              -1.0,
-                                            ),
-                                            blurRadius: 10.0,
-                                            spreadRadius: 4.0,
-                                          ),
-                                        ],
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.only(
+                                            top: 8.0, left: 8),
                                         child: Column(
                                           children: <Widget>[
                                             Row(
@@ -779,10 +847,16 @@ class _HomePageState extends State<HomePage> {
                                             horizontal: 2.0, vertical: 8.0),
                                         child: InkWell(
                                           onTap: () {
-                                            Get.to(() => WorkoutDetail(
-                                                dashbarodUsersList[index]
-                                                    .id
-                                                    .toString()));
+                                            Get.to(
+                                              () => WorkoutDetail(
+                                                  dashbarodUsersList[index]
+                                                      .id
+                                                      .toString()),
+                                              transition: Transition.fade,
+                                              duration:
+                                                  const Duration(seconds: 1),
+                                              curve: Curves.decelerate,
+                                            );
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.only(
@@ -934,7 +1008,9 @@ class _HomePageState extends State<HomePage> {
                                                                             () {
                                                                           setState(
                                                                               () {
-                                                                            Vibration.vibrate(amplitude: 2,duration: 200);
+                                                                            Vibration.vibrate(
+                                                                                amplitude: 2,
+                                                                                duration: 200);
                                                                             DataApiService.instance.addBookmark(dashbarodUsersList[index].id.toString(),
                                                                                 context);
                                                                             dashbarodUsersList[index].bookmark =
@@ -1190,10 +1266,17 @@ class _HomePageState extends State<HomePage> {
                                                         vertical: 8.0),
                                                 child: InkWell(
                                                   onTap: () {
-                                                    Get.to(() => WorkoutDetail(
-                                                        activityUsers[index]
-                                                            .id
-                                                            .toString()));
+                                                    Get.to(
+                                                      () => WorkoutDetail(
+                                                          activityUsers[index]
+                                                              .id
+                                                              .toString()),
+                                                      transition:
+                                                          Transition.fade,
+                                                      duration: const Duration(
+                                                          seconds: 1),
+                                                      curve: Curves.decelerate,
+                                                    );
                                                   },
                                                   child: Padding(
                                                     padding:
@@ -1347,7 +1430,7 @@ class _HomePageState extends State<HomePage> {
                                                                             ? InkWell(
                                                                                 onTap: () {
                                                                                   setState(() {
-                                                                                    Vibration.vibrate(amplitude: 2,duration: 200);
+                                                                                    Vibration.vibrate(amplitude: 2, duration: 200);
                                                                                     DataApiService.instance.addBookmark(activityUsers[index].id.toString(), context);
                                                                                     activityUsers[index].bookmark = 1;
                                                                                   });

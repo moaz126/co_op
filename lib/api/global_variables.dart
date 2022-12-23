@@ -16,12 +16,15 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:co_op/models/Profile_Model.dart';
 
+import '../models/InProgressModel.dart';
 import '../models/MyRequestList.dart';
 
 final USER_TOKEN = ValueNotifier("");
 var profileInfo = GetProfileModel(goal: [], subCategoryId: [], imageList: []);
 List<GetFilterModel> getfilterList = [];
 List<MyRequestList> myReqeustList = [];
+List<InProgressModel> inProgressList = [];
+List<InProgressModel> completedList = [];
 List<AddressModel> getAddrList = [];
 List<BookmarkModel> bookmarkList = [];
 List<GetUsersModel> getUsersList = [];

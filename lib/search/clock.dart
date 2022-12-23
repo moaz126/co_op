@@ -19,7 +19,9 @@ import '../provider/dark_theme_provider.dart';
 
 class Clock extends StatefulWidget {
   final String requestId;
-  Clock(this.requestId);
+  final String requestedToid;
+
+  Clock(this.requestId, this.requestedToid);
 
   @override
   State<Clock> createState() => _ClockState();
@@ -70,6 +72,7 @@ class _ClockState extends State<Clock> {
   }
 
   int timerleft = 100;
+
   void _startCountDown() {
     String st = form.DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     print(getrequest.meetUpTime);
@@ -101,20 +104,22 @@ class _ClockState extends State<Clock> {
 
   timeDifference() {
     Duration initDif = DateTime.now().difference(startTime);
-    Duration dif = endTime.difference(DateTime.now());
+    // Duration dif = endTime.difference(DateTime.now());
+    Duration dif = endTime.difference(startTime);
     _initDuration = initDif.inSeconds;
     _duration = dif.inSeconds;
     print('inital duration');
     print(_initDuration);
     print('duration');
     print(_duration);
-     if (_duration < 0 || _initDuration<0) {
-       DataApiService.instance
-           .completeRequest(users.requestId.toString(), context);
-     }
+    if (_duration < 0||_initDuration>_duration) {
+      DataApiService.instance
+          .completeRequest(users.requestId.toString(), context);
+    }
   }
 
   bool loader = false;
+
   callApi() async {
     setState(() {
       loader = true;
@@ -190,7 +195,7 @@ class _ClockState extends State<Clock> {
           title: Text('Get Ready!'),
           leading: InkWell(
               onTap: () {
-                if (_duration < 0) {
+                if (_duration < 0||_initDuration>_duration) {
                   Navigator.pop(context);
                   Navigator.pushReplacement(
                       context,
@@ -211,7 +216,7 @@ class _ClockState extends State<Clock> {
                   SizedBox(
                     height: 2,
                   ),
-                  _duration < 0
+                  _duration < 0 || _initDuration>_duration
                       ? Column(
                           children: [
                             timeend,
@@ -347,7 +352,7 @@ class _ClockState extends State<Clock> {
                                                                 .headline3),
                                                         SizedBox(height: 10),
                                                         Text(
-                                                            'Rate Your Experience with ' +
+                                                            'Your workout has been ended please rate your experience with ' +
                                                                 requestUser
                                                                     .userName,
                                                             textAlign: TextAlign
@@ -507,10 +512,9 @@ class _ClockState extends State<Clock> {
                         )
                       : SizedBox(), */
                 ],
-
-                       ),
+              ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: timerleft == 0 || timerleft < 0 && _duration>0
+        floatingActionButton: timerleft == 0 || timerleft < 0 && _duration > 0
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -524,29 +528,35 @@ class _ClockState extends State<Clock> {
                   SizedBox(
                     width: 60.w,
                     child: _button(
-                      title: "Quit",
-                      onPressed: () {
+                        title: "Quit",
+                        onPressed: () {
+                          AwesomeDialog(
+                                  context: context,
+                                  dialogType: DialogType.question,
+                                  animType: AnimType.BOTTOMSLIDE,
+                                  title: 'Quit',
+                                  desc: 'Are you sure you want to quit?',
+                                  btnOkOnPress: () async {
+                                    _controller.pause();
+                                    DataApiService.instance.quitTimer(
+                                        profileInfo.id.toString(),
+                                        getrequest.requestedToId.toString(),
+                                        getrequest.id.toString(),
+                                        context);
+                                    DataApiService.instance.completeRequest(
+                                        users.requestId.toString(), context);
+                                    Navigator.pop(context);
 
-
-                        AwesomeDialog(
-                            context: context,
-                            dialogType: DialogType.question,
-                            animType: AnimType.BOTTOMSLIDE,
-                            title: 'Quit',
-                            desc:
-                            'Are you sure you want to quit?',
-                            btnOkOnPress: () async {
-                              _controller.pause();
-                              DataApiService.instance.quitTimer(profileInfo.id.toString(),getrequest.requestedToId.toString(),getrequest.id.toString(), context);
-                              DataApiService.instance
-                                     .completeRequest(users.requestId.toString(), context);
-                              Navigator.pop(context);
-
-                            },
-                            btnCancelOnPress: () {})
-                            .show();
-                      }
-                    ),
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                WorkoutDetail(
+                                                    widget.requestedToid)));
+                                  },
+                                  btnCancelOnPress: () {})
+                              .show();
+                        }),
                   ),
                   // SizedBox(
                   //   width: 25.w,
@@ -564,8 +574,7 @@ class _ClockState extends State<Clock> {
                   // ),
                 ],
               )
-            : SizedBox()
-              );
+            : SizedBox());
   }
 
   Widget _button({required String title, VoidCallback? onPressed}) {

@@ -218,7 +218,7 @@ class _RequestListState extends State<RequestList> {
                                                   child: ClipRect(
                                                     child: Banner(
                                                       textStyle: TextStyle(fontSize: 10),
-                                                      message: myReqeustList[index].status==0?'Pending':'Accepted',
+                                                      message: myReqeustList[index].status==0?'Pending':myReqeustList[index].status==2?'Declined':'Accepted',
 
                                                       color:  Colors.green,
 
@@ -315,7 +315,7 @@ class _RequestListState extends State<RequestList> {
                                                                                 .spaceBetween,
                                                                         children: [
                                                                           Text(
-                                                                         'Workout time 2 hours',
+                                                                         'Workout time '+myReqeustList[index].duration.replaceAll('after', ''),
                                                                             style: const TextStyle(
                                                                                 color: Colors
                                                                                     .white,

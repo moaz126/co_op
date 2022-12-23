@@ -51,6 +51,8 @@ class Request {
     required this.meetUpTime,
     required this.endTime,
     required this.status,
+    required this.completed,
+    required this.inProgress,
     required this.view,
     required this.createdAt,
     required this.updatedAt,
@@ -65,6 +67,8 @@ class Request {
   String meetUpTime;
   String endTime;
   int status;
+  int completed;
+  int inProgress;
   int view;
   DateTime createdAt;
   DateTime updatedAt;
@@ -79,6 +83,8 @@ class Request {
         meetUpTime: json["meet_up_time"],
         endTime: json["meetup_end_time"],
         status: json["status"],
+        completed: json["is_completed"],
+        inProgress: json["in_progress"],
         view: json["view"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),

@@ -33,7 +33,10 @@ class GetUsersModel {
     required this.createdAt,
     required this.updatedAt,
     required this.isVisible,
+    required this.rating,
+    required this.completed,
     required this.getWorkoutImages,
+    
   });
 
   int id;
@@ -56,6 +59,8 @@ class GetUsersModel {
   DateTime createdAt;
   DateTime updatedAt;
   bool? isVisible;
+  double rating;
+  int completed;
   List<GetWorkoutImage> getWorkoutImages;
 
   factory GetUsersModel.fromJson(Map<String, dynamic> json) => GetUsersModel(
@@ -80,6 +85,8 @@ class GetUsersModel {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         isVisible: json["is_visible"],
+        rating: json.containsKey('rating')?json['rating'].toDouble():0.0,
+        completed: json.containsKey('completed_workouts')?json['completed_workouts']:0,
         getWorkoutImages: json.containsKey("get_workout_images")
             ? List<GetWorkoutImage>.from(json["get_workout_images"]
                 .map((x) => GetWorkoutImage.fromJson(x)))

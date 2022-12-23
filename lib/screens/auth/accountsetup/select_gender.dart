@@ -1,5 +1,6 @@
 import 'package:co_op/constants/custom_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -208,7 +209,7 @@ class _SelectGenderState extends State<SelectGender> {
                     onTap: () {
                       if (selectedIndex == 0) {
                         ScaffoldMessenger.of(context).clearSnackBars();
-
+                        Fluttertoast.cancel();
                         select_gender = 1;
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const SelectAge()));

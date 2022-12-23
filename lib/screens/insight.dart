@@ -71,6 +71,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
   String? selectedDate;
   DateTime select = DateTime.now();
   bool loader = false;
+
   callApi() async {
     setState(() {
       loader = true;
@@ -79,7 +80,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
         .getInsightList(selectedDate.toString(), context);
     print('length');
     print(insightList.length);
-    if(insightList.isNotEmpty){
+    if (insightList.isNotEmpty) {
       print(insightList[0].userData.length);
       for (var i = 0; i < insightList.length; i++) {
         for (var j = 0; j < insightList[i].userData.length; j++) {
@@ -89,7 +90,6 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
               yogaUsers.add(insightList[i]);
             }
           } else if (insightList[i].userData[j].filterId == 2) {
-
             if (sportsUsers.contains(insightList[i]) == false) {
               print('filterid');
               sportsUsers.add(insightList[i]);
@@ -232,7 +232,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                     ),
                   ),
 
-                  /*   
+                  /*
                   Event(
                     title: "",
                     description: '',
@@ -330,10 +330,16 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                 itemBuilder: (context, index) {
                                   return InkWell(
                                     onTap: () {
-                                      Get.to(() => WorkoutDetail(
-                                          yogaUsers[index]
-                                              .requestedToId
-                                              .toString()));
+                                      yogaUsers[index].requestedByUser[0].id ==
+                                              profileInfo.id
+                                          ? Get.to(() => WorkoutDetail(
+                                              yogaUsers[index]
+                                                  .requestedToId
+                                                  .toString()))
+                                          : Get.to(() => WorkoutDetail(
+                                              yogaUsers[index]
+                                                  .requestedById
+                                                  .toString()));
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.only(
@@ -341,9 +347,23 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                       child: ClipRRect(
                                         child: Banner(
                                           textStyle: TextStyle(fontSize: 10),
-                                          message: yogaUsers[index].status == 0
+                                          message: yogaUsers[index]
+                                                          .inProgress ==
+                                                      1 &&
+                                                  yogaUsers[index].completed ==
+                                                      0
                                               ? 'In Progress'
-                                              : 'Completed',
+                                              : yogaUsers[index].status == 2
+                                                  ? 'Declined'
+                                                  : yogaUsers[index]
+                                                              .completed ==
+                                                          1
+                                                      ? 'Completed'
+                                                      : yogaUsers[index]
+                                                                  .status ==
+                                                              0
+                                                          ? 'Pending'
+                                                          : 'Accepted',
                                           color: yogaUsers[index].status == 0
                                               ? Colors.green
                                               : secondaryColor,
@@ -357,40 +377,84 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                       Alignment.bottomCenter,
                                                   children: [
                                                     ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                      child: CachedNetworkImage(
-                                                        fit: BoxFit.cover,
-                                                        height: 22.h,
-                                                        width: double.infinity,
-                                                        imageUrl:
-                                                            'https://becktesting.site/workout-bud/public/storage/user/' +
-                                                                yogaUsers[index]
-                                                                    .requestedToUser[
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        child: yogaUsers[index]
+                                                                    .requestedByUser[
                                                                         0]
-                                                                    .image
-                                                                    .toString(),
-                                                        placeholder:
-                                                            (context, url) =>
-                                                                Image.asset(
-                                                          images[0],
-                                                          fit: BoxFit.cover,
-                                                          height: 22.h,
-                                                          width:
-                                                              double.infinity,
-                                                        ),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            Image.asset(
-                                                          images[0],
-                                                          fit: BoxFit.cover,
-                                                          height: 22.h,
-                                                          width:
-                                                              double.infinity,
-                                                        ),
-                                                      ),
-                                                    ),
+                                                                    .id ==
+                                                                profileInfo.id
+                                                            ? CachedNetworkImage(
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                height: 22.h,
+                                                                width: double
+                                                                    .infinity,
+                                                                imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                                    yogaUsers[
+                                                                            index]
+                                                                        .requestedToUser[
+                                                                            0]
+                                                                        .image
+                                                                        .toString(),
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    Image.asset(
+                                                                  images[0],
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  height: 22.h,
+                                                                  width: double
+                                                                      .infinity,
+                                                                ),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                  images[0],
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  height: 22.h,
+                                                                  width: double
+                                                                      .infinity,
+                                                                ),
+                                                              )
+                                                            : CachedNetworkImage(
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                height: 22.h,
+                                                                width: double
+                                                                    .infinity,
+                                                                imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                                    yogaUsers[
+                                                                            index]
+                                                                        .requestedByUser[
+                                                                            0]
+                                                                        .image
+                                                                        .toString(),
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    Image.asset(
+                                                                  images[0],
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  height: 22.h,
+                                                                  width: double
+                                                                      .infinity,
+                                                                ),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                  images[0],
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  height: 22.h,
+                                                                  width: double
+                                                                      .infinity,
+                                                                ),
+                                                              )),
                                                     Opacity(
                                                       opacity: 0.4,
                                                       child: Container(
@@ -415,9 +479,21 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                         children: [
                                                           Text(
                                                             yogaUsers[index]
-                                                                .requestedToUser[
-                                                                    0]
-                                                                .userName,
+                                                                        .requestedByUser[
+                                                                            0]
+                                                                        .id ==
+                                                                    profileInfo
+                                                                        .id
+                                                                ? yogaUsers[
+                                                                        index]
+                                                                    .requestedToUser[
+                                                                        0]
+                                                                    .userName
+                                                                : yogaUsers[
+                                                                        index]
+                                                                    .requestedByUser[
+                                                                        0]
+                                                                    .userName,
                                                             style: const TextStyle(
                                                                 color: Colors
                                                                     .white,
@@ -430,107 +506,144 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                             height: 5,
                                                           ),
                                                           Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
                                                             children: [
-                                                              Row(
-                                                                children: [
-                                                                  /*  Text(
-                                                                    '10Min',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontSize:
-                                                                            3.w),
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    width: 4,
-                                                                  ),
-                                                                  Container(
-                                                                    height: 15,
-                                                                    width: 2,
+                                                              Text(
+                                                                DateFormat(
+                                                                        "h:mma")
+                                                                    .format(DateTime.parse(
+                                                                        '2022-12-02 ' +
+                                                                            yogaUsers[index].meetUpTime)),
+                                                                style: const TextStyle(
                                                                     color: Colors
                                                                         .white,
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    width: 4,
-                                                                  ),
-                                                                  Text(
-                                                                    'Football',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontSize:
-                                                                            3.w),
-                                                                  ), */
-                                                                  AbsorbPointer(
-                                                                    absorbing:
-                                                                        true,
-                                                                    child: RatingBar(
-                                                                        tapOnlyMode: false,
-                                                                        updateOnDrag: false,
-                                                                        initialRating: yogaUsers[index].requestedToUser[0].rating == null ? 0.0 : yogaUsers[index].requestedToUser[0].rating!.toDouble(),
-                                                                        direction: Axis.horizontal,
-                                                                        allowHalfRating: true,
-                                                                        itemCount: 5,
-                                                                        itemSize: 20,
-                                                                        ratingWidget: RatingWidget(
-                                                                            full: const Icon(Icons.star, color: secondaryColor),
-                                                                            half: const Icon(
-                                                                              Icons.star_half,
-                                                                              color: secondaryColor,
-                                                                            ),
-                                                                            empty: const Icon(
-                                                                              Icons.star_outline,
-                                                                              color: secondaryColor,
-                                                                            )),
-                                                                        onRatingUpdate: (value) {}),
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    width: 4,
-                                                                  ),
-                                                                  /*   Container(
-                                                                    height: 15,
-                                                                    width: 2,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        10),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Text(
+                                                                DateFormat(
+                                                                        "h:mma")
+                                                                    .format(DateTime.parse(
+                                                                        '2022-12-02 ' +
+                                                                            yogaUsers[index].meetupEndTime)),
+                                                                style: const TextStyle(
                                                                     color: Colors
                                                                         .white,
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    width: 4,
-                                                                  ), */
-                                                                  Row(
-                                                                    children: [
-                                                                      /*     Icon(
-                                                                        Icons
-                                                                            .star_rate_rounded,
-                                                                        size: 3.w,
-                                                                        color: Colors
-                                                                            .orange,
-                                                                      ), */
-                                                                      Text(
-                                                                        yogaUsers[index].requestedToUser[0].rating ==
-                                                                                null
-                                                                            ? '0.0'
-                                                                            : yogaUsers[index].requestedToUser[0].rating.toString(),
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontWeight: FontWeight.bold,
-                                                                            fontSize: 3.w),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ],
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        10),
                                                               ),
                                                             ],
                                                           ),
+                                                          // Row(
+                                                          //   mainAxisAlignment:
+                                                          //       MainAxisAlignment
+                                                          //           .spaceBetween,
+                                                          //   children: [
+                                                          //     Row(
+                                                          //       children: [
+                                                          //         /*  Text(
+                                                          //           '10Min',
+                                                          //           style: TextStyle(
+                                                          //               color: Colors
+                                                          //                   .white,
+                                                          //               fontWeight:
+                                                          //                   FontWeight
+                                                          //                       .bold,
+                                                          //               fontSize:
+                                                          //                   3.w),
+                                                          //         ),
+                                                          //         const SizedBox(
+                                                          //           width: 4,
+                                                          //         ),
+                                                          //         Container(
+                                                          //           height: 15,
+                                                          //           width: 2,
+                                                          //           color: Colors
+                                                          //               .white,
+                                                          //         ),
+                                                          //         const SizedBox(
+                                                          //           width: 4,
+                                                          //         ),
+                                                          //         Text(
+                                                          //           'Football',
+                                                          //           style: TextStyle(
+                                                          //               color: Colors
+                                                          //                   .white,
+                                                          //               fontWeight:
+                                                          //                   FontWeight
+                                                          //                       .bold,
+                                                          //               fontSize:
+                                                          //                   3.w),
+                                                          //         ), */
+                                                          //         AbsorbPointer(
+                                                          //           absorbing:
+                                                          //               true,
+                                                          //           child: RatingBar(
+                                                          //               tapOnlyMode: false,
+                                                          //               updateOnDrag: false,
+                                                          //               initialRating: yogaUsers[index].requestedToUser[0].rating == null ? 0.0 : yogaUsers[index].requestedToUser[0].rating!.toDouble(),
+                                                          //               direction: Axis.horizontal,
+                                                          //               allowHalfRating: true,
+                                                          //               itemCount: 5,
+                                                          //               itemSize: 20,
+                                                          //               ratingWidget: RatingWidget(
+                                                          //                   full: const Icon(Icons.star, color: secondaryColor),
+                                                          //                   half: const Icon(
+                                                          //                     Icons.star_half,
+                                                          //                     color: secondaryColor,
+                                                          //                   ),
+                                                          //                   empty: const Icon(
+                                                          //                     Icons.star_outline,
+                                                          //                     color: secondaryColor,
+                                                          //                   )),
+                                                          //               onRatingUpdate: (value) {}),
+                                                          //         ),
+                                                          //         const SizedBox(
+                                                          //           width: 4,
+                                                          //         ),
+                                                          //         /*   Container(
+                                                          //           height: 15,
+                                                          //           width: 2,
+                                                          //           color: Colors
+                                                          //               .white,
+                                                          //         ),
+                                                          //         const SizedBox(
+                                                          //           width: 4,
+                                                          //         ), */
+                                                          //         Row(
+                                                          //           children: [
+                                                          //             /*     Icon(
+                                                          //               Icons
+                                                          //                   .star_rate_rounded,
+                                                          //               size: 3.w,
+                                                          //               color: Colors
+                                                          //                   .orange,
+                                                          //             ), */
+                                                          //             Text(
+                                                          //               yogaUsers[index].requestedToUser[0].rating ==
+                                                          //                       null
+                                                          //                   ? '0.0'
+                                                          //                   : yogaUsers[index].requestedToUser[0].rating.toString(),
+                                                          //               style: TextStyle(
+                                                          //                   color:
+                                                          //                       Colors.white,
+                                                          //                   fontWeight: FontWeight.bold,
+                                                          //                   fontSize: 3.w),
+                                                          //             ),
+                                                          //           ],
+                                                          //         ),
+                                                          //       ],
+                                                          //     ),
+                                                          //   ],
+                                                          // ),
                                                           const SizedBox(
                                                             height: 10,
                                                           ),
@@ -604,9 +717,15 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                     child: InkWell(
                                       onTap: () {
                                         setState(() {});
-                                        Get.to(() => WorkoutDetail(
+                                        sportsUsers[index].requestedByUser[0].id ==
+                                            profileInfo.id
+                                            ? Get.to(() => WorkoutDetail(
                                             sportsUsers[index]
                                                 .requestedToId
+                                                .toString()))
+                                            : Get.to(() => WorkoutDetail(
+                                            sportsUsers[index]
+                                                .requestedById
                                                 .toString()));
                                       },
                                       child: Padding(
@@ -615,10 +734,24 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                         child: ClipRRect(
                                           child: Banner(
                                             textStyle: TextStyle(fontSize: 10),
-                                            message:
-                                                sportsUsers[index].status == 0
-                                                    ? 'In Progress'
-                                                    : 'Completed',
+                                            message: sportsUsers[index]
+                                                            .inProgress ==
+                                                        1 &&
+                                                    sportsUsers[index]
+                                                            .completed ==
+                                                        0
+                                                ? 'In Progress'
+                                                : sportsUsers[index].status == 2
+                                                    ? 'Declined'
+                                                    : sportsUsers[index]
+                                                                .completed ==
+                                                            1
+                                                        ? 'Completed'
+                                                        : sportsUsers[index]
+                                                                    .status ==
+                                                                0
+                                                            ? 'Pending'
+                                                            : 'Accepted',
                                             color:
                                                 sportsUsers[index].status == 0
                                                     ? Colors.green
@@ -634,43 +767,95 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                         Alignment.bottomCenter,
                                                     children: [
                                                       ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        child:
-                                                            CachedNetworkImage(
-                                                          fit: BoxFit.cover,
-                                                          height: 22.h,
-                                                          width:
-                                                              double.infinity,
-                                                          imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
-                                                              sportsUsers[index]
-                                                                  .requestedToUser[
-                                                                      0]
-                                                                  .image
-                                                                  .toString(),
-                                                          placeholder:
-                                                              (context, url) =>
-                                                                  Image.asset(
-                                                            images[0],
-                                                            fit: BoxFit.cover,
-                                                            height: 22.h,
-                                                            width:
-                                                                double.infinity,
-                                                          ),
-                                                          errorWidget: (context,
-                                                                  url,
-                                                                  error) => /* Icon(Icons
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                          child: sportsUsers[
+                                                                          index]
+                                                                      .requestedByUser[
+                                                                          0]
+                                                                      .id ==
+                                                                  profileInfo.id
+                                                              ? CachedNetworkImage(
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  height: 22.h,
+                                                                  width: double
+                                                                      .infinity,
+                                                                  imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                                      sportsUsers[
+                                                                              index]
+                                                                          .requestedToUser[
+                                                                              0]
+                                                                          .image
+                                                                          .toString(),
+                                                                  placeholder: (context,
+                                                                          url) =>
+                                                                      Image
+                                                                          .asset(
+                                                                    images[0],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    height:
+                                                                        22.h,
+                                                                    width: double
+                                                                        .infinity,
+                                                                  ),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) => /* Icon(Icons
                                                                         .person) */
-                                                              Image.asset(
-                                                            images[0],
-                                                            fit: BoxFit.cover,
-                                                            height: 22.h,
-                                                            width:
-                                                                double.infinity,
-                                                          ),
-                                                        ),
-                                                      ),
+                                                                      Image
+                                                                          .asset(
+                                                                    images[0],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    height:
+                                                                        22.h,
+                                                                    width: double
+                                                                        .infinity,
+                                                                  ),
+                                                                )
+                                                              : CachedNetworkImage(
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  height: 22.h,
+                                                                  width: double
+                                                                      .infinity,
+                                                                  imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                                      sportsUsers[
+                                                                              index]
+                                                                          .requestedByUser[
+                                                                              0]
+                                                                          .image
+                                                                          .toString(),
+                                                                  placeholder: (context,
+                                                                          url) =>
+                                                                      Image
+                                                                          .asset(
+                                                                    images[0],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    height:
+                                                                        22.h,
+                                                                    width: double
+                                                                        .infinity,
+                                                                  ),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) => /* Icon(Icons
+                                                                        .person) */
+                                                                      Image
+                                                                          .asset(
+                                                                    images[0],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    height:
+                                                                        22.h,
+                                                                    width: double
+                                                                        .infinity,
+                                                                  ),
+                                                                )),
                                                       Opacity(
                                                         opacity: 0.4,
                                                         child: Container(
@@ -698,9 +883,21 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                           children: [
                                                             Text(
                                                               sportsUsers[index]
-                                                                  .requestedToUser[
-                                                                      0]
-                                                                  .userName,
+                                                                          .requestedByUser[
+                                                                              0]
+                                                                          .id ==
+                                                                      profileInfo
+                                                                          .id
+                                                                  ? sportsUsers[
+                                                                          index]
+                                                                      .requestedToUser[
+                                                                          0]
+                                                                      .userName
+                                                                  : sportsUsers[
+                                                                          index]
+                                                                      .requestedByUser[
+                                                                          0]
+                                                                      .userName,
                                                               style: const TextStyle(
                                                                   color: Colors
                                                                       .white,
@@ -709,66 +906,104 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                                           .bold,
                                                                   fontSize: 18),
                                                             ),
-                                                            const SizedBox(
-                                                              height: 5,
-                                                            ),
+
                                                             Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
                                                               children: [
-                                                                Row(
-                                                                  children: [
-                                                                    AbsorbPointer(
-                                                                      absorbing:
-                                                                          true,
-                                                                      child: RatingBar(
-                                                                          tapOnlyMode: false,
-                                                                          updateOnDrag: false,
-                                                                          initialRating: sportsUsers[index].requestedToUser[0].rating == null ? 0.0 : sportsUsers[index].requestedToUser[0].rating!.toDouble(),
-                                                                          direction: Axis.horizontal,
-                                                                          allowHalfRating: true,
-                                                                          itemCount: 5,
-                                                                          itemSize: 20,
-                                                                          ratingWidget: RatingWidget(
-                                                                              full: const Icon(Icons.star, color: secondaryColor),
-                                                                              half: const Icon(
-                                                                                Icons.star_half,
-                                                                                color: secondaryColor,
-                                                                              ),
-                                                                              empty: const Icon(
-                                                                                Icons.star_outline,
-                                                                                color: secondaryColor,
-                                                                              )),
-                                                                          onRatingUpdate: (value) {}),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      width: 4,
-                                                                    ),
-                                                                    Row(
-                                                                      children: [
-                                                                        /*   Icon(
-                                                                          Icons
-                                                                              .star_rate_rounded,
-                                                                          size: 3.w,
-                                                                          color: Colors
-                                                                              .orange,
-                                                                        ), */
-                                                                        Text(
-                                                                          sportsUsers[index].requestedToUser[0].rating == null
-                                                                              ? '0.0'
-                                                                              : sportsUsers[index].requestedToUser[0].rating.toString(),
-                                                                          style: TextStyle(
-                                                                              color: Colors.white,
-                                                                              fontWeight: FontWeight.bold,
-                                                                              fontSize: 3.w),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
+                                                                Text(
+                                                                  DateFormat(
+                                                                          "h:mma")
+                                                                      .format(DateTime.parse(
+                                                                          '2022-12-02 ' +
+                                                                              sportsUsers[index].meetUpTime)),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          12),
+                                                                ),
+                                                                Text(
+                                                                  '-',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                                Text(
+                                                                  DateFormat(
+                                                                          "h:mma")
+                                                                      .format(DateTime.parse(
+                                                                          '2022-12-02 ' +
+                                                                              sportsUsers[index].meetupEndTime)),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          12),
                                                                 ),
                                                               ],
                                                             ),
+                                                            // Row(
+                                                            //   mainAxisAlignment:
+                                                            //       MainAxisAlignment
+                                                            //           .spaceBetween,
+                                                            //   children: [
+                                                            //     Row(
+                                                            //       children: [
+                                                            //         AbsorbPointer(
+                                                            //           absorbing:
+                                                            //               true,
+                                                            //           child: RatingBar(
+                                                            //               tapOnlyMode: false,
+                                                            //               updateOnDrag: false,
+                                                            //               initialRating: sportsUsers[index].requestedToUser[0].rating == null ? 0.0 : sportsUsers[index].requestedToUser[0].rating!.toDouble(),
+                                                            //               direction: Axis.horizontal,
+                                                            //               allowHalfRating: true,
+                                                            //               itemCount: 5,
+                                                            //               itemSize: 20,
+                                                            //               ratingWidget: RatingWidget(
+                                                            //                   full: const Icon(Icons.star, color: secondaryColor),
+                                                            //                   half: const Icon(
+                                                            //                     Icons.star_half,
+                                                            //                     color: secondaryColor,
+                                                            //                   ),
+                                                            //                   empty: const Icon(
+                                                            //                     Icons.star_outline,
+                                                            //                     color: secondaryColor,
+                                                            //                   )),
+                                                            //               onRatingUpdate: (value) {}),
+                                                            //         ),
+                                                            //         const SizedBox(
+                                                            //           width: 4,
+                                                            //         ),
+                                                            //         Row(
+                                                            //           children: [
+                                                            //             /*   Icon(
+                                                            //               Icons
+                                                            //                   .star_rate_rounded,
+                                                            //               size: 3.w,
+                                                            //               color: Colors
+                                                            //                   .orange,
+                                                            //             ), */
+                                                            //             Text(
+                                                            //               sportsUsers[index].requestedToUser[0].rating == null
+                                                            //                   ? '0.0'
+                                                            //                   : sportsUsers[index].requestedToUser[0].rating.toString(),
+                                                            //               style: TextStyle(
+                                                            //                   color: Colors.white,
+                                                            //                   fontWeight: FontWeight.bold,
+                                                            //                   fontSize: 3.w),
+                                                            //             ),
+                                                            //           ],
+                                                            //         ),
+                                                            //       ],
+                                                            //     ),
+                                                            //   ],
+                                                            // ),
                                                             const SizedBox(
                                                               height: 10,
                                                             ),
@@ -842,10 +1077,16 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                         horizontal: 0, vertical: 0.0),
                                     child: InkWell(
                                       onTap: () {
-                                        setState(() {});
-                                        Get.to(() => WorkoutDetail(
+
+                                        cardioUsers[index].requestedByUser[0].id ==
+                                            profileInfo.id
+                                            ? Get.to(() => WorkoutDetail(
                                             cardioUsers[index]
                                                 .requestedToId
+                                                .toString()))
+                                            : Get.to(() => WorkoutDetail(
+                                            cardioUsers[index]
+                                                .requestedById
                                                 .toString()));
                                       },
                                       child: Padding(
@@ -854,10 +1095,24 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                         child: ClipRRect(
                                           child: Banner(
                                             textStyle: TextStyle(fontSize: 10),
-                                            message:
-                                                cardioUsers[index].status == 0
-                                                    ? 'In Progress'
-                                                    : 'Completed',
+                                            message: cardioUsers[index]
+                                                            .inProgress ==
+                                                        1 &&
+                                                    cardioUsers[index]
+                                                            .completed ==
+                                                        0
+                                                ? 'In Progress'
+                                                : cardioUsers[index].status == 2
+                                                    ? 'Declined'
+                                                    : cardioUsers[index]
+                                                                .completed ==
+                                                            1
+                                                        ? 'Completed'
+                                                        : cardioUsers[index]
+                                                                    .status ==
+                                                                0
+                                                            ? 'Pending'
+                                                            : 'Accepted',
                                             color:
                                                 cardioUsers[index].status == 0
                                                     ? Colors.green
@@ -873,43 +1128,95 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                         Alignment.bottomCenter,
                                                     children: [
                                                       ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        child:
-                                                            CachedNetworkImage(
-                                                          fit: BoxFit.cover,
-                                                          height: 22.h,
-                                                          width:
-                                                              double.infinity,
-                                                          imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
-                                                              cardioUsers[index]
-                                                                  .requestedToUser[
-                                                                      0]
-                                                                  .image
-                                                                  .toString(),
-                                                          placeholder:
-                                                              (context, url) =>
-                                                                  Image.asset(
-                                                            images[0],
-                                                            fit: BoxFit.cover,
-                                                            height: 22.h,
-                                                            width:
-                                                                double.infinity,
-                                                          ),
-                                                          errorWidget: (context,
-                                                                  url,
-                                                                  error) => /* Icon(Icons
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                          child: cardioUsers[
+                                                                          index]
+                                                                      .requestedByUser[
+                                                                          0]
+                                                                      .id ==
+                                                                  profileInfo.id
+                                                              ? CachedNetworkImage(
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  height: 22.h,
+                                                                  width: double
+                                                                      .infinity,
+                                                                  imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                                      cardioUsers[
+                                                                              index]
+                                                                          .requestedToUser[
+                                                                              0]
+                                                                          .image
+                                                                          .toString(),
+                                                                  placeholder: (context,
+                                                                          url) =>
+                                                                      Image
+                                                                          .asset(
+                                                                    images[0],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    height:
+                                                                        22.h,
+                                                                    width: double
+                                                                        .infinity,
+                                                                  ),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) => /* Icon(Icons
                                                                         .person) */
-                                                              Image.asset(
-                                                            images[0],
-                                                            fit: BoxFit.cover,
-                                                            height: 22.h,
-                                                            width:
-                                                                double.infinity,
-                                                          ),
-                                                        ),
-                                                      ),
+                                                                      Image
+                                                                          .asset(
+                                                                    images[0],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    height:
+                                                                        22.h,
+                                                                    width: double
+                                                                        .infinity,
+                                                                  ),
+                                                                )
+                                                              : CachedNetworkImage(
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  height: 22.h,
+                                                                  width: double
+                                                                      .infinity,
+                                                                  imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                                      cardioUsers[
+                                                                              index]
+                                                                          .requestedByUser[
+                                                                              0]
+                                                                          .image
+                                                                          .toString(),
+                                                                  placeholder: (context,
+                                                                          url) =>
+                                                                      Image
+                                                                          .asset(
+                                                                    images[0],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    height:
+                                                                        22.h,
+                                                                    width: double
+                                                                        .infinity,
+                                                                  ),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) => /* Icon(Icons
+                                                                        .person) */
+                                                                      Image
+                                                                          .asset(
+                                                                    images[0],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    height:
+                                                                        22.h,
+                                                                    width: double
+                                                                        .infinity,
+                                                                  ),
+                                                                )),
                                                       Opacity(
                                                         opacity: 0.4,
                                                         child: Container(
@@ -937,9 +1244,21 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                           children: [
                                                             Text(
                                                               cardioUsers[index]
-                                                                  .requestedToUser[
-                                                                      0]
-                                                                  .userName,
+                                                                          .requestedByUser[
+                                                                              0]
+                                                                          .id ==
+                                                                      profileInfo
+                                                                          .id
+                                                                  ? cardioUsers[
+                                                                          index]
+                                                                      .requestedToUser[
+                                                                          0]
+                                                                      .userName
+                                                                  : cardioUsers[
+                                                                          index]
+                                                                      .requestedByUser[
+                                                                          0]
+                                                                      .userName,
                                                               style: const TextStyle(
                                                                   color: Colors
                                                                       .white,
@@ -948,66 +1267,103 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                                           .bold,
                                                                   fontSize: 18),
                                                             ),
-                                                            const SizedBox(
-                                                              height: 5,
-                                                            ),
                                                             Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
                                                               children: [
-                                                                Row(
-                                                                  children: [
-                                                                    AbsorbPointer(
-                                                                      absorbing:
-                                                                          true,
-                                                                      child: RatingBar(
-                                                                          tapOnlyMode: false,
-                                                                          updateOnDrag: false,
-                                                                          initialRating: cardioUsers[index].requestedToUser[0].rating == null ? 0.0 : cardioUsers[index].requestedToUser[0].rating!.toDouble(),
-                                                                          direction: Axis.horizontal,
-                                                                          allowHalfRating: true,
-                                                                          itemCount: 5,
-                                                                          itemSize: 20,
-                                                                          ratingWidget: RatingWidget(
-                                                                              full: const Icon(Icons.star, color: secondaryColor),
-                                                                              half: const Icon(
-                                                                                Icons.star_half,
-                                                                                color: secondaryColor,
-                                                                              ),
-                                                                              empty: const Icon(
-                                                                                Icons.star_outline,
-                                                                                color: secondaryColor,
-                                                                              )),
-                                                                          onRatingUpdate: (value) {}),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      width: 4,
-                                                                    ),
-                                                                    Row(
-                                                                      children: [
-                                                                        /*  Icon(
-                                                                          Icons
-                                                                              .star_rate_rounded,
-                                                                          size: 3.w,
-                                                                          color: Colors
-                                                                              .orange,
-                                                                        ), */
-                                                                        Text(
-                                                                          cardioUsers[index].requestedToUser[0].rating == null
-                                                                              ? '0.0'
-                                                                              : cardioUsers[index].requestedToUser[0].rating.toString(),
-                                                                          style: TextStyle(
-                                                                              color: Colors.white,
-                                                                              fontWeight: FontWeight.bold,
-                                                                              fontSize: 3.w),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
+                                                                Text(
+                                                                  DateFormat(
+                                                                          "h:mma")
+                                                                      .format(DateTime.parse(
+                                                                          '2022-12-02 ' +
+                                                                              cardioUsers[index].meetUpTime)),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          12),
+                                                                ),
+                                                                Text(
+                                                                  '-',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                                Text(
+                                                                  DateFormat(
+                                                                          "h:mma")
+                                                                      .format(DateTime.parse(
+                                                                          '2022-12-02 ' +
+                                                                              cardioUsers[index].meetupEndTime)),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          12),
                                                                 ),
                                                               ],
                                                             ),
+                                                            // Row(
+                                                            //   mainAxisAlignment:
+                                                            //       MainAxisAlignment
+                                                            //           .spaceBetween,
+                                                            //   children: [
+                                                            //     Row(
+                                                            //       children: [
+                                                            //         AbsorbPointer(
+                                                            //           absorbing:
+                                                            //               true,
+                                                            //           child: RatingBar(
+                                                            //               tapOnlyMode: false,
+                                                            //               updateOnDrag: false,
+                                                            //               initialRating: cardioUsers[index].requestedToUser[0].rating == null ? 0.0 : cardioUsers[index].requestedToUser[0].rating!.toDouble(),
+                                                            //               direction: Axis.horizontal,
+                                                            //               allowHalfRating: true,
+                                                            //               itemCount: 5,
+                                                            //               itemSize: 20,
+                                                            //               ratingWidget: RatingWidget(
+                                                            //                   full: const Icon(Icons.star, color: secondaryColor),
+                                                            //                   half: const Icon(
+                                                            //                     Icons.star_half,
+                                                            //                     color: secondaryColor,
+                                                            //                   ),
+                                                            //                   empty: const Icon(
+                                                            //                     Icons.star_outline,
+                                                            //                     color: secondaryColor,
+                                                            //                   )),
+                                                            //               onRatingUpdate: (value) {}),
+                                                            //         ),
+                                                            //         const SizedBox(
+                                                            //           width: 4,
+                                                            //         ),
+                                                            //         Row(
+                                                            //           children: [
+                                                            //             /*  Icon(
+                                                            //               Icons
+                                                            //                   .star_rate_rounded,
+                                                            //               size: 3.w,
+                                                            //               color: Colors
+                                                            //                   .orange,
+                                                            //             ), */
+                                                            //             Text(
+                                                            //               cardioUsers[index].requestedToUser[0].rating == null
+                                                            //                   ? '0.0'
+                                                            //                   : cardioUsers[index].requestedToUser[0].rating.toString(),
+                                                            //               style: TextStyle(
+                                                            //                   color: Colors.white,
+                                                            //                   fontWeight: FontWeight.bold,
+                                                            //                   fontSize: 3.w),
+                                                            //             ),
+                                                            //           ],
+                                                            //         ),
+                                                            //       ],
+                                                            //     ),
+                                                            //   ],
+                                                            // ),
                                                             const SizedBox(
                                                               height: 10,
                                                             ),
@@ -1082,9 +1438,15 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                     child: InkWell(
                                       onTap: () {
                                         setState(() {});
-                                        Get.to(() => WorkoutDetail(
+                                        weightLisftUsers[index].requestedByUser[0].id ==
+                                            profileInfo.id
+                                            ? Get.to(() => WorkoutDetail(
                                             weightLisftUsers[index]
                                                 .requestedToId
+                                                .toString()))
+                                            : Get.to(() => WorkoutDetail(
+                                            weightLisftUsers[index]
+                                                .requestedById
                                                 .toString()));
                                       },
                                       child: Padding(
@@ -1094,10 +1456,26 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                           child: Banner(
                                             textStyle: TextStyle(fontSize: 10),
                                             message: weightLisftUsers[index]
-                                                        .status ==
-                                                    0
+                                                            .inProgress ==
+                                                        1 &&
+                                                    weightLisftUsers[index]
+                                                            .completed ==
+                                                        0
                                                 ? 'In Progress'
-                                                : 'Completed',
+                                                : weightLisftUsers[index]
+                                                            .status ==
+                                                        2
+                                                    ? 'Declined'
+                                                    : weightLisftUsers[index]
+                                                                .completed ==
+                                                            1
+                                                        ? 'Completed'
+                                                        : weightLisftUsers[
+                                                                        index]
+                                                                    .status ==
+                                                                0
+                                                            ? 'Pending'
+                                                            : 'Accepted',
                                             color: weightLisftUsers[index]
                                                         .status ==
                                                     0
@@ -1114,44 +1492,95 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                         Alignment.bottomCenter,
                                                     children: [
                                                       ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        child:
-                                                            CachedNetworkImage(
-                                                          fit: BoxFit.cover,
-                                                          height: 22.h,
-                                                          width:
-                                                              double.infinity,
-                                                          imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
-                                                              weightLisftUsers[
-                                                                      index]
-                                                                  .requestedToUser[
-                                                                      0]
-                                                                  .image
-                                                                  .toString(),
-                                                          placeholder:
-                                                              (context, url) =>
-                                                                  Image.asset(
-                                                            images[0],
-                                                            fit: BoxFit.cover,
-                                                            height: 22.h,
-                                                            width:
-                                                                double.infinity,
-                                                          ),
-                                                          errorWidget: (context,
-                                                                  url,
-                                                                  error) => /* Icon(Icons
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                          child: weightLisftUsers[
+                                                                          index]
+                                                                      .requestedByUser[
+                                                                          0]
+                                                                      .id ==
+                                                                  profileInfo.id
+                                                              ? CachedNetworkImage(
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  height: 22.h,
+                                                                  width: double
+                                                                      .infinity,
+                                                                  imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                                      weightLisftUsers[
+                                                                              index]
+                                                                          .requestedToUser[
+                                                                              0]
+                                                                          .image
+                                                                          .toString(),
+                                                                  placeholder: (context,
+                                                                          url) =>
+                                                                      Image
+                                                                          .asset(
+                                                                    images[0],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    height:
+                                                                        22.h,
+                                                                    width: double
+                                                                        .infinity,
+                                                                  ),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) => /* Icon(Icons
                                                                         .person) */
-                                                              Image.asset(
-                                                            images[0],
-                                                            fit: BoxFit.cover,
-                                                            height: 22.h,
-                                                            width:
-                                                                double.infinity,
-                                                          ),
-                                                        ),
-                                                      ),
+                                                                      Image
+                                                                          .asset(
+                                                                    images[0],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    height:
+                                                                        22.h,
+                                                                    width: double
+                                                                        .infinity,
+                                                                  ),
+                                                                )
+                                                              : CachedNetworkImage(
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  height: 22.h,
+                                                                  width: double
+                                                                      .infinity,
+                                                                  imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                                      weightLisftUsers[
+                                                                              index]
+                                                                          .requestedByUser[
+                                                                              0]
+                                                                          .image
+                                                                          .toString(),
+                                                                  placeholder: (context,
+                                                                          url) =>
+                                                                      Image
+                                                                          .asset(
+                                                                    images[0],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    height:
+                                                                        22.h,
+                                                                    width: double
+                                                                        .infinity,
+                                                                  ),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) => /* Icon(Icons
+                                                                        .person) */
+                                                                      Image
+                                                                          .asset(
+                                                                    images[0],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    height:
+                                                                        22.h,
+                                                                    width: double
+                                                                        .infinity,
+                                                                  ),
+                                                                )),
                                                       Opacity(
                                                         opacity: 0.4,
                                                         child: Container(
@@ -1179,10 +1608,22 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                           children: [
                                                             Text(
                                                               weightLisftUsers[
-                                                                      index]
-                                                                  .requestedToUser[
-                                                                      0]
-                                                                  .userName,
+                                                                              index]
+                                                                          .requestedByUser[
+                                                                              0]
+                                                                          .id ==
+                                                                      profileInfo
+                                                                          .id
+                                                                  ? weightLisftUsers[
+                                                                          index]
+                                                                      .requestedToUser[
+                                                                          0]
+                                                                      .userName
+                                                                  : weightLisftUsers[
+                                                                          index]
+                                                                      .requestedByUser[
+                                                                          0]
+                                                                      .userName,
                                                               style: const TextStyle(
                                                                   color: Colors
                                                                       .white,
@@ -1191,66 +1632,103 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                                           .bold,
                                                                   fontSize: 18),
                                                             ),
-                                                            const SizedBox(
-                                                              height: 5,
-                                                            ),
                                                             Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
                                                               children: [
-                                                                Row(
-                                                                  children: [
-                                                                    AbsorbPointer(
-                                                                      absorbing:
-                                                                          true,
-                                                                      child: RatingBar(
-                                                                          tapOnlyMode: false,
-                                                                          updateOnDrag: false,
-                                                                          initialRating: weightLisftUsers[index].requestedToUser[0].rating == null ? 0.0 : weightLisftUsers[index].requestedToUser[0].rating!.toDouble(),
-                                                                          direction: Axis.horizontal,
-                                                                          allowHalfRating: true,
-                                                                          itemCount: 5,
-                                                                          itemSize: 20,
-                                                                          ratingWidget: RatingWidget(
-                                                                              full: const Icon(Icons.star, color: secondaryColor),
-                                                                              half: const Icon(
-                                                                                Icons.star_half,
-                                                                                color: secondaryColor,
-                                                                              ),
-                                                                              empty: const Icon(
-                                                                                Icons.star_outline,
-                                                                                color: secondaryColor,
-                                                                              )),
-                                                                          onRatingUpdate: (value) {}),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      width: 4,
-                                                                    ),
-                                                                    Row(
-                                                                      children: [
-                                                                        /*  Icon(
-                                                                          Icons
-                                                                              .star_rate_rounded,
-                                                                          size: 3.w,
-                                                                          color: Colors
-                                                                              .orange,
-                                                                        ), */
-                                                                        Text(
-                                                                          weightLisftUsers[index].requestedToUser[0].rating == null
-                                                                              ? '0.0'
-                                                                              : weightLisftUsers[index].requestedToUser[0].rating.toString(),
-                                                                          style: TextStyle(
-                                                                              color: Colors.white,
-                                                                              fontWeight: FontWeight.bold,
-                                                                              fontSize: 3.w),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
+                                                                Text(
+                                                                  DateFormat(
+                                                                          "h:mma")
+                                                                      .format(DateTime.parse(
+                                                                          '2022-12-02 ' +
+                                                                              weightLisftUsers[index].meetUpTime)),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          12),
+                                                                ),
+                                                                Text(
+                                                                  '-',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                                Text(
+                                                                  DateFormat(
+                                                                          "h:mma")
+                                                                      .format(DateTime.parse(
+                                                                          '2022-12-02 ' +
+                                                                              weightLisftUsers[index].meetupEndTime)),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          12),
                                                                 ),
                                                               ],
                                                             ),
+                                                            // Row(
+                                                            //   mainAxisAlignment:
+                                                            //       MainAxisAlignment
+                                                            //           .spaceBetween,
+                                                            //   children: [
+                                                            //     Row(
+                                                            //       children: [
+                                                            //         AbsorbPointer(
+                                                            //           absorbing:
+                                                            //               true,
+                                                            //           child: RatingBar(
+                                                            //               tapOnlyMode: false,
+                                                            //               updateOnDrag: false,
+                                                            //               initialRating: weightLisftUsers[index].requestedToUser[0].rating == null ? 0.0 : weightLisftUsers[index].requestedToUser[0].rating!.toDouble(),
+                                                            //               direction: Axis.horizontal,
+                                                            //               allowHalfRating: true,
+                                                            //               itemCount: 5,
+                                                            //               itemSize: 20,
+                                                            //               ratingWidget: RatingWidget(
+                                                            //                   full: const Icon(Icons.star, color: secondaryColor),
+                                                            //                   half: const Icon(
+                                                            //                     Icons.star_half,
+                                                            //                     color: secondaryColor,
+                                                            //                   ),
+                                                            //                   empty: const Icon(
+                                                            //                     Icons.star_outline,
+                                                            //                     color: secondaryColor,
+                                                            //                   )),
+                                                            //               onRatingUpdate: (value) {}),
+                                                            //         ),
+                                                            //         const SizedBox(
+                                                            //           width: 4,
+                                                            //         ),
+                                                            //         Row(
+                                                            //           children: [
+                                                            //             /*  Icon(
+                                                            //               Icons
+                                                            //                   .star_rate_rounded,
+                                                            //               size: 3.w,
+                                                            //               color: Colors
+                                                            //                   .orange,
+                                                            //             ), */
+                                                            //             Text(
+                                                            //               weightLisftUsers[index].requestedToUser[0].rating == null
+                                                            //                   ? '0.0'
+                                                            //                   : weightLisftUsers[index].requestedToUser[0].rating.toString(),
+                                                            //               style: TextStyle(
+                                                            //                   color: Colors.white,
+                                                            //                   fontWeight: FontWeight.bold,
+                                                            //                   fontSize: 3.w),
+                                                            //             ),
+                                                            //           ],
+                                                            //         ),
+                                                            //       ],
+                                                            //     ),
+                                                            //   ],
+                                                            // ),
                                                             const SizedBox(
                                                               height: 10,
                                                             ),

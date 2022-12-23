@@ -84,8 +84,22 @@ class _SetGoalState extends State<SetGoal> {
                           _selectedIndex.remove(index);
                           select_goal.remove(goal[index]);
                         } else {
+                        if(index==1){
+                          if(!_selectedIndex.contains(2)){
+                            _selectedIndex.add(index);
+                            select_goal.add(goal[index]);
+                          }
+                        }
+                       else if(index==2){
+                          if(!_selectedIndex.contains(1)){
+                            _selectedIndex.add(index);
+                            select_goal.add(goal[index]);
+                          }
+                        }else{
                           _selectedIndex.add(index);
                           select_goal.add(goal[index]);
+                        }
+
                         }
                         setState(() {});
                         print(select_goal);
@@ -125,8 +139,21 @@ class _SetGoalState extends State<SetGoal> {
                                     _selectedIndex.remove(index);
                                     select_goal.remove(goal[index]);
                                   } else {
-                                    _selectedIndex.add(index);
-                                    select_goal.add(goal[index]);
+                                    if(index==1){
+                                      if(!_selectedIndex.contains(2)){
+                                        _selectedIndex.add(index);
+                                        select_goal.add(goal[index]);
+                                      }
+                                    }
+                                   else if(index==2){
+                                      if(!_selectedIndex.contains(1)){
+                                        _selectedIndex.add(index);
+                                        select_goal.add(goal[index]);
+                                      }
+                                    }else{
+                                      _selectedIndex.add(index);
+                                      select_goal.add(goal[index]);
+                                    }
                                   }
                                   setState(() {});
                                   print(select_goal);

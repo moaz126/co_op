@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:co_op/constants/constants.dart';
+import 'package:sizer/sizer.dart';
 
 import '../provider/dark_theme_provider.dart';
 import 'auth/accountsetup/select_gender.dart';
@@ -109,23 +110,19 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Title of last page - reversed",
+          title: "Stay strong and healthy",
           bodyWidget: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text("Click on ", style: bodyStyle),
-              Icon(Icons.edit),
-              Text(" to edit a post", style: bodyStyle),
+            children:  [
+              Container(
+                  width:80.w,
+                  child: Text("We want you to fully enjoy, stay healthy and positive ",maxLines: 2,textAlign: TextAlign.center, style: TextStyle(fontSize: 19))),
+
             ],
           ),
-          decoration: pageDecoration.copyWith(
-            bodyFlex: 2,
-            imageFlex: 4,
-            bodyAlignment: Alignment.bottomCenter,
-            imageAlignment: Alignment.topCenter,
-          ),
-          image: _buildImage('intro1.png'),
-          reverse: true,
+          decoration:pageDecoration,
+          image: Image.asset('assets/images/intro5.png',height: 50.h,fit: BoxFit.cover,),
+        
         ),
       ],
       onDone: () => _onIntroEnd(context),

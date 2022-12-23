@@ -22,6 +22,7 @@ dependencies:
   custom_marker: ^1.0.0
   date_picker_timeline: ^1.2.3
   dotted_border: ^2.0.0+3
+  email_validator: ^2.1.17
   file_picker: ^5.2.2
   firebase_core: ^2.1.0
   firebase_messaging: ^14.0.2

@@ -18,6 +18,7 @@ import 'package:co_op/screens/profile/AddressList.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import '../models/InProgressModel.dart';
 import '../models/MyRequestList.dart';
 import '../models/Profile_Model.dart';
 import 'urls.dart';
@@ -190,7 +191,7 @@ class DataApiService {
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.fields.addAll({
         'gender': gender,
-        'user_name': username,
+        if (profileInfo.userName != username) 'user_name': username,
         'age': age,
         'weight': weight,
         'height': height,
@@ -354,6 +355,7 @@ class DataApiService {
       rethrow;
     }
   }
+
   Future completeRequest(String id, context) async {
     String url = baseUrl + complete_request_url;
     print(url);
@@ -367,15 +369,14 @@ class DataApiService {
       print(response.body);
       final result = jsonDecode(response.body);
       // requestList = jsonDecode(result['list']);
-     
+
       if (result['success'] == true) {
         print('true');
-   
 
         return true;
       } else {
         print('false');
-     
+
         return false;
       }
     } on Exception {
@@ -443,14 +444,17 @@ class DataApiService {
       }
     }
   }
+
   Future getMyRequestList(context) async {
     connected = await isNetworkAvailable();
     if (connected) {
-      String url =baseUrl+ myRequest_url;
+      String url = baseUrl + myRequest_url;
       print(url);
 
       try {
-        http.Response response = await http.post(Uri.parse(url),body: {'flag':'1'}, headers: {
+        http.Response response = await http.post(Uri.parse(url), body: {
+          'flag': '1'
+        }, headers: {
           "Authorization": "Bearer ${USER_TOKEN.value}",
         });
         print(response.body);
@@ -461,6 +465,63 @@ class DataApiService {
           print("divider");
           myReqeustList = List<MyRequestList>.from(
               result['send_request'].map((x) => MyRequestList.fromJson(x)));
+        } else {
+          print("unsuccess");
+        }
+      } on Exception {
+        rethrow;
+      } catch (e) {
+        rethrow;
+      }
+    }
+  }
+
+  Future getInProgress(context) async {
+    connected = await isNetworkAvailable();
+    if (connected) {
+      String url = baseUrl + inProgress_url;
+      print(url);
+
+      try {
+        http.Response response = await http.post(Uri.parse(url), headers: {
+          "Authorization": "Bearer ${USER_TOKEN.value}",
+        });
+        print(response.body);
+        final result = jsonDecode(response.body);
+        if (response.statusCode == 200) {
+          print('Success');
+
+          print("divider");
+          inProgressList = List<InProgressModel>.from(
+              result['In Progress'].map((x) => InProgressModel.fromJson(x)));
+        } else {
+          print("unsuccess");
+        }
+      } on Exception {
+        rethrow;
+      } catch (e) {
+        rethrow;
+      }
+    }
+  }
+  Future getComplete(context) async {
+    connected = await isNetworkAvailable();
+    if (connected) {
+      String url = baseUrl + complete_url;
+      print(url);
+
+      try {
+        http.Response response = await http.post(Uri.parse(url), headers: {
+          "Authorization": "Bearer ${USER_TOKEN.value}",
+        });
+        print(response.body);
+        final result = jsonDecode(response.body);
+        if (response.statusCode == 200) {
+          print('Success');
+
+          print("divider");
+          completedList = List<InProgressModel>.from(
+              result['In Progress'].map((x) => InProgressModel.fromJson(x)));
         } else {
           print("unsuccess");
         }
@@ -525,19 +586,19 @@ class DataApiService {
       }
     }
   }
-  Future quitTimer(String id,String idto,String reqid, context) async {
+
+  Future quitTimer(String id, String idto, String reqid, context) async {
     connected = await isNetworkAvailable();
     if (connected) {
       String url = baseUrl + quit_url;
       print(url);
 
       try {
-        http.Response response =
-            await http.post(Uri.parse(url), body: {
-              'quiter':id,
-              'notifier':idto,
-              'request_id':reqid,
-            }, headers: {
+        http.Response response = await http.post(Uri.parse(url), body: {
+          'quiter': id,
+          // 'notifier':idto,
+          'request_id': reqid,
+        }, headers: {
           "Authorization": "Bearer ${USER_TOKEN.value}",
         });
         print(response.body);
@@ -950,6 +1011,7 @@ class DataApiService {
           activityUsers = List<DashboardModel>.from(
               result['user'].map((x) => DashboardModel.fromJson(x)));
         } else {
+          activityUsers = [];
           print("unsuccess");
         }
       } on Exception {

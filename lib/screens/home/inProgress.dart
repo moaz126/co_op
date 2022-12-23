@@ -87,7 +87,7 @@ class _InProgressListState extends State<InProgressList> {
     setState(() {
       loader = true;
     });
-    await DataApiService.instance.getMyRequestList(context);
+    await DataApiService.instance.getInProgress(context);
     setState(() {
       loader = false;
     });
@@ -126,7 +126,7 @@ class _InProgressListState extends State<InProgressList> {
             SizedBox(
               width: 5.w,
             ),
-            Text('Requests'),
+            Text('In Progress'),
           ],
         ),
       ),
@@ -148,7 +148,7 @@ class _InProgressListState extends State<InProgressList> {
                         SizedBox(
                           height: 10,
                         ),
-                        myReqeustList.isEmpty
+                        inProgressList.isEmpty
                             ? Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -163,7 +163,7 @@ class _InProgressListState extends State<InProgressList> {
                                 ],
                               )
                             : ListView.builder(
-                                itemCount: myReqeustList.length,
+                                itemCount: inProgressList.length,
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 itemBuilder: (BuildContext context, int index) {
@@ -179,139 +179,123 @@ class _InProgressListState extends State<InProgressList> {
                                           child: InkWell(
                                             onTap: () {
                                               Get.to(() => WorkoutDetail(
-                                                  myReqeustList[index]
-                                                      .requestedToUser[0]
+                                                  inProgressList[index]
+
                                                       .id
                                                       .toString()));
                                             },
                                             child: Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 8.0, right: 8.0),
-                                              child: ClipRect(
-                                                child: Banner(
-                                                  textStyle:
-                                                      TextStyle(fontSize: 10),
-                                                  message: myReqeustList[index]
-                                                              .status ==
-                                                          0
-                                                      ? 'Pending'
-                                                      : 'Accepted',
-                                                  color: Colors.green,
-                                                  location:
-                                                      BannerLocation.topEnd,
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Stack(
-                                                          alignment: Alignment
-                                                              .bottomCenter,
-                                                          children: [
-                                                            ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          20),
-                                                              child:
-                                                                  CachedNetworkImage(
-                                                                height: 12.h,
-                                                                width: double
-                                                                    .infinity,
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                                imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
-                                                                    myReqeustList[
-                                                                            index]
-                                                                        .requestedToUser[
-                                                                            0]
-                                                                        .image
-                                                                        .toString(),
-                                                                placeholder: (context,
-                                                                        url) =>
-                                                                    Image.asset(
-                                                                  images[0],
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                  height: 12.h,
-                                                                  width: double
-                                                                      .infinity,
-                                                                ),
-                                                                errorWidget: (context,
-                                                                        url,
-                                                                        error) => /* Icon(Icons
-                                                                        .person) */
-                                                                    Image.asset(
-                                                                  images[0],
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                  height: 12.h,
-                                                                  width: double
-                                                                      .infinity,
-                                                                ),
-                                                              ),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Stack(
+                                                      alignment: Alignment
+                                                          .bottomCenter,
+                                                      children: [
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20),
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            height: 12.h,
+                                                            width: double
+                                                                .infinity,
+                                                            fit: BoxFit
+                                                                .cover,
+                                                            imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                                inProgressList[
+                                                                        index]
+
+                                                                    .image
+                                                                    .toString(),
+                                                            placeholder: (context,
+                                                                    url) =>
+                                                                Image.asset(
+                                                              images[0],
+                                                              fit: BoxFit
+                                                                  .cover,
+                                                              height: 12.h,
+                                                              width: double
+                                                                  .infinity,
                                                             ),
-                                                            Opacity(
-                                                              opacity: 0.4,
-                                                              child: Container(
-                                                                height: 12.h,
-                                                                decoration: BoxDecoration(
+                                                            errorWidget: (context,
+                                                                    url,
+                                                                    error) => /* Icon(Icons
+                                                                    .person) */
+                                                                Image.asset(
+                                                              images[0],
+                                                              fit: BoxFit
+                                                                  .cover,
+                                                              height: 12.h,
+                                                              width: double
+                                                                  .infinity,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Opacity(
+                                                          opacity: 0.4,
+                                                          child: Container(
+                                                            height: 12.h,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .black,
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        20)),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding: const EdgeInsets
+                                                                  .symmetric(
+                                                              horizontal:
+                                                                  18.0,
+                                                              vertical: 8),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                inProgressList[
+                                                                        index]
+
+                                                                    .userName,
+                                                                style: const TextStyle(
                                                                     color: Colors
-                                                                        .black,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            20)),
+                                                                        .white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        22),
                                                               ),
-                                                            ),
-                                                            Padding(
-                                                              padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal:
-                                                                      18.0,
-                                                                  vertical: 8),
-                                                              child: Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
                                                                 children: [
                                                                   Text(
-                                                                    myReqeustList[
-                                                                            index]
-                                                                        .requestedToUser[
-                                                                            0]
-                                                                        .userName,
+                                                                    'Workout time '+inProgressList[index].duration.replaceAll('after', ''),
                                                                     style: const TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontSize:
-                                                                            22),
+                                                                        color:
+                                                                            Colors.white,
+                                                                        fontWeight: FontWeight.normal,
+                                                                        fontSize: 18),
                                                                   ),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      Text(
-                                                                        'Workout time 2 hours',
-                                                                        style: const TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontWeight: FontWeight.normal,
-                                                                            fontSize: 18),
-                                                                      ),
-                                                                    ],
-                                                                  )
                                                                 ],
-                                                              ),
-                                                            ),
-                                                          ]),
-                                                      // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
-                                                    ],
-                                                  ),
-                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ]),
+                                                  // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
+                                                ],
                                               ),
                                             ),
                                           ),

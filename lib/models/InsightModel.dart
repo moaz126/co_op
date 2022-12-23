@@ -24,6 +24,8 @@ class InsightModel {
     required this.userData,
     required this.requestedByUser,
     required this.requestedToUser,
+    required this.completed,
+    required this.inProgress,
   });
 
   int id;
@@ -34,6 +36,8 @@ class InsightModel {
   DateTime meetUpDate;
   String meetUpTime;
   int status;
+  int completed;
+  int inProgress;
   int view;
   DateTime createdAt;
   DateTime updatedAt;
@@ -51,6 +55,8 @@ class InsightModel {
         meetUpDate: DateTime.parse(json["meet_up_date"]),
         meetUpTime: json["meet_up_time"],
         status: json["status"],
+        completed: json["is_completed"],
+        inProgress: json["in_progress"],
         view: json["view"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
@@ -134,7 +140,7 @@ class RequestedUser {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         otp: json["otp"],
-        rating: json["rating"],
+        rating:json.containsKey('rating')&&json["rating"]!=null? json["rating"].toDouble():0.0,
         fcmTokken: json["fcm_tokken"] == null ? null : json["fcm_tokken"],
       );
 }

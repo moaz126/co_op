@@ -289,12 +289,13 @@ class _ProfileDetailState extends State<ProfileDetail> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Navigator.push(
+                            Navigator.pop(context);
+                          /*  Navigator.push(
                               context,
                               CustomPageRoute(
                                   child: SignUp(),
                                   direction: AxisDirection.left),
-                            );
+                            );*/
                           },
                           child: Container(
                             height: 6.h,
@@ -307,7 +308,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Skip",
+                                  "Back",
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 1.8.h,

@@ -87,7 +87,7 @@ class GetProfileModel {
         lat: json["lat"].toDouble(),
         lng: json["long"].toDouble(),
         complete: json["completed"],
-        inProgress: json["inprogress"],
+        inProgress: json["in_progress"],
         requested: json["requests"],
         time: json["time_in_minutes"],
       );

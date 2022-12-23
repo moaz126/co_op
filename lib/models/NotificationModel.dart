@@ -22,6 +22,7 @@ class NotificationListModel {
     required this.updatedAt,
     required this.status,
     required this.requestedByUser,
+    required this.requestedToUser,
   });
 
   int id;
@@ -34,6 +35,7 @@ class NotificationListModel {
   DateTime updatedAt;
   int status;
   List<GetProfileModel> requestedByUser;
+  List<GetProfileModel> requestedToUser;
 
   factory NotificationListModel.fromJson(Map<String, dynamic> json) =>
       NotificationListModel(
@@ -49,6 +51,10 @@ class NotificationListModel {
         requestedByUser: json['requested_by_user'] == null
             ? []
             : List<GetProfileModel>.from(json["requested_by_user"]
+                .map((x) => GetProfileModel.fromJson(x))),
+        requestedToUser: json['requested_to_user'] == null
+            ? []
+            : List<GetProfileModel>.from(json["requested_to_user"]
                 .map((x) => GetProfileModel.fromJson(x))),
       );
 }

@@ -16,8 +16,9 @@ class SplashScreen extends StatefulWidget {
 
 class SplashScreenState extends State<SplashScreen> {
   getstate() async {
+    setUserLoggedIn(false);
     var isLogin = await getUserLoggedIn();
-    await DataApiService.instance.getFiltersList(context);
+     DataApiService.instance.getFiltersList(context);
 
     if (isLogin) {
       String? token = await getUserDataToken();
@@ -25,21 +26,17 @@ class SplashScreenState extends State<SplashScreen> {
       print('true');
       await DataApiService.instance.getprofileinfo(context);
 
-      Timer(
-          Duration(seconds: 2),
-          () => Get.to(() =>
-              HomePage()) /* Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomePage())) */
-          );
+      Get.to(() =>
+          HomePage());
     } else {
       print('false');
       await getUserFirstTime() == false
           ? Timer(
-              Duration(seconds: 3),
+              Duration(seconds: 2),
               () => Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => SignIn())))
           : Timer(
-              Duration(seconds: 3),
+              Duration(seconds: 2),
               () => Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => OnBoardingPage())));
     }
