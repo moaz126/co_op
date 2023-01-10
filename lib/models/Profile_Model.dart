@@ -33,6 +33,8 @@ class GetProfileModel {
     this.inProgress,
     this.requested,
     this.time,
+    this.rating,
+    this.verified,
   });
 
   int? id;
@@ -60,6 +62,8 @@ class GetProfileModel {
   int? inProgress;
   int? requested;
   int? time;
+  double? rating;
+  int?verified;
 
   factory GetProfileModel.fromJson(Map<String, dynamic> json) =>
       GetProfileModel(
@@ -90,6 +94,8 @@ class GetProfileModel {
         inProgress: json["in_progress"],
         requested: json["requests"],
         time: json["time_in_minutes"],
+        rating:json["rating"]==null?0.0: json["rating"].toDouble(),
+        verified: json.containsKey('verify')?json['verify']:null,
       );
 }
 

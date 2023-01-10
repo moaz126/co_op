@@ -131,39 +131,7 @@ class _GetReadyState extends State<GetReady> {
         ],
       ),
 
-      // floatingActionButton: Row(
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   children: [
-      //     const SizedBox(
-      //       width: 30,
-      //     ),
-      //     _button(
-      //       title: "Start",
-      //       onPressed: () => _controller.start(),
-      //     ),
-      //     const SizedBox(
-      //       width: 10,
-      //     ),
-      //     _button(
-      //       title: "Pause",
-      //       onPressed: () => _controller.pause(),
-      //     ),
-      //     const SizedBox(
-      //       width: 10,
-      //     ),
-      //     _button(
-      //       title: "Resume",
-      //       onPressed: () => _controller.resume(),
-      //     ),
-      //     const SizedBox(
-      //       width: 10,
-      //     ),
-      //     _button(
-      //       title: "Restart",
-      //       onPressed: () => _controller.restart(duration: _duration),
-      //     ),
-      //   ],
-      // ),
+
     );
   }
 

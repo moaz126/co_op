@@ -142,50 +142,7 @@ class _ClockState extends State<Clock> {
     super.initState();
     callApi();
 
-    /// Example 1
-    /// One-off execution after 10 minutes (or more).
-    ///
-    /// If the app is stopped, and restarted again within 10 minutes, the scheduled time will be
-    /// automatically retrieved and the function executed as scheduled.
-    ///
-    /// If the app is stopped, and restarted again after more than 10 minutes, `onMissedSchedule` will
-    /// be executed immediately - which will in turn execute `onExecute`.
-    /*  late ScheduledTimer example1;
-    example1 = ScheduledTimer(
-        id: 'example1',
-        onExecute: () {
-          print('Executing example1');
-        },
-        defaultScheduledTime: DateTime.now().add(Duration(seconds: 10)),
-        onMissedSchedule: () {
-          example1.execute();
-        }); */
 
-    /// Example 2
-    /// Periodic execution every 10 minutes (or more).
-    ///
-    /// We're scheduling a new execution after 10 minutes every time the timer executes, which will
-    /// create a "periodic" timer.
-    ///
-    /// If the app is stopped, and restarted again within 10 minutes, the scheduled time will be
-    /// automatically retrieved and the function executed as scheduled.
-    ///
-    /// If the app is stopped, and restarted again after more than 10 minutes, `onMissedSchedule` will
-    /// be executed immediately - which will in turn execute `onExecute`.
-    /*   late ScheduledTimer example2;
-    example2 = ScheduledTimer(
-        id: 'example2',
-        onExecute: () {
-          print('Executing example2');
-
-          // Schedule the next execution 10 minutes from now. This will create a "periodic" timer,
-          // which will self-execute every 10 minutes.
-          example2.schedule(DateTime.now().add(Duration(minutes: 10)));
-        },
-        defaultScheduledTime: DateTime.now(),
-        onMissedSchedule: () {
-          example2.execute();
-        }); */
   }
 
   @override
@@ -475,42 +432,7 @@ class _ClockState extends State<Clock> {
                   SizedBox(
                     height: 15.h,
                   )
-                  /*  timerleft == 0 || timerleft < 0
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            SizedBox(
-                              width: 23.w,
-                              child: _button(
-                                title: "Start",
-                                onPressed: () => _controller.start(),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 23.w,
-                              child: _button(
-                                title: "Pause",
-                                onPressed: () => _controller.pause(),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 25.w,
-                              child: _button(
-                                title: "Resume",
-                                onPressed: () => _controller.resume(),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 25.w,
-                              child: _button(
-                                title: "Restart",
-                                onPressed: () =>
-                                    _controller.restart(duration: _duration),
-                              ),
-                            ),
-                          ],
-                        )
-                      : SizedBox(), */
+
                 ],
               ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -518,13 +440,7 @@ class _ClockState extends State<Clock> {
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // SizedBox(
-                  //   width: 23.w,
-                  //   child: _button(
-                  //     title: "Start",
-                  //     onPressed: () => _controller.start(),
-                  //   ),
-                  // ),
+
                   SizedBox(
                     width: 60.w,
                     child: _button(
@@ -537,41 +453,211 @@ class _ClockState extends State<Clock> {
                                   title: 'Quit',
                                   desc: 'Are you sure you want to quit?',
                                   btnOkOnPress: () async {
-                                    _controller.pause();
-                                    DataApiService.instance.quitTimer(
-                                        profileInfo.id.toString(),
-                                        getrequest.requestedToId.toString(),
-                                        getrequest.id.toString(),
-                                        context);
-                                    DataApiService.instance.completeRequest(
-                                        users.requestId.toString(), context);
-                                    Navigator.pop(context);
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          final themeChange =
+                                          Provider.of<DarkThemeProvider>(
+                                              context);
 
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                WorkoutDetail(
-                                                    widget.requestedToid)));
+                                          return StatefulBuilder(
+                                              builder: (context, setState) {
+                                                return Dialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                      BorderRadius.circular(
+                                                          20.0)),
+                                                  child: Container(
+                                                    color: Theme.of(context)
+                                                        .scaffoldBackgroundColor,
+                                                    height: 350,
+                                                    child: Column(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                          const EdgeInsets.all(
+                                                              10),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              SizedBox(height: 10),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                                children: [
+                                                                  InkWell(
+                                                                    onTap: () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    child: ClipOval(
+                                                                      child:
+                                                                      CachedNetworkImage(
+                                                                        height: 15.h,
+                                                                        width: 15.h,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                        imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
+                                                                            requestUser
+                                                                                .image
+                                                                                .toString(),
+                                                                        placeholder: (context,
+                                                                            url) =>
+                                                                            Image
+                                                                                .asset(
+                                                                              'assets/images/profile.png',
+                                                                              height: 70,
+                                                                              width: 70,
+                                                                              fit: BoxFit
+                                                                                  .fill,
+                                                                            ),
+                                                                        errorWidget: (context,
+                                                                            url,
+                                                                            error) =>
+                                                                            Image
+                                                                                .asset(
+                                                                              'assets/images/profile.png',
+                                                                              height: 70,
+                                                                              width: 70,
+                                                                              fit: BoxFit
+                                                                                  .contain,
+                                                                            ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              SizedBox(height: 10),
+                                                              Text(
+                                                                  requestUser
+                                                                      .userName,
+                                                                  textAlign: TextAlign
+                                                                      .center,
+                                                                  style: Theme.of(
+                                                                      context)
+                                                                      .textTheme
+                                                                      .headline3),
+                                                              SizedBox(height: 10),
+                                                              Text(
+                                                                  'Your workout has been ended please rate your experience with ' +
+                                                                      requestUser
+                                                                          .userName,
+                                                                  textAlign: TextAlign
+                                                                      .center,
+                                                                  style: Theme.of(
+                                                                      context)
+                                                                      .textTheme
+                                                                      .bodyText2),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 5),
+                                                        RatingBar(
+                                                            initialRating: 0.0,
+                                                            direction:
+                                                            Axis.horizontal,
+                                                            allowHalfRating: true,
+                                                            itemCount: 5,
+                                                            itemSize: 30,
+                                                            ratingWidget:
+                                                            RatingWidget(
+                                                                full: const Icon(
+                                                                    Icons.star,
+                                                                    color:
+                                                                    secondaryColor),
+                                                                half: const Icon(
+                                                                  Icons.star_half,
+                                                                  color:
+                                                                  secondaryColor,
+                                                                ),
+                                                                empty: const Icon(
+                                                                  Icons
+                                                                      .star_outline,
+                                                                  color:
+                                                                  secondaryColor,
+                                                                )),
+                                                            onRatingUpdate: (value) {
+                                                              rate = value;
+                                                            }),
+                                                        Column(children: [
+                                                          SizedBox(
+                                                            height: 20,
+                                                          ),
+                                                          Container(
+                                                            height: 6.h,
+                                                            width: 70.w,
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                BorderRadius
+                                                                    .circular(20),
+                                                                color: primaryColor),
+                                                            child: InkWell(
+                                                              onTap: () async {
+                                                                _controller.pause();
+                                                                DataApiService.instance.quitTimer(
+                                                                    profileInfo.id.toString(),
+                                                                    getrequest.requestedToId.toString(),
+                                                                    getrequest.id.toString(),
+                                                                    context);
+                                                                DataApiService.instance.completeRequest(
+                                                                    users.requestId.toString(), context);
+
+
+
+                                                                /* Navigator.pushReplacement(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder: (BuildContext context) =>
+                                                                            WorkoutDetail(
+                                                                                widget.requestedToid)));*/
+                                                                DataApiService
+                                                                    .instance
+                                                                    .sendRating(
+                                                                    requestUser.id
+                                                                        .toString(),
+                                                                    rate.toString(),
+                                                                    context);
+                                                                Navigator.pop(
+                                                                    context);
+                                                                Navigator.pop(
+                                                                    context);  Navigator.pop(context);
+                                                                Navigator.pushReplacement(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder: (BuildContext
+                                                                        context) =>
+                                                                            WorkoutDetail(users
+                                                                                .userData!
+                                                                                .id
+                                                                                .toString())));
+                                                              },
+                                                              child: Center(
+                                                                  child: Text(
+                                                                      "Submit",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                          2.1.h,
+                                                                          color: Colors
+                                                                              .white))),
+                                                            ),
+                                                          ),
+                                                        ]),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              });
+                                        });
+
                                   },
                                   btnCancelOnPress: () {})
                               .show();
                         }),
                   ),
-                  // SizedBox(
-                  //   width: 25.w,
-                  //   child: _button(
-                  //     title: "Resume",
-                  //     onPressed: () => _controller.resume(),
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   width: 25.w,
-                  //   child: _button(
-                  //     title: "Restart",
-                  //     onPressed: () => _controller.restart(duration: _duration),
-                  //   ),
-                  // ),
+
                 ],
               )
             : SizedBox());

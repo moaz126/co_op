@@ -9,12 +9,14 @@ import 'package:co_op/screens/profile/AddressList.dart';
 import 'package:co_op/screens/profile/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:co_op/screens/profile/packages.dart';
 
 import '../../bottom_navigation_bar.dart';
+import '../../constants/constants.dart';
 import '../../constants/noInternet.dart';
 import '../../provider/dark_theme_provider.dart';
 import '../auth/accountsetup/choose_interest.dart';
@@ -41,6 +43,17 @@ class _ProfilePageState extends State<ProfilePage> {
         SystemNavigator.pop();
       },
     ).show();
+  }
+  callApi(){
+    setState(() {
+      DataApiService.instance.getprofileinfo(context);
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    callApi();
   }
 
   @override
@@ -135,79 +148,62 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       Text(profileInfo.email.toString(),
                           style: TextStyle(fontSize: 16)),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      /*   InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PackagesScreen()),
-                    );
-                  },
-                  child: Container(
-                    height: 10.h,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topRight,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            Colors.deepPurpleAccent,
-                            Color(0xff994ef5),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Column(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              Container(
-                                height: 24,
-                                width: 44,
-                                decoration: BoxDecoration(
-                                    color: Color(0xffffd700),
-                                    borderRadius: BorderRadius.circular(40)),
-                                child: Center(
-                                    child: Text(
-                                  "PRO",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
-                                )),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "Upgrade to Premium",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              ),
-                              Spacer(),
-                              Icon(
-                                Icons.navigate_next_outlined,
-                                color: Colors.white,
-                                size: 30,
-                              ),
-                            ],
+                          AbsorbPointer(
+                            absorbing:
+                            true,
+                            child: RatingBar(
+                                tapOnlyMode: false,
+                                updateOnDrag: false,
+                                initialRating: ratingStars.value == null ? 0.0 : ratingStars.value.toDouble(),
+
+
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemSize: 24,
+                                ratingWidget: RatingWidget(
+                                    full: const Icon(Icons.star, color: secondaryColor),
+                                    half: const Icon(
+                                      Icons.star_half,
+                                      color: secondaryColor,
+                                    ),
+                                    empty: const Icon(
+                                      Icons.star_outline,
+                                      color: secondaryColor,
+                                    )),
+                                onRatingUpdate: (value) {}),
                           ),
-                          Text(
-                            "Enjoy workout access without ads and restrictions",
-                            style: TextStyle(color: Colors.white, fontSize: 12),
+                          Container(
+                            width: 30,
+                            height:
+                            30,
+                            alignment:
+                            Alignment
+                                .center,
+                            child:
+                            Text(
+                             ratingStars.value ==
+                                  null
+                                  ? '0.0'
+                                  : ratingStars.value.toString(),
+
+                              style: const TextStyle(
+                                  color: secondaryColor,
+                                  fontSize:
+                                  14,
+                                  fontWeight:
+                                  FontWeight.bold),
+                            ),
                           )
                         ],
                       ),
-                    ),
-                  ),
-                ), */
+                      SizedBox(
+                        height: 20,
+                      ),
+
                       Divider(
                         height: 20,
                         color: Colors.black,
@@ -268,24 +264,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           },
                         ),
                       ),
-                      /* Card(
-                        child: ListTile(
-                          onTap: () {
-                            DataApiService.instance.getUsers(context);
-                          },
-                          leading: Icon(Icons.security),
-                          title: Text('Security'),
-                        ),
-                      ),
-                      Card(
-                        child: ListTile(
-                          leading: Icon(Icons.help_outline),
-                          title: Text('Help'),
-                          onTap: () {
-                            DataApiService.instance.getFiltersList(context);
-                          },
-                        ),
-                      ), */
+
                       Card(
                         child: ListTile(
                           onTap: () {
@@ -302,6 +281,37 @@ class _ProfilePageState extends State<ProfilePage> {
                           title: Text('Interests'),
                         ),
                       ),
+                      Card(
+                        child: ListTile(
+                          onTap: () {
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.question,
+                              animType: AnimType.TOPSLIDE,
+                              title: 'Delete Account',
+                              desc: 'Are you sure you want to delete account?',
+                              btnCancelOnPress: () {},
+                              btnCancelText: 'No',
+                              btnOkText: 'Yes',
+                              btnOkOnPress: () async {
+                                setUserLoggedIn(false);
+                                firstHome = false;
+                                DataApiService.instance.delteAccount(context, profileInfo.id.toString());
+                                Get.offAll(SignIn());
+                              },
+                            ).show();
+                          },
+                          leading: Icon(
+                            Icons.delete,
+
+                          ),
+                          title: Text(
+                            'Delete Account',
+
+                          ),
+                        ),
+                      ),
+
                       Card(
                         child: ListTile(
                           onTap: () {
@@ -332,50 +342,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
-                      // SizedBox(
-                      //   height: 25.h,
-                      //   child: ListView(
-                      //     //physics: NeverScrollableScrollPhysics(),
-                      //     children: const <Widget>[
-                      //       Card(
-                      //         child: ListTile(
-                      //           leading: Icon(Icons.person),
-                      //           title: Text('Edit Profile'),
-                      //         ),
-                      //       ),
-                      //       Card(
-                      //         child: ListTile(
-                      //           leading: Icon(Icons.notifications),
-                      //           title: Text('Notifications'),
-                      //         ),
-                      //       ),
-                      //       Card(
-                      //         child: ListTile(
-                      //           leading: Icon(Icons.security),
-                      //           title: Text('Security'),
-                      //         ),
-                      //       ),
-                      //       Card(
-                      //         child: ListTile(
-                      //           leading: Icon(Icons.help_outline),
-                      //           title: Text('Help'),
-                      //         ),
-                      //       ),
-                      //       Card(
-                      //         child: ListTile(
-                      //           leading: Icon(Icons.remove_red_eye),
-                      //           title: Text('Dark Theme'),
-                      //         ),
-                      //       ),
-                      //       Card(
-                      //         child: ListTile(
-                      //           leading: Icon(Icons.logout),
-                      //           title: Text('Logout', style: TextStyle(color:Colors.red),),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // )
                     ],
                   ),
                 ),

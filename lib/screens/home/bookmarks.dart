@@ -77,7 +77,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
                                 child: emptyAnimation,
                               ),
                             ),
-                            Text('No Bookmark yet')
+                            const Text('No Bookmark yet')
                           ],
                         )
                       : GridView.builder(
@@ -182,7 +182,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
                                                           .user
                                                           .userName
                                                           .toString(),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,

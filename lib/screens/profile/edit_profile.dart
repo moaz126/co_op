@@ -8,10 +8,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -143,7 +140,7 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ),
       body: connected == false
-          ? NoInternet(
+          ? const NoInternet(
               page: EditProfile(),
             )
           : pageLoader
@@ -153,7 +150,7 @@ class _EditProfileState extends State<EditProfile> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Column(
@@ -198,7 +195,7 @@ class _EditProfileState extends State<EditProfile> {
                                     onTap: () {
                                       selectFile();
                                     },
-                                    child: CircleAvatar(
+                                    child: const CircleAvatar(
                                         backgroundColor: secondaryColor,
                                         child: Icon(
                                           Icons.edit,
@@ -206,20 +203,20 @@ class _EditProfileState extends State<EditProfile> {
                                         )),
                                   ))
                             ]),
-                            SizedBox(
+                            const SizedBox(
                               height: 30,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 20.0),
                               child: Container(
                                 width: Get.width,
-                                child: Text(
+                                child: const Text(
                                   'Full Name',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Center(
@@ -267,13 +264,13 @@ class _EditProfileState extends State<EditProfile> {
                               padding: const EdgeInsets.only(left: 20.0),
                               child: Container(
                                 width: Get.width,
-                                child: Text(
+                                child: const Text(
                                   'Nick Name',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Center(
@@ -319,13 +316,13 @@ class _EditProfileState extends State<EditProfile> {
                               padding: const EdgeInsets.only(left: 20.0),
                               child: Container(
                                 width: Get.width,
-                                child: Text(
+                                child: const Text(
                                   'User Name',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Center(
@@ -370,13 +367,13 @@ class _EditProfileState extends State<EditProfile> {
                               padding: const EdgeInsets.only(left: 20.0),
                               child: Container(
                                 width: Get.width,
-                                child: Text(
+                                child: const Text(
                                   'Phone Number',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Center(
@@ -431,21 +428,21 @@ class _EditProfileState extends State<EditProfile> {
                             children: <Widget>[
                               Container(
                                 width: 25.w,
-                                child: Text(
+                                child: const Text(
                                   'Age',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
                               Container(
                                 width: 25.w,
-                                child: Text(
+                                child: const Text(
                                   'Weight',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
                               Container(
                                 width: 25.w,
-                                child: Text(
+                                child: const Text(
                                   'Height',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
@@ -453,7 +450,7 @@ class _EditProfileState extends State<EditProfile> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Padding(
@@ -570,13 +567,13 @@ class _EditProfileState extends State<EditProfile> {
                           padding: const EdgeInsets.only(left: 25.0),
                           child: Container(
                             width: Get.width,
-                            child: Text(
+                            child: const Text(
                               'Activity level',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Padding(
@@ -616,7 +613,7 @@ class _EditProfileState extends State<EditProfile> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               InkWell(
@@ -653,7 +650,7 @@ class _EditProfileState extends State<EditProfile> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               InkWell(
@@ -700,7 +697,7 @@ class _EditProfileState extends State<EditProfile> {
                           padding: const EdgeInsets.only(left: 25.0),
                           child: Container(
                             width: Get.width,
-                            child: Text(
+                            child: const Text(
                               'Workout Images',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
@@ -731,7 +728,7 @@ class _EditProfileState extends State<EditProfile> {
                                                     width: 140,
                                                     decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius.all(
+                                                            const BorderRadius.all(
                                                                 Radius.circular(
                                                                     5)),
                                                         border: Border.all(
@@ -743,10 +740,7 @@ class _EditProfileState extends State<EditProfile> {
                                                         padding:
                                                             const EdgeInsets
                                                                 .all(3.0),
-                                                        child: /* Image.asset(
-                                                      imageList[i],
-                                                      fit: BoxFit
-                                                          .cover) */
+                                                        child:
                                                             Image.network(
                                                           'https://becktesting.site/workout-bud/public/storage/user/workout/' +
                                                               profileInfo
@@ -872,7 +866,7 @@ class _EditProfileState extends State<EditProfile> {
                                                             Icon(Icons.close)))
                                               ],
                                             ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 5,
                                           ),
                                         ],
@@ -1014,11 +1008,11 @@ class _EditProfileState extends State<EditProfile> {
                                                               print(
                                                                   "helooooooooooooo");
                                                             },
-                                                            child: Icon(
+                                                            child: const Icon(
                                                                 Icons.close)))
                                                   ],
                                                 ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 5,
                                               ),
                                               InkWell(
@@ -1137,187 +1131,7 @@ class _EditProfileState extends State<EditProfile> {
                                       ),
                                     ),
                                   ),
-                        /*       SizedBox(
-                      height: 2.h,
-                    ),
-                    ListView.builder(
-                      itemCount: getAddrList.length,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Center(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: Get.width,
-                                  child: Text(
-                                    'Address#${index + 1}',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  height: 8.h,
-                                  width: 90.w,
-                                  decoration: BoxDecoration(
-                                      color: Colors.black12,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(24, 8, 24, 0),
-                                    child: TextField(
-                                      onTap: () {},
-                                      controller: addrUser[index].AddController,
-                                      readOnly: true,
-                                      showCursor: false,
-                                      cursorColor: Colors.grey,
-                                      textAlign: TextAlign.start,
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.digitsOnly,
-                                        LengthLimitingTextInputFormatter(15)
-                                      ],
-                                      decoration: InputDecoration(
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        prefixIcon: Icon(Icons.location_pin),
-                                        hintText:
-                                            getAddrList[index].locationName,
-                                        hintStyle: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 2.h,
-                                            fontFamily: 'NeueMachina'),
-                                        filled: true,
-                                        fillColor: Colors.transparent,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: Container(
-                        width: Get.width,
-                        child: Text(
-                          'Add Address',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        child: Container(
-                          height: 8.h,
-                          width: 90.w,
-                          decoration: BoxDecoration(
-                              color: Colors.black12,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
-                            child: TextField(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PlacePicker(
-                                      apiKey:
-                                          "AIzaSyBDOMNCVC2eacCxKYuRxIwCz4w-QjV_l5Y",
-                                      onPlacePicked: (result) {
-                                        print(result.geometry!.location);
-                                        final tagName =
-                                            result.formattedAddress.toString();
-                                        print(result.formattedAddress);
-                                        final split = tagName.split(',');
-                                        final Map<int, String> values = {
-                                          for (int i = 0; i < split.length; i++)
-                                            i: split[i]
-                                        };
-                                        final value1 = values[0];
-                                        final value2 = values[1];
-                                        final value3 = values[2];
-                                        final value4 = values[3];
-                                        setState(() {
 
-                                          addrUser.insert(
-                                              0,
-                                              Address(
-                                                  AddController:
-                                                      TextEditingController(
-                                                          text: result
-                                                              .formattedAddress
-                                                              .toString()),
-                                                  useraddress: value1,
-                                                  city: value2,
-                                                  country: value3,
-                                                  latitude: result
-                                                      .geometry!.location.lat
-                                                      .toString(),
-                                                  longitude: result
-                                                      .geometry!.location.lng
-                                                      .toString()));
-
-                                          /*   if(value1!=null) {
-                                              address.text = value1.toString();
-                                            }
-                                            if(value2!=null) {
-                                              houseNo.text = value2.toString();
-                                            }
-                                            if(value3!=null) {
-                                              city.text = value3.toString();
-                                            } */
-                                        });
-                                        Navigator.of(context).pop();
-                                      },
-                                      useCurrentLocation: true,
-                                      initialPosition:
-                                          LatLng(31.65465, 31.35153),
-                                    ),
-                                  ),
-                                );
-                              },
-                              readOnly: true,
-                              showCursor: false,
-                              cursorColor: Colors.grey,
-                              textAlign: TextAlign.start,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(15)
-                              ],
-                              decoration: InputDecoration(
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                prefixIcon: Icon(Icons.location_pin),
-                                hintText: 'Address',
-                                hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 2.h,
-                                    fontFamily: 'NeueMachina'),
-                                filled: true,
-                                fillColor: Colors.transparent,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ), */
                         SizedBox(
                           height: 60,
                         ),

@@ -48,7 +48,7 @@ final timeend = SizedBox(
     'assets/animations/timeEnd.json',
   ),
 );
-
+    
 /* SpinKitFadingCube(
   color: secondaryColor,
   size: 5.h,

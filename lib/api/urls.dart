@@ -11,6 +11,7 @@ String resoponse_url = 'request/response';
 String requestList_url = 'request/list_single';
 String getrequest_url = 'get/request';
 String logout_url = 'logout';
+String deleteAcount_url = 'delete_account';
 String myRequest_url = 'request/list';
 String inProgress_url = 'in-progress';
 String complete_url = 'completed';

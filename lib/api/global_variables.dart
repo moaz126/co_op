@@ -20,6 +20,7 @@ import '../models/InProgressModel.dart';
 import '../models/MyRequestList.dart';
 
 final USER_TOKEN = ValueNotifier("");
+final ratingStars = ValueNotifier(0.0);
 var profileInfo = GetProfileModel(goal: [], subCategoryId: [], imageList: []);
 List<GetFilterModel> getfilterList = [];
 List<MyRequestList> myReqeustList = [];

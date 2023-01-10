@@ -66,7 +66,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
   ];
   List<InsightModel> yogaUsers = [];
   List<InsightModel> sportsUsers = [];
-  List<InsightModel> weightLisftUsers = [];
+  List<InsightModel> weightListUsers = [];
   List<InsightModel> cardioUsers = [];
   String? selectedDate;
   DateTime select = DateTime.now();
@@ -95,8 +95,8 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
               sportsUsers.add(insightList[i]);
             }
           } else if (insightList[i].userData[j].filterId == 3) {
-            if (weightLisftUsers.contains(insightList[i]) == false) {
-              weightLisftUsers.add(insightList[i]);
+            if (weightListUsers.contains(insightList[i]) == false) {
+              weightListUsers.add(insightList[i]);
             }
           } else if (insightList[i].userData[j].filterId == 4) {
             if (cardioUsers.contains(insightList[i]) == false) {
@@ -110,7 +110,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
     print('second');
     print(yogaUsers.length);
     print(sportsUsers.length);
-    print(weightLisftUsers.length);
+    print(weightListUsers.length);
     print(cardioUsers.length);
     setState(() {
       loader = false;
@@ -194,7 +194,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                               yogaUsers.clear();
                               sportsUsers.clear();
                               cardioUsers.clear();
-                              weightLisftUsers.clear();
+                              weightListUsers.clear();
                               await callApi();
                               setState(() {});
                             }),
@@ -328,7 +328,12 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                 itemCount: yogaUsers.length,
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (context, index) {
-                                  return InkWell(
+                                  return yogaUsers[index]
+                                      .inProgress ==
+                                      1 &&
+                                      yogaUsers[index].completed ==
+                                          0
+                                      ?SizedBox(): InkWell(
                                     onTap: () {
                                       yogaUsers[index].requestedByUser[0].id ==
                                               profileInfo.id
@@ -347,13 +352,13 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                       child: ClipRRect(
                                         child: Banner(
                                           textStyle: TextStyle(fontSize: 10),
-                                          message: yogaUsers[index]
+                                          message: /*yogaUsers[index]
                                                           .inProgress ==
                                                       1 &&
                                                   yogaUsers[index].completed ==
                                                       0
                                               ? 'In Progress'
-                                              : yogaUsers[index].status == 2
+                                              :*/ yogaUsers[index].status == 2
                                                   ? 'Declined'
                                                   : yogaUsers[index]
                                                               .completed ==
@@ -542,138 +547,11 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                               ),
                                                             ],
                                                           ),
-                                                          // Row(
-                                                          //   mainAxisAlignment:
-                                                          //       MainAxisAlignment
-                                                          //           .spaceBetween,
-                                                          //   children: [
-                                                          //     Row(
-                                                          //       children: [
-                                                          //         /*  Text(
-                                                          //           '10Min',
-                                                          //           style: TextStyle(
-                                                          //               color: Colors
-                                                          //                   .white,
-                                                          //               fontWeight:
-                                                          //                   FontWeight
-                                                          //                       .bold,
-                                                          //               fontSize:
-                                                          //                   3.w),
-                                                          //         ),
-                                                          //         const SizedBox(
-                                                          //           width: 4,
-                                                          //         ),
-                                                          //         Container(
-                                                          //           height: 15,
-                                                          //           width: 2,
-                                                          //           color: Colors
-                                                          //               .white,
-                                                          //         ),
-                                                          //         const SizedBox(
-                                                          //           width: 4,
-                                                          //         ),
-                                                          //         Text(
-                                                          //           'Football',
-                                                          //           style: TextStyle(
-                                                          //               color: Colors
-                                                          //                   .white,
-                                                          //               fontWeight:
-                                                          //                   FontWeight
-                                                          //                       .bold,
-                                                          //               fontSize:
-                                                          //                   3.w),
-                                                          //         ), */
-                                                          //         AbsorbPointer(
-                                                          //           absorbing:
-                                                          //               true,
-                                                          //           child: RatingBar(
-                                                          //               tapOnlyMode: false,
-                                                          //               updateOnDrag: false,
-                                                          //               initialRating: yogaUsers[index].requestedToUser[0].rating == null ? 0.0 : yogaUsers[index].requestedToUser[0].rating!.toDouble(),
-                                                          //               direction: Axis.horizontal,
-                                                          //               allowHalfRating: true,
-                                                          //               itemCount: 5,
-                                                          //               itemSize: 20,
-                                                          //               ratingWidget: RatingWidget(
-                                                          //                   full: const Icon(Icons.star, color: secondaryColor),
-                                                          //                   half: const Icon(
-                                                          //                     Icons.star_half,
-                                                          //                     color: secondaryColor,
-                                                          //                   ),
-                                                          //                   empty: const Icon(
-                                                          //                     Icons.star_outline,
-                                                          //                     color: secondaryColor,
-                                                          //                   )),
-                                                          //               onRatingUpdate: (value) {}),
-                                                          //         ),
-                                                          //         const SizedBox(
-                                                          //           width: 4,
-                                                          //         ),
-                                                          //         /*   Container(
-                                                          //           height: 15,
-                                                          //           width: 2,
-                                                          //           color: Colors
-                                                          //               .white,
-                                                          //         ),
-                                                          //         const SizedBox(
-                                                          //           width: 4,
-                                                          //         ), */
-                                                          //         Row(
-                                                          //           children: [
-                                                          //             /*     Icon(
-                                                          //               Icons
-                                                          //                   .star_rate_rounded,
-                                                          //               size: 3.w,
-                                                          //               color: Colors
-                                                          //                   .orange,
-                                                          //             ), */
-                                                          //             Text(
-                                                          //               yogaUsers[index].requestedToUser[0].rating ==
-                                                          //                       null
-                                                          //                   ? '0.0'
-                                                          //                   : yogaUsers[index].requestedToUser[0].rating.toString(),
-                                                          //               style: TextStyle(
-                                                          //                   color:
-                                                          //                       Colors.white,
-                                                          //                   fontWeight: FontWeight.bold,
-                                                          //                   fontSize: 3.w),
-                                                          //             ),
-                                                          //           ],
-                                                          //         ),
-                                                          //       ],
-                                                          //     ),
-                                                          //   ],
-                                                          // ),
+
                                                           const SizedBox(
                                                             height: 10,
                                                           ),
-                                                          /*   InkWell(
-                                                            onTap: () {},
-                                                            child: Container(
-                                                              height: 4.h,
-                                                              width:
-                                                                  double.infinity,
-                                                              decoration: BoxDecoration(
-                                                                  color:
-                                                                      secondaryColor,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10)),
-                                                              child: Center(
-                                                                  child: Text(
-                                                                "Send Request",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        1.8.h,
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w700),
-                                                              )),
-                                                            ),
-                                                          ), */
+
                                                         ],
                                                       ),
                                                     ),
@@ -711,7 +589,13 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                 itemCount: sportsUsers.length,
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (context, index) {
-                                  return Padding(
+                                  return sportsUsers[index]
+                                      .inProgress ==
+                                      1 &&
+                                      sportsUsers[index]
+                                          .completed ==
+                                          0
+                                      ?SizedBox(): Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 0, vertical: 0.0),
                                     child: InkWell(
@@ -734,14 +618,14 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                         child: ClipRRect(
                                           child: Banner(
                                             textStyle: TextStyle(fontSize: 10),
-                                            message: sportsUsers[index]
+                                            message: /*sportsUsers[index]
                                                             .inProgress ==
                                                         1 &&
                                                     sportsUsers[index]
                                                             .completed ==
                                                         0
                                                 ? 'In Progress'
-                                                : sportsUsers[index].status == 2
+                                                :*/ sportsUsers[index].status == 2
                                                     ? 'Declined'
                                                     : sportsUsers[index]
                                                                 .completed ==
@@ -947,93 +831,11 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            // Row(
-                                                            //   mainAxisAlignment:
-                                                            //       MainAxisAlignment
-                                                            //           .spaceBetween,
-                                                            //   children: [
-                                                            //     Row(
-                                                            //       children: [
-                                                            //         AbsorbPointer(
-                                                            //           absorbing:
-                                                            //               true,
-                                                            //           child: RatingBar(
-                                                            //               tapOnlyMode: false,
-                                                            //               updateOnDrag: false,
-                                                            //               initialRating: sportsUsers[index].requestedToUser[0].rating == null ? 0.0 : sportsUsers[index].requestedToUser[0].rating!.toDouble(),
-                                                            //               direction: Axis.horizontal,
-                                                            //               allowHalfRating: true,
-                                                            //               itemCount: 5,
-                                                            //               itemSize: 20,
-                                                            //               ratingWidget: RatingWidget(
-                                                            //                   full: const Icon(Icons.star, color: secondaryColor),
-                                                            //                   half: const Icon(
-                                                            //                     Icons.star_half,
-                                                            //                     color: secondaryColor,
-                                                            //                   ),
-                                                            //                   empty: const Icon(
-                                                            //                     Icons.star_outline,
-                                                            //                     color: secondaryColor,
-                                                            //                   )),
-                                                            //               onRatingUpdate: (value) {}),
-                                                            //         ),
-                                                            //         const SizedBox(
-                                                            //           width: 4,
-                                                            //         ),
-                                                            //         Row(
-                                                            //           children: [
-                                                            //             /*   Icon(
-                                                            //               Icons
-                                                            //                   .star_rate_rounded,
-                                                            //               size: 3.w,
-                                                            //               color: Colors
-                                                            //                   .orange,
-                                                            //             ), */
-                                                            //             Text(
-                                                            //               sportsUsers[index].requestedToUser[0].rating == null
-                                                            //                   ? '0.0'
-                                                            //                   : sportsUsers[index].requestedToUser[0].rating.toString(),
-                                                            //               style: TextStyle(
-                                                            //                   color: Colors.white,
-                                                            //                   fontWeight: FontWeight.bold,
-                                                            //                   fontSize: 3.w),
-                                                            //             ),
-                                                            //           ],
-                                                            //         ),
-                                                            //       ],
-                                                            //     ),
-                                                            //   ],
-                                                            // ),
+
                                                             const SizedBox(
                                                               height: 10,
                                                             ),
-                                                            /*  InkWell(
-                                                              onTap: () {},
-                                                              child: Container(
-                                                                height: 4.h,
-                                                                width:
-                                                                    double.infinity,
-                                                                decoration: BoxDecoration(
-                                                                    color:
-                                                                        secondaryColor,
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                10)),
-                                                                child: Center(
-                                                                    child: Text(
-                                                                  "Send Request",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          1.8.h,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700),
-                                                                )),
-                                                              ),
-                                                            ), */
+
                                                           ],
                                                         ),
                                                       ),
@@ -1072,7 +874,13 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                 itemCount: cardioUsers.length,
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (context, index) {
-                                  return Padding(
+                                  return cardioUsers[index]
+                                      .inProgress ==
+                                      1 &&
+                                      cardioUsers[index]
+                                          .completed ==
+                                          0
+                                      ?SizedBox(): Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 0, vertical: 0.0),
                                     child: InkWell(
@@ -1095,14 +903,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                         child: ClipRRect(
                                           child: Banner(
                                             textStyle: TextStyle(fontSize: 10),
-                                            message: cardioUsers[index]
-                                                            .inProgress ==
-                                                        1 &&
-                                                    cardioUsers[index]
-                                                            .completed ==
-                                                        0
-                                                ? 'In Progress'
-                                                : cardioUsers[index].status == 2
+                                            message: cardioUsers[index].status == 2
                                                     ? 'Declined'
                                                     : cardioUsers[index]
                                                                 .completed ==
@@ -1307,93 +1108,11 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            // Row(
-                                                            //   mainAxisAlignment:
-                                                            //       MainAxisAlignment
-                                                            //           .spaceBetween,
-                                                            //   children: [
-                                                            //     Row(
-                                                            //       children: [
-                                                            //         AbsorbPointer(
-                                                            //           absorbing:
-                                                            //               true,
-                                                            //           child: RatingBar(
-                                                            //               tapOnlyMode: false,
-                                                            //               updateOnDrag: false,
-                                                            //               initialRating: cardioUsers[index].requestedToUser[0].rating == null ? 0.0 : cardioUsers[index].requestedToUser[0].rating!.toDouble(),
-                                                            //               direction: Axis.horizontal,
-                                                            //               allowHalfRating: true,
-                                                            //               itemCount: 5,
-                                                            //               itemSize: 20,
-                                                            //               ratingWidget: RatingWidget(
-                                                            //                   full: const Icon(Icons.star, color: secondaryColor),
-                                                            //                   half: const Icon(
-                                                            //                     Icons.star_half,
-                                                            //                     color: secondaryColor,
-                                                            //                   ),
-                                                            //                   empty: const Icon(
-                                                            //                     Icons.star_outline,
-                                                            //                     color: secondaryColor,
-                                                            //                   )),
-                                                            //               onRatingUpdate: (value) {}),
-                                                            //         ),
-                                                            //         const SizedBox(
-                                                            //           width: 4,
-                                                            //         ),
-                                                            //         Row(
-                                                            //           children: [
-                                                            //             /*  Icon(
-                                                            //               Icons
-                                                            //                   .star_rate_rounded,
-                                                            //               size: 3.w,
-                                                            //               color: Colors
-                                                            //                   .orange,
-                                                            //             ), */
-                                                            //             Text(
-                                                            //               cardioUsers[index].requestedToUser[0].rating == null
-                                                            //                   ? '0.0'
-                                                            //                   : cardioUsers[index].requestedToUser[0].rating.toString(),
-                                                            //               style: TextStyle(
-                                                            //                   color: Colors.white,
-                                                            //                   fontWeight: FontWeight.bold,
-                                                            //                   fontSize: 3.w),
-                                                            //             ),
-                                                            //           ],
-                                                            //         ),
-                                                            //       ],
-                                                            //     ),
-                                                            //   ],
-                                                            // ),
+
                                                             const SizedBox(
                                                               height: 10,
                                                             ),
-                                                            /*   InkWell(
-                                                              onTap: () {},
-                                                              child: Container(
-                                                                height: 4.h,
-                                                                width:
-                                                                    double.infinity,
-                                                                decoration: BoxDecoration(
-                                                                    color:
-                                                                        secondaryColor,
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                10)),
-                                                                child: Center(
-                                                                    child: Text(
-                                                                  "Send Request",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          1.8.h,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700),
-                                                                )),
-                                                              ),
-                                                            ), */
+
                                                           ],
                                                         ),
                                                       ),
@@ -1410,7 +1129,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                               ),
                             ),
                           ),
-                    weightLisftUsers.isEmpty
+                    weightListUsers.isEmpty
                         ? Column(
                             children: [
                               SizedBox(
@@ -1429,23 +1148,28 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2),
-                                itemCount: weightLisftUsers.length,
+                                itemCount: weightListUsers.length,
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (context, index) {
-                                  return Padding(
+                                  return weightListUsers[index]
+                                      .inProgress ==
+                                      1 &&
+                                      weightListUsers[index]
+                                          .completed ==
+                                          0?SizedBox(): Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 0, vertical: 0.0),
                                     child: InkWell(
                                       onTap: () {
                                         setState(() {});
-                                        weightLisftUsers[index].requestedByUser[0].id ==
+                                        weightListUsers[index].requestedByUser[0].id ==
                                             profileInfo.id
                                             ? Get.to(() => WorkoutDetail(
-                                            weightLisftUsers[index]
+                                            weightListUsers[index]
                                                 .requestedToId
                                                 .toString()))
                                             : Get.to(() => WorkoutDetail(
-                                            weightLisftUsers[index]
+                                            weightListUsers[index]
                                                 .requestedById
                                                 .toString()));
                                       },
@@ -1455,28 +1179,21 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                         child: ClipRRect(
                                           child: Banner(
                                             textStyle: TextStyle(fontSize: 10),
-                                            message: weightLisftUsers[index]
-                                                            .inProgress ==
-                                                        1 &&
-                                                    weightLisftUsers[index]
-                                                            .completed ==
-                                                        0
-                                                ? 'In Progress'
-                                                : weightLisftUsers[index]
+                                            message:  weightListUsers[index]
                                                             .status ==
                                                         2
                                                     ? 'Declined'
-                                                    : weightLisftUsers[index]
+                                                    : weightListUsers[index]
                                                                 .completed ==
                                                             1
                                                         ? 'Completed'
-                                                        : weightLisftUsers[
+                                                        : weightListUsers[
                                                                         index]
                                                                     .status ==
                                                                 0
                                                             ? 'Pending'
                                                             : 'Accepted',
-                                            color: weightLisftUsers[index]
+                                            color: weightListUsers[index]
                                                         .status ==
                                                     0
                                                 ? Colors.green
@@ -1495,7 +1212,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(20),
-                                                          child: weightLisftUsers[
+                                                          child: weightListUsers[
                                                                           index]
                                                                       .requestedByUser[
                                                                           0]
@@ -1508,7 +1225,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                                   width: double
                                                                       .infinity,
                                                                   imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
-                                                                      weightLisftUsers[
+                                                                      weightListUsers[
                                                                               index]
                                                                           .requestedToUser[
                                                                               0]
@@ -1548,7 +1265,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                                   width: double
                                                                       .infinity,
                                                                   imageUrl: 'https://becktesting.site/workout-bud/public/storage/user/' +
-                                                                      weightLisftUsers[
+                                                                      weightListUsers[
                                                                               index]
                                                                           .requestedByUser[
                                                                               0]
@@ -1607,19 +1324,19 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                                   .start,
                                                           children: [
                                                             Text(
-                                                              weightLisftUsers[
+                                                              weightListUsers[
                                                                               index]
                                                                           .requestedByUser[
                                                                               0]
                                                                           .id ==
                                                                       profileInfo
                                                                           .id
-                                                                  ? weightLisftUsers[
+                                                                  ? weightListUsers[
                                                                           index]
                                                                       .requestedToUser[
                                                                           0]
                                                                       .userName
-                                                                  : weightLisftUsers[
+                                                                  : weightListUsers[
                                                                           index]
                                                                       .requestedByUser[
                                                                           0]
@@ -1639,7 +1356,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                                           "h:mma")
                                                                       .format(DateTime.parse(
                                                                           '2022-12-02 ' +
-                                                                              weightLisftUsers[index].meetUpTime)),
+                                                                              weightListUsers[index].meetUpTime)),
                                                                   style: const TextStyle(
                                                                       color: Colors
                                                                           .white,
@@ -1660,7 +1377,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                                           "h:mma")
                                                                       .format(DateTime.parse(
                                                                           '2022-12-02 ' +
-                                                                              weightLisftUsers[index].meetupEndTime)),
+                                                                              weightListUsers[index].meetupEndTime)),
                                                                   style: const TextStyle(
                                                                       color: Colors
                                                                           .white,
@@ -1672,93 +1389,11 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            // Row(
-                                                            //   mainAxisAlignment:
-                                                            //       MainAxisAlignment
-                                                            //           .spaceBetween,
-                                                            //   children: [
-                                                            //     Row(
-                                                            //       children: [
-                                                            //         AbsorbPointer(
-                                                            //           absorbing:
-                                                            //               true,
-                                                            //           child: RatingBar(
-                                                            //               tapOnlyMode: false,
-                                                            //               updateOnDrag: false,
-                                                            //               initialRating: weightLisftUsers[index].requestedToUser[0].rating == null ? 0.0 : weightLisftUsers[index].requestedToUser[0].rating!.toDouble(),
-                                                            //               direction: Axis.horizontal,
-                                                            //               allowHalfRating: true,
-                                                            //               itemCount: 5,
-                                                            //               itemSize: 20,
-                                                            //               ratingWidget: RatingWidget(
-                                                            //                   full: const Icon(Icons.star, color: secondaryColor),
-                                                            //                   half: const Icon(
-                                                            //                     Icons.star_half,
-                                                            //                     color: secondaryColor,
-                                                            //                   ),
-                                                            //                   empty: const Icon(
-                                                            //                     Icons.star_outline,
-                                                            //                     color: secondaryColor,
-                                                            //                   )),
-                                                            //               onRatingUpdate: (value) {}),
-                                                            //         ),
-                                                            //         const SizedBox(
-                                                            //           width: 4,
-                                                            //         ),
-                                                            //         Row(
-                                                            //           children: [
-                                                            //             /*  Icon(
-                                                            //               Icons
-                                                            //                   .star_rate_rounded,
-                                                            //               size: 3.w,
-                                                            //               color: Colors
-                                                            //                   .orange,
-                                                            //             ), */
-                                                            //             Text(
-                                                            //               weightLisftUsers[index].requestedToUser[0].rating == null
-                                                            //                   ? '0.0'
-                                                            //                   : weightLisftUsers[index].requestedToUser[0].rating.toString(),
-                                                            //               style: TextStyle(
-                                                            //                   color: Colors.white,
-                                                            //                   fontWeight: FontWeight.bold,
-                                                            //                   fontSize: 3.w),
-                                                            //             ),
-                                                            //           ],
-                                                            //         ),
-                                                            //       ],
-                                                            //     ),
-                                                            //   ],
-                                                            // ),
+
                                                             const SizedBox(
                                                               height: 10,
                                                             ),
-                                                            /*  InkWell(
-                                                              onTap: () {},
-                                                              child: Container(
-                                                                height: 4.h,
-                                                                width:
-                                                                    double.infinity,
-                                                                decoration: BoxDecoration(
-                                                                    color:
-                                                                        secondaryColor,
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                10)),
-                                                                child: Center(
-                                                                    child: Text(
-                                                                  "Send Request",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          1.8.h,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700),
-                                                                )),
-                                                              ),
-                                                            ), */
+
                                                           ],
                                                         ),
                                                       ),

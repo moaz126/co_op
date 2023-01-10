@@ -16,7 +16,7 @@ class SplashScreen extends StatefulWidget {
 
 class SplashScreenState extends State<SplashScreen> {
   getstate() async {
-    setUserLoggedIn(false);
+    // setUserLoggedIn(false);
     var isLogin = await getUserLoggedIn();
      DataApiService.instance.getFiltersList(context);
 

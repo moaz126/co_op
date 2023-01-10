@@ -32,15 +32,7 @@ class _CompletedState extends State<Completed> {
     'assets/images/muscles.webp',
   ];
 
-/*   DateTime combine() {
-    final f = form.DateFormat("dd:mm:yyyy");
-    setState(() {
-      String pickedDate = date.toString().split(' ')[0];
-    });
-    TimeOfDay t;
-    final now = new DateTime.now();
-    return new DateTime(now.year, now.month, now.day, t.hour, t.minute);
-  } */
+
 
   Future<dynamic> _onBackPressed(context) async {
     return AwesomeDialog(
@@ -61,16 +53,7 @@ class _CompletedState extends State<Completed> {
   double _userRating = 0.0;
   final double _initialRating = 5.0;
 
-  /*  void showPlacePicker() async {
-    LocationResult? result = await Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => PlacePicker(
-              "AIzaSyBDOMNCVC2eacCxKYuRxIwCz4w-QjV_l5Y",
-              defaultLocation: LatLng(31.432354, 73.121249),
-            )));
 
-    // Handle the result in your way
-    print(result);
-  } */
   bool loader = false;
 
   callApi() async {

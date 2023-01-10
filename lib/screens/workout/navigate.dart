@@ -114,33 +114,7 @@ class _NavigateScreenState extends State<NavigateScreen> {
       canvas.drawCircle(Offset(radius, radius), radius, paint);
     }
 
-    /* if (title != null) {
-      if (title.length > 9) {
-        title = title.substring(0, 9);
-      }
-      //draw Title background
-      paint..color = titleBackgroundColor;
-      paint..style = PaintingStyle.fill;
-      canvas.drawRRect(
-          RRect.fromRectAndRadius(
-              Rect.fromLTWH(0, size * 8 / 10, size.toDouble(), size * 3 / 10),
-              Radius.circular(100)),
-          paint);
 
-      //draw Title
-      textPainter.text = TextSpan(
-          text: title,
-          style: TextStyle(
-            fontSize: radius / 2.5,
-            fontWeight: FontWeight.bold,
-            color: titleColor,
-          ));
-      textPainter.layout();
-      textPainter.paint(
-          canvas,
-          Offset(radius - textPainter.width / 2,
-              size * 9.5 / 10 - textPainter.height / 2));
-    } */
 
     //convert canvas as PNG bytes
     final _image = await pictureRecorder
@@ -334,17 +308,13 @@ class _NavigateScreenState extends State<NavigateScreen> {
 
       flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-      /// Create an Android Notification Channel.
-      ///
-      /// We use this channel in the `AndroidManifest.xml` file to override the
-      /// default FCM channel to enable heads up notifications.
+
       await flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>()
           ?.createNotificationChannel(channel);
 
-      /// Update the iOS foreground notification presentation options to allow
-      /// heads up notifications.
+
       await FirebaseMessaging.instance
           .setForegroundNotificationPresentationOptions(
         alert: true,
@@ -436,18 +406,7 @@ class _NavigateScreenState extends State<NavigateScreen> {
       'assets/images/fitness.png',
       70,
     );
-    final Uint8List marker1 = await getBytesFromAsset(
-      'assets/images/marker1.png',
-      80,
-    );
-    final Uint8List marker2 = await getBytesFromAsset(
-      'assets/images/marker2.png',
-      70,
-    );
-    final Uint8List marker3 = await getBytesFromAsset(
-      'assets/images/marker3.png',
-      80,
-    );
+
     Location location = Location();
     location.getLocation().then(
       (location) {
@@ -458,18 +417,7 @@ class _NavigateScreenState extends State<NavigateScreen> {
     location.onLocationChanged.listen(
       (newLoc) async {
         currentLocation = newLoc;
-        /*    googleMapController.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              zoom: 15.5,
-              target: LatLng(
-                  profileInfo.lat!.toDouble(), profileInfo.lng!.toDouble()),
-            ),
-          ),
-        ); */
-        // File myfile = await getImageFileFromAssets('images/profile.png');
-        /*  BitmapDescriptor myBitmap =
-            await convertImageFileToCustomBitmapDescriptor(file); */
+
 
         setState(() {
           _markers.add(Marker(
@@ -631,14 +579,7 @@ class _NavigateScreenState extends State<NavigateScreen> {
               ),
             ),
           ),
-          /*  Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: Icon(
-              Icons.filter_alt_outlined,
-              color: Colors.white,
-              size: 30,
-            ),
-          ) */
+
         ],
       ),
       body: GoogleMap(
@@ -648,16 +589,7 @@ class _NavigateScreenState extends State<NavigateScreen> {
           zoom: 13.5,
         ),
         markers: _markers,
-        /* {
-          const Marker(
-            markerId: MarkerId("source"),
-            position: sourceLocation,
-          ),
-          const Marker(
-            markerId: MarkerId("destination"),
-            position: destination,
-          ),
-        }, */
+
         onMapCreated: (mapController) {
           _controller.complete(mapController);
         },

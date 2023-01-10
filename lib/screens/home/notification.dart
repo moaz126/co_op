@@ -8,6 +8,8 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
+import '../auth/controllers/notification_controller..dart';
+
 class NotificationPage extends StatefulWidget {
   const NotificationPage({Key? key}) : super(key: key);
 
@@ -16,6 +18,8 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
+  DataController dataController = Get.put(DataController());
+
   List<String> headline = [
     'Congratulations',
     'New Workout is Available!',
@@ -56,6 +60,7 @@ class _NotificationPageState extends State<NotificationPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Notifications"),
@@ -104,23 +109,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                 : notificationList[index]
                                                     .requestedById
                                                     .toString()));
-                                        // if (notificationList[index]
-                                        //         .title
-                                        //         .toUpperCase() ==
-                                        //     'YOU HAVE A NEW NOTIFICATION') {
-                                        //   Get.to(() => WorkoutDetail(
-                                        //       notificationList[index]
-                                        //           .requestedById
-                                        //           .toString()));
-                                        // } else if (notificationList[index]
-                                        //         .title
-                                        //         .toUpperCase() ==
-                                        //     ' ACCEPT YOUR REQUEST ') {
-                                        //   Get.to(() => WorkoutDetail(
-                                        //       notificationList[index]
-                                        //           .requestedById
-                                        //           .toString()));
-                                        // }
+
                                       },
                                       child: Column(
                                         mainAxisAlignment:
@@ -146,7 +135,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                               children: [
                                                 ClipRRect(
                                                   borderRadius:
-                                                      BorderRadius.only(
+                                                      const BorderRadius.only(
                                                           bottomLeft:
                                                               Radius.circular(
                                                                   20),
@@ -232,7 +221,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                               Theme.of(context)
                                                                   .textTheme
                                                                   .bodyText2),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         height: 5,
                                                       ),
                                                       SizedBox(
@@ -241,7 +230,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                               notificationList[
                                                                       index]
                                                                   .description,
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   color: Colors
                                                                       .grey)))
                                                     ],

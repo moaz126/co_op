@@ -381,10 +381,13 @@ class _SignInState extends State<SignIn> {
                                   loader = false;
                                 });
                                 if (status) {
-                                  if (rememberMe) {
-                                    saveCredsList(creds);
+                                  if(profileInfo.verified==1){
+                                    if (rememberMe) {
+                                      saveCredsList(creds);
+                                    }
+                                    Get.to(() => HomePage());
                                   }
-                                  Get.to(() => HomePage());
+
                                 } else {
                                   AwesomeDialog(
                                           context: context,

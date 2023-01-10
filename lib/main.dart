@@ -1,3 +1,4 @@
+import 'package:co_op/screens/auth/controllers/notification_controller..dart';
 import 'package:co_op/screens/workout/workout_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,34 +28,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> _handleMessage(RemoteMessage message) async {
   print('naviagate1 ');
   await Future.delayed(Duration(seconds: 2));
-
-  if (type == '0') {
-    /*  Get.defaultDialog(
-        title: "Request",
-        middleText: "",
-        backgroundColor: Colors.white,
-        titleStyle: TextStyle(color: Colors.black),
-        middleTextStyle: TextStyle(color: Colors.black),
-        confirm: Container(
-          child: Text('Accept'),
-        ),
-        cancel: Container(
-          child: Text('Decline'),
-        ),
-        onConfirm: () {
-          print('confirm');
-        },
-        onCancel: () {
-          print('cancel');
-        }); */
-    Get.to(() => WorkoutDetail(userId.toString()));
-  }
-}
-
-Future<void> onSelectNotification(String? payload) async {
-
-
-  await Future.delayed(Duration(seconds: 2));
   if (type == '0') {
     print('trueeeeeeeeeeeeeeeeeeeeeee');
     /*  Get.defaultDialog(
@@ -75,6 +48,21 @@ Future<void> onSelectNotification(String? payload) async {
         onCancel: () {
           print('cancel');
         }); */
+    Get.to(() => WorkoutDetail(userId.toString()));
+  } else if (type == '1') {
+
+    print(userId);
+    Get.to(() => WorkoutDetail(userId.toString()));
+  }
+}
+
+Future<void> onSelectNotification(String? payload) async {
+
+
+  await Future.delayed(Duration(seconds: 2));
+  if (type == '0') {
+    print('trueeeeeeeeeeeeeeeeeeeeeee');
+
     Get.to(() => WorkoutDetail(userId.toString()));
   } else if (type == '1') {
 
@@ -110,40 +98,12 @@ Future<void> _selectNotification(RemoteMessage message) async {
   userId = message.data['user_id'];
   id = message.data['id'];
 
-  /*  await FlutterLocalNotificationsPlugin().show(123, message.data['title'],
-      message.data['body'], platformChannelSpecifics,
-      payload: 'data'); */
+
   await FlutterLocalNotificationsPlugin().show(123, message.notification!.title,
       message.notification!.body, platformChannelSpecifics,
       payload: 'data');
-/*   await FlutterLocalNotificationsPlugin().zonedSchedule(
-    123,
-    message.notification!.title,
-    message.notification!.body,
-    tz.TZDateTime.now(tz.local).add(Duration(
-        seconds: 1)), //schedule the notification to show after 2 seconds.
-    const NotificationDetails(
-      // Android details
-      android: AndroidNotificationDetails('main_channel', 'Main Channel',
-          channelDescription: "ashwin",
-          importance: Importance.max,
-          priority: Priority.max),
-      // iOS details
-      iOS: IOSNotificationDetails(
-        sound: 'default.wav',
-        presentAlert: true,
-        presentBadge: true,
-        presentSound: true,
-      ),
-    ),
-
-    // Type of time interpretation
-    uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime,
-    androidAllowWhileIdle:
-        true, // To show notification even when the app is closed
-  ); */
-
+  DataController dataController = Get.put(DataController());
+  dataController.count(dataController.count.value+1);
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
   final IOSInitializationSettings initializationSettingsIOS =
@@ -196,6 +156,7 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
+
 
   DarkThemeProvider themeChangeProvider = DarkThemeProvider();
 

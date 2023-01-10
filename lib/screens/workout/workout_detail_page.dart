@@ -370,94 +370,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                       const SizedBox(
                         height: 10,
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.fromLTRB(18,4,18,4),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       InkWell(
-                      //         highlightColor: Colors.transparent,
-                      //         splashColor: Colors.transparent,
-                      //         onTap: (){
-                      //           setState(() {
-                      //             selectedIndex=0;
-                      //           });
-                      //         },
-                      //         child: Container(
-                      //           height: 5.h,
-                      //           width: 28.w,
-                      //           decoration: BoxDecoration(
-                      //               color: selectedIndex == 0 ? Colors.deepPurpleAccent : Colors.black12,
-                      //               borderRadius: BorderRadius.circular(40),
-                      //               border: Border.all(color: Colors.deepPurpleAccent)
-                      //           ),
-                      //           child:
-                      //           Row(
-                      //             mainAxisAlignment: MainAxisAlignment.center,
-                      //             children: [
-                      //               Text("Beginner", style: TextStyle(color: selectedIndex == 0 ? Colors.white : Colors.deepPurpleAccent, fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 1 ))
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       SizedBox(height: 20,),
-                      //       InkWell(
-                      //         highlightColor: Colors.transparent,
-                      //         splashColor: Colors.transparent,
-                      //         onTap: (){
-                      //           setState(() {
-                      //             selectedIndex=1;
-                      //           });
-                      //         },
-                      //         child: Container(
-                      //           height: 5.h,
-                      //           width: 28.w,
-                      //           decoration: BoxDecoration(
-                      //               color: selectedIndex == 1 ? Colors.deepPurpleAccent : Colors.black12,
-                      //               borderRadius: BorderRadius.circular(40),
-                      //               border: Border.all(color: Colors.deepPurpleAccent)
-                      //           ),
-                      //           child:
-                      //           Row(
-                      //             mainAxisAlignment: MainAxisAlignment.center,
-                      //             children: [
-                      //               Icon(Icons.timer_outlined, color: selectedIndex == 1 ? Colors.white : Colors.deepPurpleAccent, size: 20,),
-                      //               Text(" 10 Minutes", style: TextStyle(color: selectedIndex == 1 ? Colors.white : Colors.deepPurpleAccent, fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 1 ),)
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       SizedBox(height: 20,),
-                      //       InkWell(
-                      //         highlightColor: Colors.transparent,
-                      //         splashColor: Colors.transparent,
-                      //         onTap: (){
-                      //           setState(() {
-                      //             selectedIndex=2;
-                      //           });
-                      //         },
-                      //         child: Container(
-                      //           height: 5.h,
-                      //           width: 28.w,
-                      //           decoration: BoxDecoration(
-                      //               color: selectedIndex == 2 ? Colors.deepPurpleAccent : Colors.black12,
-                      //               borderRadius: BorderRadius.circular(40),
-                      //               border: Border.all(color: Colors.deepPurpleAccent)
-                      //           ),
-                      //           child:
-                      //           Row(
-                      //             mainAxisAlignment: MainAxisAlignment.center,
-                      //             children: [
-                      //               Icon(Icons.play_circle_outline, color:selectedIndex == 2 ? Colors.white : Colors.deepPurpleAccent, size: 20,),
-                      //               Text(" 10 Workouts", style: TextStyle(color: selectedIndex == 2 ? Colors.white : Colors.deepPurpleAccent, fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 1 ),)
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ),
-                      //
-                      //     ],
-                      //   ),
-                      // ),
+
                       const Divider(
                         height: 10,
                         color: Colors.black,
@@ -477,11 +390,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                       style:
                                           Theme.of(context).textTheme.bodyText2,
                                     ),
-                                    /*  Text(
-                                    "See All",
-                                    style: TextStyle(
-                                        color: Colors.deepPurpleAccent, fontSize: 16),
-                                  ), */
+
                                   ],
                                 ),
                               ),
@@ -531,11 +440,11 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                       height: 2.h,
                                                       child: Image.asset(
                                                           'assets/icons/request.png')),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 7,
                                                   ),
                                                   Container(
-                                                    child: Text(
+                                                    child: const Text(
                                                       'Rating',
                                                       style: TextStyle(
                                                           fontWeight:
@@ -545,7 +454,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                   ),
                                                 ],
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 5,
                                               ),
                                               Row(
@@ -557,13 +466,13 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                     child: Text(
                                                       users.userData!.rating
                                                           .toString(),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 22),
                                                     ),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 5,
                                                   ),
                                                   AbsorbPointer(
@@ -646,11 +555,11 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                     height: 2.5.h,
                                                     child: Image.asset(
                                                         'assets/icons/exercises.png')),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 7,
                                                 ),
                                                 Container(
-                                                  child: Text(
+                                                  child: const Text(
                                                     'Finished',
                                                     style: TextStyle(
                                                         fontWeight:
@@ -660,7 +569,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 5,
                                             ),
                                             Row(
@@ -668,14 +577,14 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                 Text(
                                                   users.userData!.completed
                                                       .toString(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontWeight: FontWeight.bold,
                                                       fontSize: 22),
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 5,
                                                 ),
-                                                Text(
+                                                const Text(
                                                   'Workouts',
                                                   style: TextStyle(
                                                       fontSize: 12,
@@ -693,7 +602,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                               ),
                               Column(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   Container(
@@ -732,7 +641,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Container(
-                                                child: Text(
+                                                child: const Text(
                                                   'Age',
                                                   style: TextStyle(
                                                       fontWeight: FontWeight.bold,
@@ -742,7 +651,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                               Container(
                                                 child: Text(
                                                   users.userData!.age.toString(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontWeight: FontWeight.bold,
                                                       fontSize: 15),
                                                 ),
@@ -758,7 +667,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Container(
-                                                child: Text(
+                                                child: const Text(
                                                   'Weight',
                                                   style: TextStyle(
                                                       fontWeight: FontWeight.bold,
@@ -786,7 +695,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Container(
-                                                child: Text(
+                                                child: const Text(
                                                   'Height',
                                                   style: TextStyle(
                                                       fontWeight: FontWeight.bold,
@@ -814,7 +723,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Container(
-                                                child: Text(
+                                                child: const Text(
                                                   'Activity level',
                                                   style: TextStyle(
                                                       fontWeight: FontWeight.bold,
@@ -845,7 +754,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Container(
-                                                child: Text(
+                                                child: const Text(
                                                   'Email',
                                                   style: TextStyle(
                                                       fontWeight: FontWeight.bold,
@@ -856,7 +765,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                 child: Text(
                                                   users.userData!.email
                                                       .toString(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontWeight: FontWeight.bold,
                                                       fontSize: 15),
                                                 ),
@@ -889,7 +798,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                           ? '-'
                                                           : users.userData!.phone
                                                               .toString(),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 15),
@@ -911,7 +820,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                           .spaceBetween,
                                                   children: [
                                                     Container(
-                                                      child: Text(
+                                                      child: const Text(
                                                         'Nick name',
                                                         style: TextStyle(
                                                             fontWeight:
@@ -928,7 +837,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                             : users.userData!
                                                                 .nickName
                                                                 .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 15),
@@ -945,7 +854,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Container(
-                                                child: Text(
+                                                child: const Text(
                                                   'Goals',
                                                   style: TextStyle(
                                                       fontWeight: FontWeight.bold,
@@ -1013,1282 +922,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                         ),
                       ),
 
-                      // Expanded(
-                      //   child: Stack(
-                      //     alignment: Alignment.bottomCenter,
-                      //     children: [
-                      //       // workoutWithList.isEmpty
-                      //       //     ? Positioned(
-                      //       //         top: 20,
-                      //       //         child: Column(
-                      //       //           children: [
-                      //       //             emptyAnimation,
-                      //       //             const Text("No Activity Found!")
-                      //       //           ],
-                      //       //         ),
-                      //       //       )
-                      //       //     : ListView.builder(
-                      //       //         scrollDirection: Axis.vertical,
-                      //       //         itemCount: workoutWithList.length,
-                      //       //         padding: const EdgeInsets.only(bottom: 80),
-                      //       //         itemBuilder: (context, index) {
-                      //       //           return Padding(
-                      //       //             padding: const EdgeInsets.symmetric(
-                      //       //                 horizontal: 16.0, vertical: 8.0),
-                      //       //             child: InkWell(
-                      //       //               onTap: () {
-                      //       //                 setState(() {});
-                      //       //               },
-                      //       //               child: Column(
-                      //       //                 mainAxisAlignment:
-                      //       //                     MainAxisAlignment.spaceBetween,
-                      //       //                 children: [
-                      //       //                   Container(
-                      //       //                     decoration: BoxDecoration(
-                      //       //                       color: Colors.white,
-                      //       //                       borderRadius:
-                      //       //                           BorderRadius.circular(20),
-                      //       //                       boxShadow: [
-                      //       //                         BoxShadow(
-                      //       //                           color: Colors.grey
-                      //       //                               .withOpacity(0.5),
-                      //       //                           spreadRadius: 2,
-                      //       //                           blurRadius: 3,
-                      //       //                           offset: const Offset(0,
-                      //       //                               3), // changes position of shadow
-                      //       //                         ),
-                      //       //                       ],
-                      //       //                     ),
-                      //       //                     child: Row(
-                      //       //                       children: [
-                      //       //                         ClipRRect(
-                      //       //                           borderRadius:
-                      //       //                               const BorderRadius.only(
-                      //       //                                   bottomLeft: Radius
-                      //       //                                       .circular(20),
-                      //       //                                   topLeft:
-                      //       //                                       Radius.circular(
-                      //       //                                           20)),
-                      //       //                           child: CachedNetworkImage(
-                      //       //                             height: 12.h,
-                      //       //                             width: 12.h,
-                      //       //                             fit: BoxFit.cover,
-                      //       //                             imageUrl:
-                      //       //                                 'https://becktesting.site/workout-bud/public/storage/user/' +
-                      //       //                                     workoutWithList[
-                      //       //                                             index]
-                      //       //                                         .workoutUser[
-                      //       //                                             0]
-                      //       //                                         .image
-                      //       //                                         .toString(),
-                      //       //                             placeholder:
-                      //       //                                 (context, url) =>
-                      //       //                                     Image.asset(
-                      //       //                               images[0],
-                      //       //                               fit: BoxFit.cover,
-                      //       //                               height: 12.h,
-                      //       //                               width: 12.h,
-                      //       //                             ),
-                      //       //                             errorWidget: (context,
-                      //       //                                     url,
-                      //       //                                     error) => /* Icon(Icons
-                      //       //     .person) */
-                      //       //                                 Image.asset(
-                      //       //                               images[0],
-                      //       //                               fit: BoxFit.cover,
-                      //       //                               height: 12.h,
-                      //       //                               width: 12.h,
-                      //       //                             ),
-                      //       //                           ),
-                      //       //                         ),
-                      //       //                         Padding(
-                      //       //                           padding:
-                      //       //                               const EdgeInsets.only(
-                      //       //                                   left: 8.0),
-                      //       //                           child: Column(
-                      //       //                             crossAxisAlignment:
-                      //       //                                 CrossAxisAlignment
-                      //       //                                     .start,
-                      //       //                             children: [
-                      //       //                               Text(
-                      //       //                                 workoutWithList[index]
-                      //       //                                     .workoutUser[0]
-                      //       //                                     .userName,
-                      //       //                                 style: const TextStyle(
-                      //       //                                     color:
-                      //       //                                         Colors.black,
-                      //       //                                     fontWeight:
-                      //       //                                         FontWeight
-                      //       //                                             .normal,
-                      //       //                                     fontSize: 20),
-                      //       //                               ),
-                      //       //                               Row(
-                      //       //                                 mainAxisAlignment:
-                      //       //                                     MainAxisAlignment
-                      //       //                                         .spaceBetween,
-                      //       //                                 children: [
-                      //       //                                   Row(
-                      //       //                                     children: [
-                      //       //                                       Row(
-                      //       //                                         children: [
-                      //       //                                           AbsorbPointer(
-                      //       //                                             absorbing:
-                      //       //                                                 true,
-                      //       //                                             child: RatingBar(
-                      //       //                                                 initialRating: workoutWithList[index].rating == null ? 0.0 : workoutWithList[index].rating!,
-                      //       //                                                 direction: Axis.horizontal,
-                      //       //                                                 allowHalfRating: true,
-                      //       //                                                 itemCount: 5,
-                      //       //                                                 itemSize: 24,
-                      //       //                                                 ratingWidget: RatingWidget(
-                      //       //                                                     full: const Icon(Icons.star, color: secondaryColor),
-                      //       //                                                     half: const Icon(
-                      //       //                                                       Icons.star_half,
-                      //       //                                                       color: secondaryColor,
-                      //       //                                                     ),
-                      //       //                                                     empty: const Icon(
-                      //       //                                                       Icons.star_outline,
-                      //       //                                                       color: secondaryColor,
-                      //       //                                                     )),
-                      //       //                                                 onRatingUpdate: (value) {
-                      //       //                                                   setState(() {
-                      //       //                                                     ratings[index] = value;
-                      //       //                                                   });
-                      //       //                                                 }),
-                      //       //                                           ),
-                      //       //                                           Container(
-                      //       //                                             width: 30,
-                      //       //                                             height:
-                      //       //                                                 30,
-                      //       //                                             alignment:
-                      //       //                                                 Alignment
-                      //       //                                                     .center,
-                      //       //                                             child:
-                      //       //                                                 Text(
-                      //       //                                               workoutWithList[index].rating ==
-                      //       //                                                       null
-                      //       //                                                   ? '0.0'
-                      //       //                                                   : workoutWithList[index].rating.toString(),
-                      //       //                                               style: const TextStyle(
-                      //       //                                                   color:
-                      //       //                                                       secondaryColor,
-                      //       //                                                   fontSize:
-                      //       //                                                       14,
-                      //       //                                                   fontWeight:
-                      //       //                                                       FontWeight.bold),
-                      //       //                                             ),
-                      //       //                                           )
-                      //       //                                         ],
-                      //       //                                       )
-                      //       //                                     ],
-                      //       //                                   ),
-                      //       //                                   workoutWithList[index]
-                      //       //                                               .bookmark ==
-                      //       //                                           0
-                      //       //                                       ? InkWell(
-                      //       //                                           onTap: () {
-                      //       //                                             setState(
-                      //       //                                                 () {
-                      //       //                                               DataApiService.instance.addBookmark(
-                      //       //                                                   workoutWithList[index].id.toString(),
-                      //       //                                                   context);
-                      //       //                                               workoutWithList[index]
-                      //       //                                                   .bookmark = 1;
-                      //       //                                             });
-                      //       //                                           },
-                      //       //                                           child:
-                      //       //                                               Container(
-                      //       //                                             height:
-                      //       //                                                 20,
-                      //       //                                             child:
-                      //       //                                                 const Icon(
-                      //       //                                               Icons
-                      //       //                                                   .bookmark_border,
-                      //       //                                               color:
-                      //       //                                                   secondaryColor,
-                      //       //                                             ),
-                      //       //                                           ),
-                      //       //                                         )
-                      //       //                                       : InkWell(
-                      //       //                                           onTap: () {
-                      //       //                                             setState(
-                      //       //                                                 () {
-                      //       //                                               DataApiService.instance.deleteBookmark(
-                      //       //                                                   workoutWithList[index].id.toString(),
-                      //       //                                                   context);
-                      //       //                                               workoutWithList[index]
-                      //       //                                                   .bookmark = 0;
-                      //       //                                             });
-                      //       //                                           },
-                      //       //                                           child:
-                      //       //                                               Container(
-                      //       //                                             child:
-                      //       //                                                 const Icon(
-                      //       //                                               Icons
-                      //       //                                                   .bookmark,
-                      //       //                                               color:
-                      //       //                                                   secondaryColor,
-                      //       //                                             ),
-                      //       //                                           ),
-                      //       //                                         )
-                      //       //                                 ],
-                      //       //                               )
-                      //       //                             ],
-                      //       //                           ),
-                      //       //                         ),
-                      //       //                       ],
-                      //       //                     ),
-                      //       //                   ),
-                      //       //                   // Text(goal[1], style: TextStyle(color: Colors.black, fontSize: 14, ),),
-                      //       //                 ],
-                      //       //               ),
-                      //       //             ),
-                      //       //           );
-                      //       //         },
-                      //       //       ),
-                      //       Positioned(
-                      //         top: 0,
-                      //         child: SingleChildScrollView(
-                      //           child: Column(
-                      //             children: [
-                      //               SizedBox(
-                      //                 height: 10,
-                      //               ),
-                      //               Container(
-                      //
-                      //                 width: 90.w,
-                      //                 decoration: BoxDecoration(
-                      //                   color: Colors.white,
-                      //                   borderRadius: BorderRadius.circular(10),
-                      //                   boxShadow: [
-                      //                     BoxShadow(
-                      //                       color: Colors.grey.withOpacity(0.1),
-                      //                       offset: Offset(
-                      //                         3.0,
-                      //                         3.0,
-                      //                       ),
-                      //                       blurRadius: 10.0,
-                      //                       spreadRadius: 4.0,
-                      //                     ),
-                      //                     BoxShadow(
-                      //                       color: Colors.grey.withOpacity(0.1),
-                      //                       offset: Offset(
-                      //                         -3.0,
-                      //                         -1.0,
-                      //                       ),
-                      //                       blurRadius: 10.0,
-                      //                       spreadRadius: 4.0,
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //                 child: Column(
-                      //                   children: [
-                      //                     Padding(
-                      //                       padding: const EdgeInsets.only(
-                      //                           top: 8.0, left: 20, right: 20),
-                      //                       child: Row(
-                      //                         mainAxisAlignment:
-                      //                             MainAxisAlignment.spaceBetween,
-                      //                         children: [
-                      //                           Container(
-                      //                             child: Text(
-                      //                               'Age',
-                      //                               style: TextStyle(
-                      //                                   fontWeight:
-                      //                                       FontWeight.bold,
-                      //                                   fontSize: 15),
-                      //                             ),
-                      //                           ),
-                      //                           Container(
-                      //                             child: Text(
-                      //                               users.userData!.age
-                      //                                   .toString(),
-                      //                               style: TextStyle(
-                      //                                   fontWeight:
-                      //                                       FontWeight.bold,
-                      //                                   fontSize: 15),
-                      //                             ),
-                      //                           ),
-                      //                         ],
-                      //                       ),
-                      //                     ),
-                      //                     Padding(
-                      //                       padding: const EdgeInsets.only(
-                      //                           top: 8.0, left: 20, right: 20),
-                      //                       child: Row(
-                      //                         mainAxisAlignment:
-                      //                             MainAxisAlignment.spaceBetween,
-                      //                         children: [
-                      //                           Container(
-                      //                             child: Text(
-                      //                               'Weight',
-                      //                               style: TextStyle(
-                      //                                   fontWeight:
-                      //                                       FontWeight.bold,
-                      //                                   fontSize: 15),
-                      //                             ),
-                      //                           ),
-                      //                           Container(
-                      //                             child: Text(
-                      //                               users.userData!.weight
-                      //                                       .toString() +
-                      //                                   ' lbs',
-                      //                               style: TextStyle(
-                      //                                   fontWeight:
-                      //                                       FontWeight.bold,
-                      //                                   fontSize: 15),
-                      //                             ),
-                      //                           ),
-                      //                         ],
-                      //                       ),
-                      //                     ),
-                      //                     Padding(
-                      //                       padding: const EdgeInsets.only(
-                      //                           top: 8.0, left: 20, right: 20),
-                      //                       child: Row(
-                      //                         mainAxisAlignment:
-                      //                             MainAxisAlignment.spaceBetween,
-                      //                         children: [
-                      //                           Container(
-                      //                             child: Text(
-                      //                               'Height',
-                      //                               style: TextStyle(
-                      //                                   fontWeight:
-                      //                                       FontWeight.bold,
-                      //                                   fontSize: 15),
-                      //                             ),
-                      //                           ),
-                      //                           Container(
-                      //                             child: Text(
-                      //                               users.userData!.height
-                      //                                       .toString() +
-                      //                                   ' ft',
-                      //                               style: TextStyle(
-                      //                                   fontWeight:
-                      //                                       FontWeight.bold,
-                      //                                   fontSize: 15),
-                      //                             ),
-                      //                           ),
-                      //                         ],
-                      //                       ),
-                      //                     ),
-                      //                     Padding(
-                      //                       padding: const EdgeInsets.only(
-                      //                           top: 8.0, left: 20, right: 20),
-                      //                       child: Row(
-                      //                         mainAxisAlignment:
-                      //                             MainAxisAlignment.spaceBetween,
-                      //                         children: [
-                      //                           Container(
-                      //                             child: Text(
-                      //                               'Activity level',
-                      //                               style: TextStyle(
-                      //                                   fontWeight:
-                      //                                       FontWeight.bold,
-                      //                                   fontSize: 15),
-                      //                             ),
-                      //                           ),
-                      //                           Container(
-                      //                             child: Text(
-                      //                               users.userData!.activityLevel
-                      //                                   .toString(),
-                      //                               style: TextStyle(
-                      //                                   fontWeight:
-                      //                                       FontWeight.bold,
-                      //                                   fontSize: 15),
-                      //                             ),
-                      //                           ),
-                      //                         ],
-                      //                       ),
-                      //                     ),
-                      //                     Padding(
-                      //                       padding: const EdgeInsets.only(
-                      //                           top: 8.0, left: 20, right: 20),
-                      //                       child: Row(
-                      //                         mainAxisAlignment:
-                      //                             MainAxisAlignment.spaceBetween,
-                      //                         children: [
-                      //                           Container(
-                      //                             child: Text(
-                      //                               'Email',
-                      //                               style: TextStyle(
-                      //                                   fontWeight:
-                      //                                       FontWeight.bold,
-                      //                                   fontSize: 15),
-                      //                             ),
-                      //                           ),
-                      //                           Container(
-                      //                             child: Text(
-                      //                               users.userData!.email
-                      //                                   .toString(),
-                      //                               style: TextStyle(
-                      //                                   fontWeight:
-                      //                                       FontWeight.bold,
-                      //                                   fontSize: 15),
-                      //                             ),
-                      //                           ),
-                      //                         ],
-                      //                       ),
-                      //                     ),
-                      //                     users.userData!.phone == null
-                      //                         ? SizedBox()
-                      //                         : Padding(
-                      //                             padding: const EdgeInsets.only(
-                      //                                 top: 8.0,
-                      //                                 left: 20,
-                      //                                 right: 20),
-                      //                             child: Row(
-                      //                               mainAxisAlignment:
-                      //                                   MainAxisAlignment
-                      //                                       .spaceBetween,
-                      //                               children: [
-                      //                                 const Text(
-                      //                                   'Phone number',
-                      //                                   style: TextStyle(
-                      //                                       fontWeight:
-                      //                                           FontWeight.bold,
-                      //                                       fontSize: 15),
-                      //                                 ),
-                      //                                 Text(
-                      //                                   users.userData!.phone ==
-                      //                                           null
-                      //                                       ? '-'
-                      //                                       : users
-                      //                                           .userData!.phone
-                      //                                           .toString(),
-                      //                                   style: TextStyle(
-                      //                                       fontWeight:
-                      //                                           FontWeight.bold,
-                      //                                       fontSize: 15),
-                      //                                 ),
-                      //                               ],
-                      //                             ),
-                      //                           ),
-                      //                     users.userData!.nickName == null
-                      //                         ? const SizedBox()
-                      //                         : Padding(
-                      //                             padding: const EdgeInsets.only(
-                      //                                 top: 8.0,
-                      //                                 left: 20,
-                      //                                 right: 20),
-                      //                             child: Row(
-                      //                               mainAxisAlignment:
-                      //                                   MainAxisAlignment
-                      //                                       .spaceBetween,
-                      //                               children: [
-                      //                                 Container(
-                      //                                   child: Text(
-                      //                                     'Nick name',
-                      //                                     style: TextStyle(
-                      //                                         fontWeight:
-                      //                                             FontWeight.bold,
-                      //                                         fontSize: 15),
-                      //                                   ),
-                      //                                 ),
-                      //                                 Container(
-                      //                                   child: Text(
-                      //                                     users.userData!
-                      //                                                 .nickName ==
-                      //                                             null
-                      //                                         ? '-'
-                      //                                         : users.userData!
-                      //                                             .nickName
-                      //                                             .toString(),
-                      //                                     style: TextStyle(
-                      //                                         fontWeight:
-                      //                                             FontWeight.bold,
-                      //                                         fontSize: 15),
-                      //                                   ),
-                      //                                 ),
-                      //                               ],
-                      //                             ),
-                      //                           ),Padding(
-                      //                             padding: const EdgeInsets.only(
-                      //                                 top: 8.0,
-                      //                                 left: 20,
-                      //                                 right: 20),
-                      //                             child: Row(
-                      //                               mainAxisAlignment:
-                      //                                   MainAxisAlignment
-                      //                                       .spaceBetween,
-                      //                               children: [
-                      //                                 Container(
-                      //                                   child: Text(
-                      //                                     'Goals',
-                      //                                     style: TextStyle(
-                      //                                         fontWeight:
-                      //                                             FontWeight.bold,
-                      //                                         fontSize: 15),
-                      //                                   ),
-                      //                                 ),
-                      //
-                      //                               ],
-                      //                             ),
-                      //                           ),
-                      //                     Padding(
-                      //                             padding: const EdgeInsets.only(
-                      //                                 top: 8.0,
-                      //                                 left: 20,
-                      //                                 right: 20),
-                      //                             child: Align(
-                      //                               alignment: Alignment.topLeft,
-                      //                               child: Wrap(
-                      //                                 alignment: WrapAlignment.start,
-                      //                                 runAlignment: WrapAlignment.start,
-                      //                                 runSpacing: 10.0,
-                      //                                 crossAxisAlignment: WrapCrossAlignment.start,
-                      //                                 direction: Axis.horizontal,
-                      //                                 textDirection: TextDirection.ltr,
-                      //                                 spacing: 5,
-                      //                                 children: <Widget>[
-                      //                                   for (int i = 0; i < users.userData!.goal.length; i++)
-                      //                                     Container(
-                      //                                         height: 35,
-                      //                                         width: users.userData!.goal[i].length.toDouble() * 9,
-                      //                                         decoration: BoxDecoration(
-                      //                                             border:
-                      //                                             Border.all(color: secondaryColor, width: 1.5),
-                      //                                             borderRadius: BorderRadius.circular(20)),
-                      //                                         child: Center(
-                      //                                             child: Text(
-                      //                                               users.userData!.goal[i],
-                      //                                             ))),
-                      //                                 ],
-                      //                               ),
-                      //                             ),
-                      //                           ),
-                      //                     SizedBox(
-                      //                       height: 10,
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ),
-                      //
-                      //       users.status == 1
-                      //           ? Positioned(
-                      //               bottom: 8,
-                      //               child: InkWell(
-                      //                 onTap: () {
-                      //                   setState(() {});
-                      //                   Get.to(() =>
-                      //                       Clock(users.requestId.toString()));
-                      //                 },
-                      //                 child: Container(
-                      //                     height: 6.h,
-                      //                     width: 80.w,
-                      //                     decoration: BoxDecoration(
-                      //                         color: Colors.deepPurpleAccent,
-                      //                         borderRadius:
-                      //                             BorderRadius.circular(30)),
-                      //                     child: const Center(
-                      //                         child: Text('START',
-                      //                             style: TextStyle(
-                      //                                 fontSize: 18,
-                      //                                 color: Colors.white)))),
-                      //               ),
-                      //             )
-                      //           : found
-                      //               ? Positioned(
-                      //                   bottom: 8,
-                      //                   child: InkWell(
-                      //                     onTap: () {
-                      //                       setState(() {});
-                      //                     },
-                      //                     child: Container(
-                      //                         height: 6.h,
-                      //                         width: 80.w,
-                      //                         decoration: BoxDecoration(
-                      //                             color: Colors.deepPurpleAccent,
-                      //                             borderRadius:
-                      //                                 BorderRadius.circular(30)),
-                      //                         child: const Center(
-                      //                             child: Text(
-                      //                                 'Request In Progress',
-                      //                                 style: TextStyle(
-                      //                                     fontSize: 18,
-                      //                                     color: Colors.white)))),
-                      //                   ),
-                      //                 )
-                      //               : users.status == 0
-                      //                   ? Positioned(
-                      //                       bottom: 8,
-                      //                       child: Row(
-                      //                         children: [
-                      //                           InkWell(
-                      //                             onTap: () {
-                      //                               AwesomeDialog(
-                      //                                       context: context,
-                      //                                       dialogType: DialogType
-                      //                                           .question,
-                      //                                       animType: AnimType
-                      //                                           .BOTTOMSLIDE,
-                      //                                       title: 'Request',
-                      //                                       desc:
-                      //                                           'Are you sure to accept this request',
-                      //                                       btnOkOnPress:
-                      //                                           () async {
-                      //                                         await DataApiService
-                      //                                             .instance
-                      //                                             .resposneRequest(
-                      //                                                 users
-                      //                                                     .requestId
-                      //                                                     .toString(),
-                      //                                                 '1',
-                      //                                                 context);
-                      //                                         /*     Navigator.pop(
-                      //                                             context); */
-                      //
-                      //                                         Navigator.pushReplacement(
-                      //                                             context,
-                      //                                             MaterialPageRoute(
-                      //                                                 builder: (BuildContext
-                      //                                                         context) =>
-                      //                                                     WorkoutDetail(
-                      //                                                         widget.id)));
-                      //                                       },
-                      //                                       btnCancelOnPress:
-                      //                                           () {})
-                      //                                   .show();
-                      //                             },
-                      //                             child: Container(
-                      //                                 height: 6.h,
-                      //                                 width: 40.w,
-                      //                                 decoration: BoxDecoration(
-                      //                                     color: Colors.green,
-                      //                                     borderRadius:
-                      //                                         BorderRadius
-                      //                                             .circular(30)),
-                      //                                 child: const Center(
-                      //                                     child: Text('Accept',
-                      //                                         style: TextStyle(
-                      //                                             fontSize: 18,
-                      //                                             color: Colors
-                      //                                                 .white)))),
-                      //                           ),
-                      //                           const SizedBox(
-                      //                             width: 10,
-                      //                           ),
-                      //                           InkWell(
-                      //                             onTap: () {
-                      //                               AwesomeDialog(
-                      //                                       context: context,
-                      //                                       dialogType: DialogType
-                      //                                           .question,
-                      //                                       animType: AnimType
-                      //                                           .BOTTOMSLIDE,
-                      //                                       title: 'Request',
-                      //                                       desc:
-                      //                                           'Are you sure to decline this request',
-                      //                                       btnOkOnPress:
-                      //                                           () async {
-                      //                                         await DataApiService
-                      //                                             .instance
-                      //                                             .resposneRequest(
-                      //                                                 users
-                      //                                                     .requestId
-                      //                                                     .toString(),
-                      //                                                 '0',
-                      //                                                 context);
-                      //                                         Navigator.pop(
-                      //                                             context);
-                      //
-                      //                                         Navigator.pushReplacement(
-                      //                                             context,
-                      //                                             MaterialPageRoute(
-                      //                                                 builder: (BuildContext
-                      //                                                         context) =>
-                      //                                                     WorkoutDetail(
-                      //                                                         widget.id)));
-                      //                                       },
-                      //                                       btnCancelOnPress:
-                      //                                           () {})
-                      //                                   .show();
-                      //                             },
-                      //                             child: Container(
-                      //                                 height: 6.h,
-                      //                                 width: 40.w,
-                      //                                 decoration: BoxDecoration(
-                      //                                     color: Colors.red,
-                      //                                     borderRadius:
-                      //                                         BorderRadius
-                      //                                             .circular(30)),
-                      //                                 child: const Center(
-                      //                                     child: Text('Decline',
-                      //                                         style: TextStyle(
-                      //                                             fontSize: 18,
-                      //                                             color: Colors
-                      //                                                 .white)))),
-                      //                           ),
-                      //                         ],
-                      //                       ),
-                      //                     )
-                      //                   : Positioned(
-                      //                       bottom: 8,
-                      //                       child: InkWell(
-                      //                         onTap: () {
-                      //                           showDialog(
-                      //                               context: context,
-                      //                               builder:
-                      //                                   (BuildContext context) {
-                      //                                 final themeChange = Provider
-                      //                                     .of<DarkThemeProvider>(
-                      //                                         context);
-                      //
-                      //                                 return StatefulBuilder(
-                      //                                     builder: (context,
-                      //                                         setState) {
-                      //                                   return Dialog(
-                      //                                     shape: RoundedRectangleBorder(
-                      //                                         borderRadius:
-                      //                                             BorderRadius
-                      //                                                 .circular(
-                      //                                                     20.0)),
-                      //                                     child: Container(
-                      //                                       color: Theme.of(
-                      //                                               context)
-                      //                                           .scaffoldBackgroundColor,
-                      //                                       height: 40.h,
-                      //                                       child: Column(
-                      //                                         children: [
-                      //                                           Padding(
-                      //                                             padding:
-                      //                                                 const EdgeInsets
-                      //                                                     .all(10),
-                      //                                             child: Column(
-                      //                                               crossAxisAlignment:
-                      //                                                   CrossAxisAlignment
-                      //                                                       .center,
-                      //                                               children: [
-                      //                                                 const SizedBox(
-                      //                                                     height:
-                      //                                                         10),
-                      //                                                 Row(
-                      //                                                   mainAxisAlignment:
-                      //                                                       MainAxisAlignment
-                      //                                                           .center,
-                      //                                                   children: [
-                      //                                                     /*   InkWell(
-                      //                                   onTap: () {
-                      //                                     Navigator.pop(context);
-                      //                                   },
-                      //                                   child: ClipOval(
-                      //                                     child:
-                      //                                         CachedNetworkImage(
-                      //                                       height: 15.h,
-                      //                                       width: 15.h,
-                      //                                       fit: BoxFit.fill,
-                      //                                       imageUrl:
-                      //                                           'https://becktesting.site/workout-bud/public/storage/user/' +
-                      //                                               getUsersList[
-                      //                                                       index]
-                      //                                                   .image
-                      //                                                   .toString(),
-                      //                                       placeholder:
-                      //                                           (context, url) =>
-                      //                                               Image.asset(
-                      //                                         'assets/images/profile.png',
-                      //                                         height: 70,
-                      //                                         width: 70,
-                      //                                         fit: BoxFit.fill,
-                      //                                       ),
-                      //                                       errorWidget: (context,
-                      //                                               url, error) =>
-                      //                                           Image.asset(
-                      //                                         'assets/images/profile.png',
-                      //                                         height: 70,
-                      //                                         width: 70,
-                      //                                         fit: BoxFit.contain,
-                      //                                       ),
-                      //                                     ),
-                      //                                   ),
-                      //                                 ), */
-                      //                                                   ],
-                      //                                                 ),
-                      //                                                 const SizedBox(
-                      //                                                     height:
-                      //                                                         10),
-                      //                                                 /*    Text(
-                      //                                 getUsersList[index]
-                      //                                     .userName,
-                      //                                 textAlign: TextAlign.center,
-                      //                                 style: Theme.of(context)
-                      //                                     .textTheme
-                      //                                     .headline3),
-                      //                             SizedBox(height: 10), */
-                      //                                                 Text(
-                      //                                                     'Pick your date and time',
-                      //                                                     textAlign:
-                      //                                                         TextAlign
-                      //                                                             .center,
-                      //                                                     style: Theme.of(context)
-                      //                                                         .textTheme
-                      //                                                         .bodyText2),
-                      //                                               ],
-                      //                                             ),
-                      //                                           ),
-                      //                                           const SizedBox(
-                      //                                               height: 5),
-                      //                                           Column(children: [
-                      //                                             Row(
-                      //                                               mainAxisAlignment:
-                      //                                                   MainAxisAlignment
-                      //                                                       .center,
-                      //                                               children: [
-                      //                                                 TextButton(
-                      //                                                   onPressed:
-                      //                                                       () {
-                      //                                                     DatePicker.showDatePicker(
-                      //                                                         context,
-                      //                                                         showTitleActions:
-                      //                                                             true,
-                      //                                                         minTime: DateTime(
-                      //                                                             2022,
-                      //                                                             10,
-                      //                                                             24),
-                      //                                                         maxTime: DateTime(
-                      //                                                             2024,
-                      //                                                             6,
-                      //                                                             7),
-                      //                                                         theme:
-                      //                                                             const DatePickerTheme(headerColor: secondaryColor, backgroundColor: Colors.white, itemStyle: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 18), doneStyle: TextStyle(color: Colors.white, fontSize: 16)),
-                      //                                                         onChanged:
-                      //                                                             (date) {
-                      //                                                       final f =
-                      //                                                           form.DateFormat("dd:mm:yyyy");
-                      //                                                       setState(
-                      //                                                           () {
-                      //                                                         pickedDate =
-                      //                                                             date.toString().split(' ')[0];
-                      //                                                         print('pickedDate');
-                      //                                                         print(pickedDate);
-                      //                                                       });
-                      //                                                       print('change $date in time zone ' +
-                      //                                                           date.timeZoneOffset.inHours.toString());
-                      //                                                     }, onConfirm:
-                      //                                                             (date) {
-                      //                                                       final f =
-                      //                                                           form.DateFormat("dd:mm:yyyy");
-                      //                                                       setState(
-                      //                                                           () {
-                      //                                                         pickedDate =
-                      //                                                             date.toString().split(' ')[0];
-                      //                                                         print('pickedDate');
-                      //                                                         print(pickedDate);
-                      //                                                       });
-                      //                                                       print('change $date in time zone ' +
-                      //                                                           date.timeZoneOffset.inHours.toString());
-                      //                                                       print(
-                      //                                                           'confirm $date');
-                      //                                                     },
-                      //                                                         currentTime:
-                      //                                                             DateTime.now(),
-                      //                                                         locale: LocaleType.en);
-                      //                                                   },
-                      //                                                   child:
-                      //                                                       Container(
-                      //                                                     height:
-                      //                                                         6.h,
-                      //                                                     width:
-                      //                                                         30.w,
-                      //                                                     decoration: BoxDecoration(
-                      //                                                         borderRadius:
-                      //                                                             BorderRadius.circular(10),
-                      //                                                         color: secondaryColor),
-                      //                                                     child:
-                      //                                                         Center(
-                      //                                                       child:
-                      //                                                           Text(
-                      //                                                         pickedDate != ''
-                      //                                                             ? pickedDate
-                      //                                                             : 'Pick Date',
-                      //                                                         style:
-                      //                                                             const TextStyle(color: Colors.white),
-                      //                                                       ),
-                      //                                                     ),
-                      //                                                   ),
-                      //                                                 ),
-                      //                                                 TextButton(
-                      //                                                     onPressed:
-                      //                                                         () {
-                      //                                                       DatePicker.showTime12hPicker(
-                      //                                                           context,
-                      //                                                           showTitleActions:
-                      //                                                               true,
-                      //                                                           theme: const DatePickerTheme(headerColor: secondaryColor, backgroundColor: Colors.white, itemStyle: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 18), doneStyle: TextStyle(color: Colors.white, fontSize: 16)),
-                      //                                                           onChanged: (time) {
-                      //                                                         final f =
-                      //                                                             form.DateFormat("hh:mm a");
-                      //                                                         final s =
-                      //                                                             form.DateFormat("HH:mm");
-                      //
-                      //                                                         f.format(time);
-                      //                                                         setState(() {
-                      //                                                           pickedTime = f.format(time);
-                      //                                                         });
-                      //                                                         pickedTimeApi =
-                      //                                                             s.format(time);
-                      //                                                       }, onConfirm: (time) {
-                      //                                                         final f =
-                      //                                                             form.DateFormat("hh:mm a");
-                      //                                                         final s =
-                      //                                                             form.DateFormat("HH:mm");
-                      //
-                      //                                                         f.format(time);
-                      //                                                         setState(() {
-                      //                                                           pickedTime = f.format(time);
-                      //                                                         });
-                      //                                                         pickedTimeApi =
-                      //                                                             s.format(time);
-                      //                                                         print(pickedTime);
-                      //                                                         print('confirm $time');
-                      //                                                       }, currentTime: DateTime.now());
-                      //                                                     },
-                      //                                                     child:
-                      //                                                         Container(
-                      //                                                       height:
-                      //                                                           6.h,
-                      //                                                       width:
-                      //                                                           30.w,
-                      //                                                       decoration: BoxDecoration(
-                      //                                                           borderRadius: BorderRadius.circular(10),
-                      //                                                           color: secondaryColor),
-                      //                                                       child:
-                      //                                                           Center(
-                      //                                                         child:
-                      //                                                             Text(
-                      //                                                           pickedTime != '' ? pickedTime : 'Pick Time',
-                      //                                                           style: const TextStyle(color: Colors.white),
-                      //                                                         ),
-                      //                                                       ),
-                      //                                                     )),
-                      //                                               ],
-                      //                                             ),
-                      //                                             Center(
-                      //                                               child:
-                      //                                                   TextButton(
-                      //                                                       onPressed:
-                      //                                                           () {
-                      //                                                         DatePicker.showTime12hPicker(context,
-                      //                                                             showTitleActions: true,
-                      //                                                             theme: const DatePickerTheme(headerColor: secondaryColor, backgroundColor: Colors.white, itemStyle: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 18), doneStyle: TextStyle(color: Colors.white, fontSize: 16)), onChanged: (time) {
-                      //                                                           /*   final f = form.DateFormat("hh:mm a");
-                      //                                                           final s = form.DateFormat("HH:mm");
-                      //
-                      //                                                           f.format(time);
-                      //                                                           setState(() {
-                      //                                                             pickedEndTime = f.format(time);
-                      //                                                           });
-                      //                                                           pickedEndTimeApi = s.format(time); */
-                      //                                                         }, onConfirm: (time) {
-                      //                                                           /*  if (time.isBefore(form.DateFormat("hh:mm a").parse(pickedTime))) {
-                      //                                                             Fluttertoast.showToast(msg: 'Please pick correct time'.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, textColor: Colors.white, fontSize: 16.0);
-                      //                                                           } else { */
-                      //
-                      //                                                           final f = form.DateFormat("hh:mm a");
-                      //                                                           final s = form.DateFormat("HH:mm");
-                      //
-                      //                                                           f.format(time);
-                      //                                                           String timeCheck = f.format(time);
-                      //                                                           DateTime check = f.parse(timeCheck);
-                      //                                                           if (check.isBefore(f.parse(pickedTime))) {
-                      //                                                             Fluttertoast.showToast(msg: 'Sorry! you entered wrong a time'.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, textColor: Colors.white, fontSize: 16.0);
-                      //                                                           } else {
-                      //                                                             setState(() {
-                      //                                                               pickedEndTime = f.format(time);
-                      //                                                             });
-                      //                                                             pickedEndTimeApi = s.format(time);
-                      //                                                             print(pickedEndTime);
-                      //                                                             print('confirm $time');
-                      //                                                           }
-                      //                                                         }, currentTime: DateTime.now());
-                      //                                                       },
-                      //                                                       child:
-                      //                                                           Container(
-                      //                                                         height:
-                      //                                                             6.h,
-                      //                                                         width:
-                      //                                                             65.w,
-                      //                                                         decoration:
-                      //                                                             BoxDecoration(borderRadius: BorderRadius.circular(10), color: secondaryColor),
-                      //                                                         child:
-                      //                                                             Center(
-                      //                                                           child: Text(
-                      //                                                             pickedEndTime != '' ? pickedEndTime : 'Pick End Time',
-                      //                                                             style: const TextStyle(color: Colors.white),
-                      //                                                           ),
-                      //                                                         ),
-                      //                                                       )),
-                      //                                             ),
-                      //                                             Center(
-                      //                                               child:
-                      //                                                   Padding(
-                      //                                                 padding:
-                      //                                                     const EdgeInsets.fromLTRB(
-                      //                                                         20,
-                      //                                                         0,
-                      //                                                         20,
-                      //                                                         0),
-                      //                                                 child:
-                      //                                                     Column(
-                      //                                                   children: [
-                      //                                                     /*  Container(
-                      //               width: Get.width,
-                      //               child: Text(
-                      //                 'Address#${index + 1}',
-                      //                 style:
-                      //                     TextStyle(fontWeight: FontWeight.bold),
-                      //               ),
-                      //             ),
-                      //             SizedBox(
-                      //               height: 5,
-                      //             ), */
-                      //                                                     Container(
-                      //                                                       width:
-                      //                                                           65.w,
-                      //                                                       child:
-                      //                                                           Padding(
-                      //                                                         padding: const EdgeInsets.fromLTRB(
-                      //                                                             0,
-                      //                                                             0,
-                      //                                                             0,
-                      //                                                             0),
-                      //                                                         child:
-                      //                                                             TextFormField(
-                      //                                                           validator: (value) {
-                      //                                                             if (value!.isEmpty) {
-                      //                                                               return 'This field is required';
-                      //                                                             }
-                      //                                                           },
-                      //                                                           onTap: () {
-                      //                                                             Navigator.push(
-                      //                                                               context,
-                      //                                                               MaterialPageRoute(
-                      //                                                                 builder: (context) => PlacePicker(
-                      //                                                                   apiKey: "AIzaSyBDOMNCVC2eacCxKYuRxIwCz4w-QjV_l5Y",
-                      //                                                                   onPlacePicked: (result) {
-                      //                                                                     print(result.geometry!.location);
-                      //                                                                     final tagName = result.formattedAddress.toString();
-                      //                                                                     print(result.formattedAddress);
-                      //                                                                     final split = tagName.split(',');
-                      //                                                                     final Map<int, String> values = {
-                      //                                                                       for (int i = 0; i < split.length; i++) i: split[i]
-                      //                                                                     };
-                      //                                                                     final value1 = values[0];
-                      //                                                                     final value2 = values[1];
-                      //                                                                     final value3 = values[2];
-                      //                                                                     final value4 = values[3];
-                      //                                                                     setState(() {
-                      //                                                                       AddressController.text = result.formattedAddress.toString();
-                      //                                                                       latitude = result.geometry!.location.lat.toString();
-                      //                                                                       longitude = result.geometry!.location.lng.toString();
-                      //
-                      //                                                                       /*   if(value1!=null) {
-                      //                           address.text = value1.toString();
-                      //                         }
-                      //                         if(value2!=null) {
-                      //                           houseNo.text = value2.toString();
-                      //                         }
-                      //                         if(value3!=null) {
-                      //                           city.text = value3.toString();
-                      //                         } */
-                      //                                                                     });
-                      //                                                                     Navigator.of(context).pop();
-                      //                                                                   },
-                      //                                                                   selectInitialPosition: true,
-                      //                                                                   autocompleteOnTrailingWhitespace: true,
-                      //                                                                   useCurrentLocation: true,
-                      //                                                                   initialPosition: const LatLng(31.65465, 31.35153),
-                      //                                                                 ),
-                      //                                                               ),
-                      //                                                             );
-                      //                                                           },
-                      //                                                           controller: AddressController,
-                      //                                                           readOnly: true,
-                      //                                                           showCursor: false,
-                      //                                                           cursorColor: Colors.grey,
-                      //                                                           textAlign: TextAlign.start,
-                      //                                                           keyboardType: TextInputType.number,
-                      //                                                           inputFormatters: [
-                      //                                                             FilteringTextInputFormatter.digitsOnly,
-                      //                                                             LengthLimitingTextInputFormatter(15)
-                      //                                                           ],
-                      //                                                           decoration: InputDecoration(
-                      //                                                             contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5),
-                      //                                                             errorBorder: OutlineInputBorder(
-                      //                                                               borderRadius: BorderRadius.circular(10),
-                      //                                                               //<-- SEE HERE
-                      //                                                               borderSide: const BorderSide(width: 1, color: Colors.red),
-                      //                                                             ),
-                      //                                                             enabledBorder: OutlineInputBorder(
-                      //                                                                 borderSide: const BorderSide(
-                      //                                                                   color: Colors.transparent,
-                      //                                                                 ),
-                      //                                                                 borderRadius: BorderRadius.circular(10)),
-                      //                                                             focusedBorder: OutlineInputBorder(
-                      //                                                                 borderSide: const BorderSide(
-                      //                                                                   color: Colors.transparent,
-                      //                                                                 ),
-                      //                                                                 borderRadius: BorderRadius.circular(10)),
-                      //                                                             border: OutlineInputBorder(
-                      //                                                                 borderSide: const BorderSide(
-                      //                                                                   color: Colors.transparent,
-                      //                                                                 ),
-                      //                                                                 borderRadius: BorderRadius.circular(10)),
-                      //                                                             prefixIcon: const Icon(Icons.location_on),
-                      //                                                             hintText: 'Select Meeting Point',
-                      //                                                             hintStyle: TextStyle(color: themeChange.darkTheme ? Colors.white : Colors.grey, fontSize: 2.h, fontFamily: 'NeueMachina'),
-                      //                                                             filled: true,
-                      //                                                             fillColor: themeChange.darkTheme ? Colors.white38 : Colors.black12,
-                      //                                                           ),
-                      //                                                         ),
-                      //                                                       ),
-                      //                                                     ),
-                      //                                                     /*  SizedBox(
-                      //                                   height: 10,
-                      //                                 ) */
-                      //                                                   ],
-                      //                                                 ),
-                      //                                               ),
-                      //                                             ),
-                      //                                             /*   Padding(
-                      //                           padding: const EdgeInsets.only(
-                      //                               left: 20.0, right: 20),
-                      //                           child: Row(
-                      //                             mainAxisAlignment:
-                      //                                 MainAxisAlignment
-                      //                                     .spaceBetween,
-                      //                             children: <Widget>[
-                      //                               Text("Select Meeting Point",
-                      //                                   style: Theme.of(context)
-                      //                                       .textTheme
-                      //                                       .bodyText2),
-                      //                               Icon(Icons
-                      //                                   .location_searching_rounded)
-                      //                             ],
-                      //                           ),
-                      //                         ), */
-                      //                                             SizedBox(
-                      //                                               height: 2.h,
-                      //                                             ),
-                      //                                             Container(
-                      //                                               height: 5.5.h,
-                      //                                               width: 70.w,
-                      //                                               decoration: BoxDecoration(
-                      //                                                   borderRadius:
-                      //                                                       BorderRadius.circular(
-                      //                                                           20),
-                      //                                                   color:
-                      //                                                       primaryColor),
-                      //                                               child:
-                      //                                                   InkWell(
-                      //                                                 onTap:
-                      //                                                     () async {
-                      //                                                   setState(
-                      //                                                       () {
-                      //                                                     buttonLoader =
-                      //                                                         true;
-                      //                                                   });
-                      //                                                   if (pickedDate != '' &&
-                      //                                                       pickedEndTime !=
-                      //                                                           '' &&
-                      //                                                       AddressController
-                      //                                                           .text
-                      //                                                           .isNotEmpty &&
-                      //                                                       pickedTime !=
-                      //                                                           '') {
-                      //                                                     Map<String,
-                      //                                                             dynamic>
-                      //                                                         request =
-                      //                                                         {
-                      //                                                       /*    'requested_by_id':
-                      //                                     profileInfo.id
-                      //                                         .toString(), */
-                      //                                                       'requested_to_id': widget
-                      //                                                           .id
-                      //                                                           .toString(),
-                      //                                                       'long':
-                      //                                                           longitude,
-                      //                                                       'lat':
-                      //                                                           latitude,
-                      //                                                       'meet_up_date':
-                      //                                                           pickedDate,
-                      //                                                       'meet_up_time':
-                      //                                                           pickedTimeApi,
-                      //                                                       'meetup_end_time':
-                      //                                                           pickedEndTimeApi
-                      //                                                     };
-                      //                                                     print(
-                      //                                                         request);
-                      //                                                     bool status = await DataApiService.instance.sendRequest(
-                      //                                                         request,
-                      //                                                         context);
-                      //                                                     setState(
-                      //                                                         () {
-                      //                                                       buttonLoader =
-                      //                                                           false;
-                      //                                                     });
-                      //                                                     Navigator.pop(
-                      //                                                         context);
-                      //                                                     callApi();
-                      //
-                      //                                                     if (status) {
-                      //                                                       Fluttertoast.showToast(
-                      //                                                           msg: SnackMessage.toString(),
-                      //                                                           toastLength: Toast.LENGTH_SHORT,
-                      //                                                           gravity: ToastGravity.BOTTOM,
-                      //                                                           timeInSecForIosWeb: 1,
-                      //                                                           textColor: Colors.white,
-                      //                                                           fontSize: 16.0);
-                      //                                                     } else {
-                      //                                                       Fluttertoast.showToast(
-                      //                                                           msg: SnackMessage.toString(),
-                      //                                                           toastLength: Toast.LENGTH_SHORT,
-                      //                                                           gravity: ToastGravity.BOTTOM,
-                      //                                                           timeInSecForIosWeb: 1,
-                      //                                                           textColor: Colors.white,
-                      //                                                           fontSize: 16.0);
-                      //                                                     }
-                      //                                                   }
-                      //                                                 },
-                      //                                                 child: Center(
-                      //                                                     child: buttonLoader
-                      //                                                         ? spinkit
-                      //                                                         : Text("Send Request",
-                      //                                                             style: TextStyle(fontSize: 2.1.h, color: Colors.white))),
-                      //                                               ),
-                      //                                             ),
-                      //                                           ]),
-                      //                                         ],
-                      //                                       ),
-                      //                                     ),
-                      //                                   );
-                      //                                 });
-                      //                               });
-                      //                         },
-                      //                         child: Container(
-                      //                             height: 6.h,
-                      //                             width: 80.w,
-                      //                             decoration: BoxDecoration(
-                      //                                 color:
-                      //                                     Colors.deepPurpleAccent,
-                      //                                 borderRadius:
-                      //                                     BorderRadius.circular(
-                      //                                         30)),
-                      //                             child: const Center(
-                      //                                 child: Text('Send Request',
-                      //                                     style: TextStyle(
-                      //                                         fontSize: 18,
-                      //                                         color: Colors
-                      //                                             .white)))),
-                      //                       ),
-                      //                     ),
-                      //     ],
-                      //   ),
-                      // ),
+
                     ],
                   ),
               ),
@@ -2936,17 +1570,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                           20, 0, 20, 0),
                                                   child: Column(
                                                     children: [
-                                                      /*  Container(
-                                      width: Get.width,
-                                      child: Text(
-                                        'Address#${index + 1}',
-                                        style:
-                                            TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ), */
+
                                                       Container(
                                                         width: 65.w,
                                                         child: Padding(
@@ -3022,15 +1646,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                                             .lng
                                                                             .toString();
 
-                                                                        /*   if(value1!=null) {
-                                                  address.text = value1.toString();
-                                                }
-                                                if(value2!=null) {
-                                                  houseNo.text = value2.toString();
-                                                }
-                                                if(value3!=null) {
-                                                  city.text = value3.toString();
-                                                } */
+
                                                                       });
                                                                       Navigator.of(
                                                                               context)
@@ -3153,23 +1769,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                                   ),
                                                 ),
                                               ),
-                                              /*   Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 20.0, right: 20),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: <Widget>[
-                                                      Text("Select Meeting Point",
-                                                          style: Theme.of(context)
-                                                              .textTheme
-                                                              .bodyText2),
-                                                      Icon(Icons
-                                                          .location_searching_rounded)
-                                                    ],
-                                                  ),
-                                                ), */
+
                                               SizedBox(
                                                 height: 2.h,
                                               ),

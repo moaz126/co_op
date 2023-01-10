@@ -32,35 +32,14 @@ class _AddressListState extends State<AddressList> {
   bool pageLoader = false;
 
   TextEditingController AddressNameController = TextEditingController();
+  TextEditingController EditAddressNameController = TextEditingController();
   callApi() async {
     setState(() {
       pageLoader = true;
     });
     await DataApiService.instance.getAddressList(context);
     await DataApiService.instance.getprofileinfo(context);
-    /*  for (var i = 0; i < getAddrList.length; i++) {
-      final split = getAddrList[i].locationName.split(',');
-      final Map<int, String> values = {
-        for (int i = 0; i < split.length; i++) i: split[i]
-      };
-      final value1 = values[0];
-      final value2 = values[1];
-      final value3 = values[2];
-      final value4 = values[3];
-      final value5 = values[4];
 
-      useraddr.add(Address(
-        useraddress: value2,
-        hashcode: value3 ?? '-',
-        city: value4 ?? '-',
-      ));
-    } */
-
-    /* for (var i = 0; i < getAddrList.length; i++) {
-      addrUser.add(Address(
-          AddController:
-              TextEditingController(text: getAddrList[i].locationName)));
-    } */
     setState(() {
       pageLoader = false;
     });
@@ -131,22 +110,7 @@ class _AddressListState extends State<AddressList> {
                                 Navigator.of(context).pop();
                                 await callApi();
 
-                                /*  useraddr.insert(
-                            0,
-                            Address(
-                                useraddress: value1,
-                                hashcode: value2,
-                                city: value3,
-                                country: value4)); */
-                                /*   if(value1!=null) {
-                                              address.text = value1.toString();
-                                            }
-                                            if(value2!=null) {
-                                              houseNo.text = value2.toString();
-                                            }
-                                            if(value3!=null) {
-                                              city.text = value3.toString();
-                                            } */
+
                               });
                             },
                             useCurrentLocation: true,
@@ -189,7 +153,7 @@ class _AddressListState extends State<AddressList> {
             child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Row(
-                  children: [
+                  children: const [
                     Icon(
                       Icons.add,
                       size: 20,
@@ -198,21 +162,11 @@ class _AddressListState extends State<AddressList> {
                   ],
                 )),
           )
-          /*  InkWell(
-            onTap: () async {
-              await _nameDialog();
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Image.asset(
-                'assets/icons/add_address.png',
-              ),
-            ),
-          ) */
+
         ],
       ),
       body: connected == false
-          ? NoInternet(
+          ? const NoInternet(
               page: AddressList(),
             )
           : pageLoader
@@ -254,19 +208,7 @@ class _AddressListState extends State<AddressList> {
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(fontSize: 13.sp),
                                           ),
-                                          /*  Text(
-                                            'Address#${index + 1}',
-                                            style: TextStyle(fontSize: 13.sp),
-                                          ), */
 
-                                          /*   Text(
-                                        useraddr[index].useraddress.toString(),
-                                        style: TextStyle(
-                                            color: Colors.black.withOpacity(0.5),
-                                            fontSize: 11.sp),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ), */
                                         ],
                                       ),
                                       Row(
@@ -275,8 +217,7 @@ class _AddressListState extends State<AddressList> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          /*   Text('Code' + ": ",
-                                          style: TextStyle(fontSize: 13.sp)), */
+
                                           Container(
                                             width: 55.w,
                                             child: Text(
@@ -293,49 +234,7 @@ class _AddressListState extends State<AddressList> {
                                           ),
                                         ],
                                       ),
-                                      /* Row(
-                                    children: [
-                                      Text(
-                                        'City' + ": ",
-                                        style: TextStyle(fontSize: 13.sp),
-                                      ),
-                                      Text(
-                                        useraddr[index].city.toString(),
-                                        style: TextStyle(
-                                            color: Colors.black.withOpacity(0.5),
-                                            fontSize: 11.sp),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ],
-                                  ), */
-                                      /*   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Text(
-                                        'Country' + ": ",
-                                        style: TextStyle(fontSize: 13.sp),
-                                      ),
-                                      Text.rich(
-                                        TextSpan(
-                                          text: useraddr[index].country,
-                                          style: TextStyle(
-                                              color: Colors.black.withOpacity(0.5),
-                                              fontSize: 11.sp),
-                                          children: [
-                                            /*   TextSpan(
-                                          text: " x2",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1), */
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 23.w,
-                                      ),
-                                    ],
-                                  ) */
+
                                     ],
                                   ),
                                   Column(
@@ -353,13 +252,13 @@ class _AddressListState extends State<AddressList> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10)),
-                                              child: Text(
+                                              child: const Text(
                                                 'Primary Address',
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 10),
                                               ))
-                                          : SizedBox(
+                                          : const SizedBox(
                                               height: 10,
                                             ),
                                       SizedBox(
@@ -369,130 +268,146 @@ class _AddressListState extends State<AddressList> {
                                         children: [
                                           InkWell(
                                               onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        PlacePicker(
-                                                      apiKey:
-                                                          "AIzaSyBDOMNCVC2eacCxKYuRxIwCz4w-QjV_l5Y",
-                                                      onPlacePicked: (result) {
-                                                        print(result.geometry!
-                                                            .location);
-                                                        final tagName = result
-                                                            .formattedAddress
-                                                            .toString();
-                                                        print(result
-                                                            .formattedAddress);
-                                                        final split =
-                                                            tagName.split(',');
-                                                        final Map<int, String>
-                                                            values = {
-                                                          for (int i = 0;
-                                                              i < split.length;
-                                                              i++)
-                                                            i: split[i]
-                                                        };
-                                                        final value1 =
-                                                            values[0];
-                                                        final value2 =
-                                                            values[1];
-                                                        final value3 =
-                                                            values[2];
-                                                        final value4 =
-                                                            values[3];
-                                                        setState(() async {
-                                                          if (getAddrList[index]
-                                                                      .lat ==
-                                                                  profileInfo
-                                                                      .lat &&
-                                                              getAddrList[index]
-                                                                      .long ==
-                                                                  profileInfo
-                                                                      .lng) {
-                                                            Map<String, dynamic>
-                                                                address = {
-                                                              'lat': result
-                                                                  .geometry!
-                                                                  .location
-                                                                  .lat
-                                                                  .toString(),
-                                                              'long': result
-                                                                  .geometry!
-                                                                  .location
-                                                                  .lng
-                                                                  .toString(),
-                                                            };
-                                                            print(address);
-                                                            await DataApiService
-                                                                .instance
-                                                                .updateAddress(
-                                                                    address,
-                                                                    context);
-                                                          }
-                                                          Map<String, dynamic>
-                                                              update_address = {
-                                                            'id': getAddrList[
-                                                                    index]
-                                                                .id
-                                                                .toString(),
-                                                            'location_name': result
-                                                                .formattedAddress
-                                                                .toString(),
-                                                            'lat': result
-                                                                .geometry!
-                                                                .location
-                                                                .lat
-                                                                .toString(),
-                                                            'long': result
-                                                                .geometry!
-                                                                .location
-                                                                .lng
-                                                                .toString(),
-                                                            'name': getAddrList[
-                                                                    index]
-                                                                .name
-                                                                .toString()
-                                                          };
-                                                          print(update_address);
-                                                          await DataApiService
-                                                              .instance
-                                                              .updateUserAddress(
-                                                                  update_address,
-                                                                  context);
+                                               EditAddressNameController.text= getAddrList[
+                                                index]
+                                                    .name
+                                                    .toString();
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        title: Text('Address Name'),
+                                                        content: TextField(
+                                                          onChanged: (value) {
+                                                            setState(() {});
+                                                          },
+                                                          controller: EditAddressNameController,
+                                                          decoration: InputDecoration(hintText: "Enter Address Title"),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            child: Text('OK'),
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                if (EditAddressNameController.text.isNotEmpty) {
+                                                                  Navigator.pop(context);
+                                                                  Navigator.push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          PlacePicker(
+                                                                            apiKey:
+                                                                            "AIzaSyBDOMNCVC2eacCxKYuRxIwCz4w-QjV_l5Y",
+                                                                            onPlacePicked: (result) {
+                                                                              print(result.geometry!
+                                                                                  .location);
+                                                                              final tagName = result
+                                                                                  .formattedAddress
+                                                                                  .toString();
+                                                                              print(result
+                                                                                  .formattedAddress);
+                                                                              final split =
+                                                                              tagName.split(',');
+                                                                              final Map<int, String>
+                                                                              values = {
+                                                                                for (int i = 0;
+                                                                                i < split.length;
+                                                                                i++)
+                                                                                  i: split[i]
+                                                                              };
+                                                                              final value1 =
+                                                                              values[0];
+                                                                              final value2 =
+                                                                              values[1];
+                                                                              final value3 =
+                                                                              values[2];
+                                                                              final value4 =
+                                                                              values[3];
+                                                                              setState(() async {
+                                                                                if (getAddrList[index]
+                                                                                    .lat ==
+                                                                                    profileInfo
+                                                                                        .lat &&
+                                                                                    getAddrList[index]
+                                                                                        .long ==
+                                                                                        profileInfo
+                                                                                            .lng) {
+                                                                                  Map<String, dynamic>
+                                                                                  address = {
+                                                                                    'lat': result
+                                                                                        .geometry!
+                                                                                        .location
+                                                                                        .lat
+                                                                                        .toString(),
+                                                                                    'long': result
+                                                                                        .geometry!
+                                                                                        .location
+                                                                                        .lng
+                                                                                        .toString(),
+                                                                                  };
+                                                                                  print(address);
+                                                                                  await DataApiService
+                                                                                      .instance
+                                                                                      .updateAddress(
+                                                                                      address,
+                                                                                      context);
+                                                                                }
+                                                                                Map<String, dynamic>
+                                                                                update_address = {
+                                                                                  'id': getAddrList[
+                                                                                  index]
+                                                                                      .id
+                                                                                      .toString(),
+                                                                                  'location_name': result
+                                                                                      .formattedAddress
+                                                                                      .toString(),
+                                                                                  'lat': result
+                                                                                      .geometry!
+                                                                                      .location
+                                                                                      .lat
+                                                                                      .toString(),
+                                                                                  'long': result
+                                                                                      .geometry!
+                                                                                      .location
+                                                                                      .lng
+                                                                                      .toString(),
+                                                                                  'name': EditAddressNameController.text
+                                                                                };
+                                                                                print(update_address);
+                                                                                await DataApiService
+                                                                                    .instance
+                                                                                    .updateUserAddress(
+                                                                                    update_address,
+                                                                                    context);
 
-                                                          useraddr.clear();
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                          await callApi();
+                                                                                useraddr.clear();
+                                                                                Navigator.of(context)
+                                                                                    .pop();
+                                                                                await callApi();
 
-                                                          /*  useraddr.insert(
-                                      0,
-                                      Address(
-                                          useraddress: value1,
-                                          hashcode: value2,
-                                          city: value3,
-                                          country: value4)); */
-                                                          /*   if(value1!=null) {
-                                                        address.text = value1.toString();
-                                                      }
-                                                      if(value2!=null) {
-                                                        houseNo.text = value2.toString();
-                                                      }
-                                                      if(value3!=null) {
-                                                        city.text = value3.toString();
-                                                      } */
-                                                        });
-                                                      },
-                                                      useCurrentLocation: false,
-                                                      initialPosition: LatLng(
-                                                          getAddrList[index]
-                                                              .lat,
-                                                          getAddrList[index]
-                                                              .long),
-                                                    ),
-                                                  ),
-                                                );
+
+                                                                              });
+                                                                            },
+                                                                            useCurrentLocation: false,
+                                                                            initialPosition: LatLng(
+                                                                                getAddrList[index]
+                                                                                    .lat,
+                                                                                getAddrList[index]
+                                                                                    .long),
+                                                                          ),
+                                                                    ),
+                                                                  );
+                                                                } else {
+                                                                  GlobalToast.show('Please add address name');
+                                                                }
+                                                              });
+                                                            },
+                                                          ),
+                                                        ],
+                                                      );
+                                                    });
+
+
                                                 // Get.to(EditAddress(index));
                                               },
                                               child: Icon(
@@ -537,7 +452,7 @@ class _AddressListState extends State<AddressList> {
                                                       pageLoader = false;
                                                     });
                                                   },
-                                                  child: Icon(
+                                                  child: const Icon(
                                                     Icons.delete,
                                                     color: Colors.red,
                                                   )),
@@ -584,7 +499,7 @@ class _AddressListState extends State<AddressList> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10)),
-                                                child: Text(
+                                                child: const Text(
                                                   'Change Primary',
                                                   style: TextStyle(
                                                       color: Colors.white,

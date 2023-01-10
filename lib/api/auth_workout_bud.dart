@@ -244,7 +244,8 @@ class DataApiService {
         final result = jsonDecode(response.body);
         if (response.statusCode == 200) {
           profileInfo = GetProfileModel.fromJson(result['user']);
-          print(USER_TOKEN.value);
+          ratingStars.value = profileInfo.rating!;
+          print(profileInfo.rating);
           print('success');
         } else {
           print("unsucess");
@@ -838,6 +839,31 @@ class DataApiService {
         print(response.body);
         final result = jsonDecode(response.body);
         if (response.statusCode == 200) {
+          print('Success');
+        } else {
+          print("unsuccess");
+        }
+      } on Exception {
+        rethrow;
+      } catch (e) {
+        rethrow;
+      }
+    }
+  }
+  Future delteAccount(context,String id) async {
+    connected = await isNetworkAvailable();
+    if (connected) {
+      String url ='https://becktesting.site/workout-bud/api/delete-account';
+      print(url);
+
+      try {
+        http.Response response = await http.post(Uri.parse(url), body: {
+          "id": id,
+        });
+        print(response.body);
+        final result = jsonDecode(response.body);
+        if (response.statusCode == 200) {
+          GlobalToast.show('Account deleted successfully');
           print('Success');
         } else {
           print("unsuccess");

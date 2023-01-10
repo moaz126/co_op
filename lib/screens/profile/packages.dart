@@ -71,24 +71,7 @@ class _PackagesScreenState extends State<PackagesScreen> {
                             fontSize: 4.h,
                             color: primaryColor,
                             fontWeight: FontWeight.w900,
-                            // shadows: const [
-                            //   Shadow( // bottomLeft
-                            //       offset: Offset(-1.5, -1.5),
-                            //       color: primaryColor
-                            //   ),
-                            //   Shadow( // bottomRight
-                            //       offset: Offset(1.5, -1.5),
-                            //       color: primaryColor
-                            //   ),
-                            //   Shadow( // topRight
-                            //       offset: Offset(1.5, 1.5),
-                            //       color: primaryColor
-                            //   ),
-                            //   Shadow( // topLeft
-                            //       offset: Offset(-1.5, 1.5),
-                            //       color: primaryColor
-                            //   ),
-                            // ]
+
                         ),
                       ),
                       const SizedBox(

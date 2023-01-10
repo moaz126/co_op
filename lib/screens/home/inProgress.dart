@@ -1,23 +1,13 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:co_op/constants/custom_dialog.dart';
-import 'package:co_op/constants/widgets.dart';
-import 'package:co_op/screens/workout/navigate.dart';
 import 'package:co_op/screens/workout/workout_detail_page.dart';
-import 'package:co_op/search/clock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
-import 'package:intl/intl.dart' as form;
-import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'package:sizer/sizer.dart';
-import 'package:co_op/bottom_navigation_bar.dart';
 import 'package:co_op/constants/constants.dart';
 
 import '../../api/auth_workout_bud.dart';
@@ -42,15 +32,7 @@ class _InProgressListState extends State<InProgressList> {
     'assets/images/muscles.webp',
   ];
 
-/*   DateTime combine() {
-    final f = form.DateFormat("dd:mm:yyyy");
-    setState(() {
-      String pickedDate = date.toString().split(' ')[0];
-    });
-    TimeOfDay t;
-    final now = new DateTime.now();
-    return new DateTime(now.year, now.month, now.day, t.hour, t.minute);
-  } */
+
 
   Future<dynamic> _onBackPressed(context) async {
     return AwesomeDialog(
@@ -71,16 +53,7 @@ class _InProgressListState extends State<InProgressList> {
   double _userRating = 0.0;
   final double _initialRating = 5.0;
 
-  /*  void showPlacePicker() async {
-    LocationResult? result = await Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => PlacePicker(
-              "AIzaSyBDOMNCVC2eacCxKYuRxIwCz4w-QjV_l5Y",
-              defaultLocation: LatLng(31.432354, 73.121249),
-            )));
 
-    // Handle the result in your way
-    print(result);
-  } */
   bool loader = false;
 
   callApi() async {

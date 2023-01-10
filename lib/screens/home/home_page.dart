@@ -1,21 +1,14 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:co_op/constants/custom_dialog.dart';
-import 'package:co_op/constants/widgets.dart';
+
 import 'package:co_op/screens/home/inProgress.dart';
 import 'package:co_op/screens/home/requestList.dart';
-import 'package:co_op/screens/workout/navigate.dart';
 import 'package:co_op/screens/workout/workout_detail_page.dart';
-import 'package:co_op/search/clock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
-import 'package:intl/intl.dart' as form;
-import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'package:sizer/sizer.dart';
@@ -28,7 +21,7 @@ import 'package:vibration/vibration.dart';
 import '../../api/auth_workout_bud.dart';
 import '../../api/global_variables.dart';
 import '../../constants/noInternet.dart';
-import '../../provider/dark_theme_provider.dart';
+import '../auth/controllers/notification_controller..dart';
 import 'completed.dart';
 
 class HomePage extends StatefulWidget {
@@ -39,6 +32,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  DataController dataController = Get.put(DataController());
   int selectedIndex = 0;
   List<String> userName = ['Jack', 'Shane', 'Alex Hales', 'Johnson'];
   List<double> ratings = [5.0, 4.0, 3.5, 2.5];
@@ -49,15 +43,7 @@ class _HomePageState extends State<HomePage> {
     'assets/images/muscles.webp',
   ];
 
-/*   DateTime combine() {
-    final f = form.DateFormat("dd:mm:yyyy");
-    setState(() {
-      String pickedDate = date.toString().split(' ')[0];
-    });
-    TimeOfDay t;
-    final now = new DateTime.now();
-    return new DateTime(now.year, now.month, now.day, t.hour, t.minute);
-  } */
+
 
   Future<dynamic> _onBackPressed(context) async {
     return AwesomeDialog(
@@ -78,16 +64,7 @@ class _HomePageState extends State<HomePage> {
   double _userRating = 0.0;
   final double _initialRating = 5.0;
 
-  /*  void showPlacePicker() async {
-    LocationResult? result = await Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => PlacePicker(
-              "AIzaSyBDOMNCVC2eacCxKYuRxIwCz4w-QjV_l5Y",
-              defaultLocation: LatLng(31.432354, 73.121249),
-            )));
 
-    // Handle the result in your way
-    print(result);
-  } */
   bool loader = false;
 
   callApi() async {
@@ -96,7 +73,7 @@ class _HomePageState extends State<HomePage> {
     });
     await DataApiService.instance.getDashboard(context);
     await DataApiService.instance.getActivityUsers('Beginner', context);
-    DataApiService.instance.getNotificationCount(context);
+    // DataApiService.instance.getNotificationCount(context);
     setState(() {
       loader = false;
     });
@@ -109,7 +86,7 @@ class _HomePageState extends State<HomePage> {
     DataApiService.instance.getprofileinfo(context);
     DataApiService.instance.getDashboard(context);
     DataApiService.instance.getActivityUsers('Beginner', context);
-    DataApiService.instance.getNotificationCount(context);
+    // DataApiService.instance.getNotificationCount(context);
     setState(() {
       loader = false;
     });
@@ -122,7 +99,7 @@ class _HomePageState extends State<HomePage> {
     await DataApiService.instance.getprofileinfo(context);
     DataApiService.instance.getDashboard(context);
     DataApiService.instance.getActivityUsers('Beginner', context);
-    await DataApiService.instance.getNotificationCount(context);
+    // await DataApiService.instance.getNotificationCount(context);
     setState(() {
       loader = false;
     });
@@ -188,12 +165,14 @@ class _HomePageState extends State<HomePage> {
                   InkWell(
                       onTap: () {
                         setState(() {});
+                        dataController.count.value=0;
                         Get.to(
                           () => const NotificationPage(),
                           transition: Transition.fade,
                           duration: const Duration(seconds: 1),
                           curve: Curves.decelerate,
                         );
+
                       },
                       child: Stack(
                         children: [
@@ -201,41 +180,31 @@ class _HomePageState extends State<HomePage> {
                             Icons.notifications_none_outlined,
                             color: secondaryColor,
                           ),
-                          notificationCount != 0
-                              ? Positioned(
-                                  right: 0,
-                                  child: Container(
-                                    height: 12,
-                                    width: 12,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        color: secondaryColor,
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: notificationCount > 9
-                                        ? Text(
-                                            '9+',
-                                            style: TextStyle(
-                                                fontSize: 7,
-                                                color: Colors.white),
-                                          )
-                                        : Text(
-                                            notificationCount.toString(),
-                                            style: TextStyle(
-                                                fontSize: 7,
-                                                color: Colors.white),
-                                          ),
-                                  ),
-                                )
-                              : SizedBox()
+                          Obx(()=>dataController.count.value>0?
+                          Positioned(
+                            right: 0,
+                            child: Container(
+                              height: 12,
+                              width: 12,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: secondaryColor,
+                                  borderRadius:
+                                  BorderRadius.circular(10)),
+                              child:
+                                Text(
+                                  dataController.count.value.toString(),
+                                  style: TextStyle(
+                                      fontSize: 7,
+                                      color: Colors.white),
+                                ),
+
+                            ),
+                          ):SizedBox(),),
+
                         ],
                       )),
-                  // InkWell(
-                  //     onTap: (){
-                  //       setState(() {});
-                  //       Get.to(()=>const BookmarksPage());
-                  //     },
-                  //     child: const Icon(Icons.bookmark_border, color: secondaryColor,))
+
                 ],
               )
             ],
@@ -343,75 +312,7 @@ class _HomePageState extends State<HomePage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                // Container(
-                                //   height: 20.h,
-                                //   width: 16.h,
-                                //   decoration: BoxDecoration(
-                                //     color: Colors.white,
-                                //     borderRadius: BorderRadius.circular(10),
-                                //     boxShadow: [
-                                //       BoxShadow(
-                                //         color: Colors.grey.withOpacity(0.1),
-                                //         offset: Offset(
-                                //           3.0,
-                                //           3.0,
-                                //         ),
-                                //         blurRadius: 10.0,
-                                //         spreadRadius: 4.0,
-                                //       ),
-                                //       BoxShadow(
-                                //         color: Colors.grey.withOpacity(0.1),
-                                //         offset: Offset(
-                                //           -3.0,
-                                //           -1.0,
-                                //         ),
-                                //         blurRadius: 10.0,
-                                //         spreadRadius: 4.0,
-                                //       ),
-                                //     ],
-                                //   ),
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(8.0),
-                                //     child: Column(
-                                //       children: <Widget>[
-                                //         Row(
-                                //           children: <Widget>[
-                                //             Container(
-                                //                 width: 3.5.h,
-                                //                 height: 3.5.h,
-                                //                 child: Image.asset(
-                                //                     'assets/icons/exercises.png')),
-                                //             SizedBox(
-                                //               width: 7,
-                                //             ),
-                                //             Container(
-                                //               child: Text(
-                                //                 'Finished',
-                                //                 style: TextStyle(
-                                //                     fontWeight: FontWeight.bold,
-                                //                     fontSize: 15),
-                                //               ),
-                                //             ),
-                                //           ],
-                                //         ),
-                                //         Text(
-                                //           profileInfo.complete.toString(),
-                                //           style: TextStyle(
-                                //               fontWeight: FontWeight.bold,
-                                //               fontSize: 45),
-                                //         ),
-                                //         Text(
-                                //           'Completed',
-                                //           style: TextStyle(fontSize: 13),
-                                //         ),
-                                //         Text(
-                                //           'Workout',
-                                //           style: TextStyle(fontSize: 13),
-                                //         ),
-                                //       ],
-                                //     ),
-                                //   ),
-                                // ),
+
                                 Column(
                                   children: <Widget>[
                                     InkWell(
@@ -465,11 +366,11 @@ class _HomePageState extends State<HomePage> {
                                                       height: 2.h,
                                                       child: Image.asset(
                                                           'assets/icons/request.png')),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 7,
                                                   ),
                                                   Container(
-                                                    child: Text(
+                                                    child: const Text(
                                                       'Sent Requests',
                                                       style: TextStyle(
                                                           fontWeight:
@@ -479,7 +380,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                 ],
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 5,
                                               ),
                                               Row(
@@ -495,16 +396,16 @@ class _HomePageState extends State<HomePage> {
                                                           : profileInfo
                                                               .requested
                                                               .toString(),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 22),
                                                     ),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 5,
                                                   ),
-                                                  Text(
+                                                  const Text(
                                                     'Tap to view',
                                                     style: TextStyle(
                                                         fontSize: 12,
@@ -569,11 +470,11 @@ class _HomePageState extends State<HomePage> {
                                                       height: 2.5.h,
                                                       child: Image.asset(
                                                           'assets/icons/exercises.png')),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 7,
                                                   ),
                                                   Container(
-                                                    child: Text(
+                                                    child: const Text(
                                                       'Finished',
                                                       style: TextStyle(
                                                           fontWeight:
@@ -583,7 +484,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                 ],
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 5,
                                               ),
                                               Row(
@@ -591,15 +492,15 @@ class _HomePageState extends State<HomePage> {
                                                   Text(
                                                     profileInfo.complete
                                                         .toString(),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         fontSize: 22),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 5,
                                                   ),
-                                                  Text(
+                                                  const Text(
                                                     'Workouts',
                                                     style: TextStyle(
                                                         fontSize: 12,
@@ -668,11 +569,11 @@ class _HomePageState extends State<HomePage> {
                                                       height: 2.h,
                                                       child: Image.asset(
                                                           'assets/icons/inProgress.png')),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 7,
                                                   ),
                                                   Container(
-                                                    child: Text(
+                                                    child: const Text(
                                                       'In progress',
                                                       style: TextStyle(
                                                           fontWeight:
@@ -682,7 +583,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                 ],
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 5,
                                               ),
                                               Row(
@@ -701,16 +602,16 @@ class _HomePageState extends State<HomePage> {
                                                           : profileInfo
                                                               .inProgress
                                                               .toString(),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 22),
                                                     ),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 5,
                                                   ),
-                                                  Text(
+                                                  const Text(
                                                     'Workouts',
                                                     style: TextStyle(
                                                         fontSize: 12,
@@ -766,11 +667,11 @@ class _HomePageState extends State<HomePage> {
                                                     height: 2.5.h,
                                                     child: Image.asset(
                                                         'assets/icons/spentTime.png')),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 7,
                                                 ),
                                                 Container(
-                                                  child: Text(
+                                                  child: const Text(
                                                     'Time spent',
                                                     style: TextStyle(
                                                         fontWeight:
@@ -780,22 +681,22 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 5,
                                             ),
                                             Row(
                                               children: <Widget>[
                                                 Text(
                                                   profileInfo.time.toString(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 22),
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 5,
                                                 ),
-                                                Text(
+                                                const Text(
                                                   'Minutes',
                                                   style: TextStyle(
                                                       fontSize: 12,
@@ -820,7 +721,7 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.only(left: 20.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
+                              children: const [
                                 Text(
                                   "Discover new workout partners",
                                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -1071,37 +972,7 @@ class _HomePageState extends State<HomePage> {
                           const SizedBox(
                             height: 20,
                           ),
-                          /*   Padding(
-                            padding: const EdgeInsets.fromLTRB(18, 4, 18, 4),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Workout Levels",
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                                InkWell(
-                                  onTap: () async {
-                                    // Get.to(() => NavigateScreen());
-                                    if (await Vibration.hasVibrator() != null) {
-                                      Vibration.vibrate();
-                                    }
-                                    /*   final s = form.DateFormat("HH:mm");
-                                    String st = s.format(DateTime.now());
-                                    DateTime dateTime = s.parse(st); */
-                                  },
-                                  child: Text(
-                                    "See All",
-                                    style: TextStyle(
-                                        color: secondaryColor,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                         */
+
                           Padding(
                             padding: const EdgeInsets.fromLTRB(20, 4, 28, 4),
                             child: Row(
